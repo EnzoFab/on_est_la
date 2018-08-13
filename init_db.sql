@@ -7,6 +7,21 @@
 ------------------------------------------------------------
 -- Table: User
 ------------------------------------------------------------
+DROP TABLE IF EXISTS public.Participate CASCADE;
+DROP TABLE IF EXISTS public.Own CASCADE;
+DROP TABLE IF EXISTS public.Is_Friend CASCADE;
+DROP TABLE IF EXISTS public.Belong CASCADE;
+DROP TABLE IF EXISTS public.Frequent CASCADE;
+DROP TABLE IF EXISTS public.Place CASCADE;
+DROP TABLE IF EXISTS public.Type CASCADE;
+DROP TABLE IF EXISTS public.Group CASCADE;
+DROP TABLE IF EXISTS public.User CASCADE;
+
+
+
+------------------------------------------------------------
+-- Table: User
+------------------------------------------------------------
 CREATE TABLE public.User(
 	user_id                 SERIAL NOT NULL ,
 	user_firstname          VARCHAR (50) NOT NULL ,
