@@ -38,7 +38,7 @@ body, html {
 #topbar .v-card{
   width: 150px;
   height: 150px;
-  background-color: #eaeaea;
+  background-color: transparent;
   color: #4a4a49;
   text-transform: lowercase;
   font-family: primetime !important;

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import topbar from '@/components/topbar/Topbar'
+import profile from '@/components/profile/Profile'
 import home from '@/components/home/Home'
 
 Vue.use(Router)
@@ -22,9 +22,9 @@ export default new Router({
     },
 
     {
-      path: '/topbar',
-      name: 'topbar',
-      component: topbar
+      path: '/my-profile',
+      name: 'profile',
+      component: profile
     }
   ]
 })
