@@ -3,35 +3,35 @@
     <v-layout row wrap justify-center>
       <v-flex xs2>
         <v-card>
-          <img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg">
+          <img src="../../assets/images/map.png">
           <hr>
           <h2>J'ai Soif</h2>
         </v-card>
       </v-flex>
       <v-flex xs2>
         <v-card>
-          <img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg">
+          <img src="../../assets/images/calendar.png">
           <hr>
           <h2>Les Bails</h2>
         </v-card>
       </v-flex>
       <v-flex xs2>
         <v-card>
-          <img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg">
+          <img src="../../assets/images/search_icon.png">
           <hr>
           <h3>Adopte Un Pote</h3>
         </v-card>
       </v-flex>
       <v-flex xs2>
         <v-card>
-          <img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg">
+          <img src="../../assets/images/profile.png">
           <hr>
           <h3>Ma Grosse Tête</h3>
         </v-card>
       </v-flex>
       <v-flex xs2>
         <v-card>
-          <img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg">
+          <img src="../../assets/images/group.png">
           <hr>
           <h2>Mes Crew</h2>
         </v-card>

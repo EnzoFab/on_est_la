@@ -3,10 +3,19 @@ GREY: #eaeaea
 DARK GREY: #4a4a49
  */
 
+@font-face {
+  font-family: primetime;
+  src: url('./assets/polices/primetime.ttf');
+}
+
+
+
 /* BODY */
 body, html {
   height: 100%;
 }
+
+
 
 /* APP */
 #app {
@@ -18,17 +27,28 @@ body, html {
   height: 100%;
 }
 
+
+
 /* TOPBAR */
+#topbar{
+  margin-bottom: 5% !important;
+}
+
+
 #topbar .v-card{
   width: 150px;
   height: 150px;
   background-color: #eaeaea;
   color: #4a4a49;
+  text-transform: lowercase;
+  font-family: primetime !important;
 }
 
 #topbar img{
-  height: 70%;
-  width: 70%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  height: 60%;
+  width: 60%;
 }
 
 #topbar hr {
@@ -37,6 +57,20 @@ body, html {
   margin-left: 5%;
   margin-right: 5%;
 }
+
+#topbar h2{
+  margin-top: 3%;
+}
+
+#topbar h3{
+  margin-top: 5%;
+}
+
+#topbar .v-card:hover{
+  opacity: 0.7;
+}
+
+
 
 /* HOMEPAGE */
 #homepage {
