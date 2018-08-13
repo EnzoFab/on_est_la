@@ -1,3 +1,8 @@
+/*
+GREY: #eaeaea
+DARK GREY: #4a4a49
+ */
+
 /* BODY */
 body, html {
   height: 100%;
@@ -10,18 +15,36 @@ body, html {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-image: url("./assets/images/home_wallpaper.jpg") !important;
+  height: 100%;
+}
 
+/* TOPBAR */
+#topbar .v-card{
+  width: 150px;
+  height: 150px;
+  background-color: #eaeaea;
+  color: #4a4a49;
+}
+
+#topbar img{
+  height: 70%;
+  width: 70%;
+}
+
+#topbar hr {
+  border: none;
+  border-bottom: 2px solid #fff;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+/* HOMEPAGE */
+#homepage {
+  background-image: url("./assets/images/home_wallpaper.jpg") !important;
   background-repeat: no-repeat;
   height: 100%;
-
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-/* TOPBAR */
-#topbar {
-
 }
