@@ -1,12 +1,9 @@
-var orm = require('../models');
-orm.setup('onestla', 'postgres', 'postgres', {
-    host: '127.0.0.1',
-    logging: false,
-    native: false,
-});
-var Type = orm.model('public.type');
+const db = require("../models/");
+const Type = db.type;
 
-//const Type = require('../models').model('public_type');
+
+// Callee is the model definition. This allows you to easily map a query to a predefined model
+
 
 module.exports = {
     create(req, res) {
@@ -14,10 +11,15 @@ module.exports = {
             type_name: req.body.typeName,
             type_description: req.body.typeDescription
         };
-        console.log(new_type);
         return Type
             .create(new_type)
             .then((type) => res.status(201).send(type))
             .catch((error) => res.status(400).send(error));
     },
+
+    findAll(req, res) {
+        return Type.findAll()
+            .then((types) => res.status(201).send(types))
+            .catch((error) => res.status(400).send(error));
+    }
 };
