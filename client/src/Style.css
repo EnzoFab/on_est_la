@@ -48,3 +48,32 @@ body, html {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+/* Custom scrollbar */
+body::-webkit-scrollbar {
+  width: 9px;
+  background-color: #BDBDBD;
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #BDBDBD;
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: 0 0 6px rgba(0,0,0,0.3);
+  background-color: #ECEFF1;
+}
+
+.scroll-y::-webkit-scrollbar {
+  width: 6px;
+  background-color: #E1F5FE;
+  border-radius: 45px;
+}
+.scroll-y::-webkit-scrollbar-thumb {
+  background-color: #E1F5FE;
+  border-radius: 45px;
+}
+.scroll-y::-webkit-scrollbar-track {
+  background-color: #ECEFF1;
+}
+
