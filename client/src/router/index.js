@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import Navbar from '@/components/navbar/Navbar'
+import topbar from '@/components/topbar/Topbar'
+import home from '@/components/home/Home'
 
 Vue.use(Router)
 
@@ -15,9 +16,15 @@ export default new Router({
     },
 
     {
-      path: '/navbar',
-      name: 'Navbar',
-      component: Navbar
+      path: '/home',
+      name: 'home',
+      component: home
+    },
+
+    {
+      path: '/topbar',
+      name: 'topbar',
+      component: topbar
     }
   ]
 })
