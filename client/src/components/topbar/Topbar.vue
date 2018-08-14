@@ -1,8 +1,8 @@
 <template>
   <v-container fluid grid-list-md text-xs-center id="topbar">
-    <v-flex hidden-sm-and-up xs1 id="toogleBtn">
-      <v-btn icon ripple large @click="toogleMenu"  >
-        <v-icon large color="indigo darken-4">menu</v-icon>
+    <v-flex hidden-sm-and-up xs1>
+      <v-btn icon ripple large @click="toogleMenu" >
+        <v-icon large color="indigo darken-4"  id="toogleBtn">menu</v-icon>
       </v-btn>
     </v-flex>
     <transition
@@ -12,7 +12,7 @@
       mode="out-in"
       :duration="500"
     >
-      <v-layout row wrap justify-center align-center v-show="menuVisible && toogleBtnVisibility == null">
+      <v-layout row wrap justify-center align-center v-if="menuVisible">
         <v-flex md1 lg1 xl1 sm1  xs9 offset-xs3
                 offset-md0 offset-lg0 offsetxl0 offsetsm0
                 text-xs-start>
@@ -76,7 +76,12 @@ export default {
   data () {
     return {
       menuVisible: true,
-      toogleBtnVisibility: document.querySelector('#toogleBtn')
+      mql: window.matchMedia('(min-width: 600px)')
+    }
+  },
+  computed: {
+    toogleBtnVisibility () {
+      return document.querySelector('.hidden-sm-and-up')
     }
   },
   watch: {
@@ -87,10 +92,17 @@ export default {
   methods: {
     toogleMenu () {
       this.menuVisible = !this.menuVisible
+    },
+    screenTest (e) {
+      // handle responsivity
+      if (e.matches) {
+        this.menuVisible = true
+      }
     }
   },
   mounted () {
     console.log(this.toogleBtnVisibility)
+    this.mql.addListener(this.screenTest)
   }
 
 }
