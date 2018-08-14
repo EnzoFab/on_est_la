@@ -10,7 +10,7 @@
       enter-active-class="animated slideInLeft"
       leave-active-class="animated slideOutLeft"
       mode="out-in"
-      :duration="500"
+      :duration="200"
     >
       <v-layout row wrap justify-center align-center v-if="menuVisible">
         <v-flex md1 lg1 xl1 sm1  xs9 offset-xs3
