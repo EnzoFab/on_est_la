@@ -19,21 +19,21 @@
         <v-card flat>
           <img src="../../assets/images/search_icon.png">
           <hr>
-          <h3>Adopte Un Pote</h3>
+          <h2>Adopte Un Pote</h2>
         </v-card>
       </v-flex>
       <v-flex xs2>
         <v-card flat to="/my-profile">
           <img src="../../assets/images/profile.png">
           <hr>
-          <h3>Ma Grosse Tête</h3>
+          <h2>Ma Grosse Tête</h2>
         </v-card>
       </v-flex>
       <v-flex xs2>
         <v-card flat>
           <img src="../../assets/images/group.png">
           <hr>
-          <h2>Mes Crew</h2>
+          <h2>Crew</h2>
         </v-card>
       </v-flex>
     </v-layout>

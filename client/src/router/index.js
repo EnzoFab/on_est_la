@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import profile from '@/components/profile/Profile'
 import home from '@/components/home/Home'
+import friendlist from '@/components/friendlist/Friendlist'
 
 Vue.use(Router)
 
@@ -11,8 +11,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'source',
+      component: home
     },
 
     {
@@ -25,6 +25,12 @@ export default new Router({
       path: '/my-profile',
       name: 'profile',
       component: profile
+    },
+
+    {
+      path: '/test',
+      name: 'test',
+      component: friendlist
     }
   ]
 })

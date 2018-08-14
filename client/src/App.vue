@@ -1,15 +1,15 @@
 <template>
-  <div id="app">
+  <div>
     <topbar></topbar>
-    <CustomSpinner :isLoading="showSpinner" class="mb-"/>
+    <!--<CustomSpinner :isLoading="showSpinner" class="mb-"/>
     <transition name="custom-classes-transition"
                 enter-active-class="animated fadeIn"
                 leave-active-class="animated bounceOutDown"
                 mode="out-in"
                 :duration="500"
-    >
+    >-->
       <router-view/>
-    </transition>
+    <!--</transition>-->
   </div>
 </template>
 

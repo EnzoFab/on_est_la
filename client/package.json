@@ -14,8 +14,9 @@
   "dependencies": {
     "epic-spinners": "^1.0.3",
     "vue": "^2.5.2",
+    "vue-mc": "^0.2.4",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.1.10",
+    "vuetify": "^1.1.11",
     "vuex": "^3.0.1",
     "vuex-router-sync": "^5.0.0"
   },
@@ -43,7 +44,7 @@
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^3.0.1",
@@ -73,7 +74,7 @@
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
-    "vue-template-compiler": "^2.5.2",
+    "vue-template-compiler": "^2.5.17",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
