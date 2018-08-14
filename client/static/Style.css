@@ -14,6 +14,17 @@ DARK GREY: #4a4a49
   src: url('../src/assets/polices/NotoSans-Regular.ttf');
 }
 
+@font-face {
+  font-family: customizedFont;
+  src: url('../src/assets/polices/NotoSans-Bold.ttf');
+  font-weight: bold;
+}
+
+.bold {
+  font-family: customizedFont;
+  font-weight: bold;
+}
+
 
 
 /* BODY */
@@ -78,6 +89,7 @@ body, html {
 
 /* TOPBAR */
 #topbar{
+  max-height: 20% !important;
   margin-bottom: 5% !important;
 }
 
@@ -208,4 +220,9 @@ body::-webkit-scrollbar-track {
   overflow-y: auto;
 }
 
+/* BTN */
+.v-btn {
+  font-family: customizedFont;
+  font-weight: bold;
+}
 

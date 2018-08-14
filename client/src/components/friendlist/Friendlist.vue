@@ -22,10 +22,10 @@
         <v-list id="friends-list">
           <v-list-tile
             v-for="friend in friends"
-            :key="friend.user_id"
+            :key="friend.userId"
             avatar
             @click="true"
-            :id="'friendlist-'+friend.user_id"
+            :id="'friendlist-'+friend.userId"
           >
             <!-- Hover zone -->
             <v-list-tile-content class="friend-row">
@@ -35,7 +35,7 @@
                   <i class="material-icons pr-5">
                     chat
                   </i>
-                  <p :id="'row-friendlist-'+friend.user_id">{{ friend.user_name }} {{ friend.user_firstname }}</p>
+                  <p :id="'row-friendlist-'+friend.userId">{{ friend.userName }} {{ friend.userFirstname }}</p>
                 </v-layout>
               </v-list-tile-title>
             </v-list-tile-content>
@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style>
-  .friend-row:hover {
+  /*.friend-row:hover {
     background-color: #eee !important;
-  }
+  }*/
 </style>

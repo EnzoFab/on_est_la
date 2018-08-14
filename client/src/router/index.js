@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import profile from '@/components/profile/Profile'
 import home from '@/components/home/Home'
-import friendlist from '@/components/friendlist/Friendlist'
+import searchUser from '@/components/search_user/Search_user'
 import Map from '@/components/map/Map'
 
 Vue.use(Router)
@@ -33,12 +33,19 @@ export default new Router({
     {
       path: '/test',
       name: 'test',
-      component: friendlist
+      component: searchUser
     },
+
     {
       path: '/map',
       map: 'map',
       component: Map
+    },
+
+    {
+      path: '/search-friends',
+      name: 'search-friends',
+      component: searchUser
     }
   ]
 })

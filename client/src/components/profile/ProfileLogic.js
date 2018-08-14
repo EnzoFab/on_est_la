@@ -7,8 +7,9 @@ let userModel = new User()
 
 /* ============ VARIABLES ============ */
 let isReady = false;
+let isFriendsReady = false
 let user = userModel.mutations()
-let friends = ['bella']
+let friends = []
 
 /* ============ TEMPORARY VARIABLES ============ */
 user.user_firstname = 'Fabre'
@@ -19,43 +20,34 @@ user.user_description = "Salut la compagnie ! Moi c'est Enzo mais tu peux m'appe
 /* ============ EXPORT ============ */
 export default {
   name: 'Profile',
-  created: async function () {
-    /* friends = await loadFriends()
-    console.log(friends) */
-  },
-  data() {
+    data() {
     return {
-      message: 'Welcome to Your On est là hein App',
+      data: [],
       user: user,
-      friends: loadFriends,
+      friendsList: [],
       isReady: isReady,
+      isFriendsReady: false,
       console: console
     }
   },
-  methods: {
-    change: function change() {
-      isReady = !isReady
-      console.log(isReady)
-    },
-  },
   components: {
     'friendlist': friendList
-  }
+  },
+  created: async function () {
+    await loadFriends()
+    this.friendsList = friends
+    this.isFriendsReady = true
+  },
 }
 
 /* ============ LOAD METHODS ============ */
 async function loadFriends () {
-  _userService.findAll()
+  await _userService.findAll()
     .then((res) => {
-      console.log('Logic data : ', res)
-      return res
+      friends = res
     })
 }
 
 /* ============ METHODS ============ */
-function change () {
-  isReady = !isReady
-  console.log(isReady)
-}
 
 

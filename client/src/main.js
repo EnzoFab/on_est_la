@@ -31,7 +31,8 @@ router.afterEach(route => {
 })
 
 /* eslint-disable no-new */
-new Vue({
+// eslint-disable-next-line
+let vm = new Vue({
   el: '#app',
   router,
   store,

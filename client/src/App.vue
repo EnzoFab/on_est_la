@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <topbar></topbar>
     <!--<CustomSpinner :isLoading="showSpinner" class="mb-3"/> -->
     <transition name="custom-classes-transition"
@@ -10,7 +10,7 @@
     >
       <router-view/>
     </transition>
-  </div>
+  </v-app>
 </template>
 
 <script>

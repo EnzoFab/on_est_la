@@ -18,7 +18,7 @@
             </v-card-text>
           </v-flex>
           <v-flex xs12>
-            <v-card-text class="text-justify profile-legend">
+            <v-card-text class="text-justify profile-legend bold">
               {{ user.user_description}}
             </v-card-text>
           </v-flex>
@@ -27,13 +27,11 @@
 
       <v-flex xs6>
         <v-card-text>
-          <div>
-            <v-btn small color="error">Error</v-btn>
-          </div>
+
         </v-card-text>
       </v-flex>
       <v-flex xs3>
-        <friendlist :friendlist="friends"></friendlist>
+        <friendlist v-if="isFriendsReady" :friendlist="friendsList"></friendlist>
       </v-flex>
     </v-layout>
   </v-container>

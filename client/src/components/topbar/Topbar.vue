@@ -41,7 +41,7 @@
         <v-flex md2 lg2 xl2 sm2 xs9 offset-xs3
                 offset-md0 offset-lg0 offset-xl0 offset-sm0
         >
-          <v-card flat>
+          <v-card flat to="/search-friends">
             <img src="../../assets/images/search_icon.png">
             <hr>
             <h2>Adopte Un Pote</h2>
