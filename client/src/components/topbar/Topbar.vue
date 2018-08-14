@@ -17,52 +17,52 @@
                 offset-md0 offset-lg0 offsetxl0 offsetsm0
                 text-xs-start>
           <v-card flat to="/home">
-            <img src="../../assets/images/logo.png">
+            <img src="../../assets/images/logo.png" @click="active(-1)">
           </v-card>
         </v-flex>
         <v-flex md2 lg2 xl2 sm2  xs9 offset-xs3
                 offset-md1 offset-lg1 offset-xl1 offset-sm1
         >
-          <v-card flat>
-            <img src="../../assets/images/map.png">
+          <v-card flat to="/home">
+            <img src="../../assets/images/map.png" @click="active(0)" @mouseover="show[0].show = true" @mouseleave="show[0].show = false">
             <hr>
-            <h2>J'ai Soif</h2>
+            <transition name="fade"><h2 v-if="show[0].show || show[0].active">J'ai Soif</h2></transition>
           </v-card>
         </v-flex>
         <v-flex md2 lg2 xl2 sm2  xs9 offset-xs3
                 offset-md0 offset-lg0 offset-xl0 offset-sm0
         >
-          <v-card flat>
-            <img src="../../assets/images/calendar.png">
+          <v-card flat to="/home">
+            <img src="../../assets/images/calendar.png" @click="active(1)" @mouseover="show[1].show = true" @mouseleave="show[1].show = false">
             <hr>
-            <h2>Les Bails</h2>
+            <transition name="fade"><h2 v-if="show[1].show || show[1].active">Les Bails</h2></transition>
           </v-card>
         </v-flex>
         <v-flex md2 lg2 xl2 sm2 xs9 offset-xs3
                 offset-md0 offset-lg0 offset-xl0 offset-sm0
         >
           <v-card flat to="/search-friends">
-            <img src="../../assets/images/search_icon.png">
+            <img src="../../assets/images/search_icon.png" @click="active(2)" @mouseover="show[2].show = true" @mouseleave="show[2].show = false">
             <hr>
-            <h2>Adopte Un Pote</h2>
+            <transition name="fade" :duration="200"><h2 v-if="show[2].show || show[2].active">Adopte Un Pote</h2></transition>
           </v-card>
         </v-flex>
         <v-flex md2 lg2 xl2 sm2  xs9 offset-xs3
                 offset-md0 offset-lg0 offset-xl0 offset-sm0
         >
           <v-card flat to="/my-profile">
-            <img src="../../assets/images/profile.png">
+            <img src="../../assets/images/profile.png" @click="active(3)" @mouseover="show[3].show = true" @mouseleave="show[3].show = false">
             <hr>
-            <h2>Ma Grosse Tête</h2>
+            <transition name="fade"><h2 v-if="show[3].show || show[3].active">Ma Grosse Tête</h2></transition>
           </v-card>
         </v-flex>
         <v-flex md2 lg2 xl2 sm2 xs9 offset-xs3
                 offset-md0 offset-lg0 offset-xl0 offset-sm0
         >
           <v-card flat>
-            <img src="../../assets/images/group.png">
+            <img src="../../assets/images/group.png" @click="active(2)" @mouseover="show[4].show = true" @mouseleave="show[4].show = false">
             <hr>
-            <h2>Crew</h2>
+            <transition name="fade"><h2 v-if="show[4].show || show[4].active">Crew</h2></transition>
           </v-card>
         </v-flex>
       </v-layout>
@@ -76,7 +76,8 @@ export default {
   data () {
     return {
       menuVisible: true,
-      mql: window.matchMedia('(min-width: 600px)')
+      mql: window.matchMedia('(min-width: 600px)'),
+      show: [{show: false, active: false}, {show: false, active: false}, {show: false, active: false}, {show: false, active: false}, {show: false, active: false}]
     }
   },
   methods: {
@@ -87,6 +88,12 @@ export default {
       // handle responsivity
       if (e.matches) {
         this.menuVisible = true
+      }
+    },
+    active (i) {
+      this.show = [{show: false, active: false}, {show: false, active: false}, {show: false, active: false}, {show: false, active: false}, {show: false, active: false}]
+      if (i > -1) {
+        this.show[i].active = true
       }
     }
   },
@@ -100,5 +107,12 @@ export default {
 <style>
   .top-icon {
     background-color:  blue !important;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 </style>

@@ -4,7 +4,7 @@
     <v-flex xs10>
       <!-- Headers -->
       <v-layout row justify-space-between>
-        <v-card-title primary-title>
+        <v-card-title flat primary-title>
           <h3 class="noto text-grey">HOMIES</h3>
         </v-card-title>
         <v-flex xs6>
@@ -12,13 +12,13 @@
             :onkeyup="searchFunction()"
             id="friends-search"
             prepend-icon="search"
-            label="Search"
+            label="Trouve ton gava"
             v-model="search"
           ></v-text-field>
         </v-flex>
       </v-layout>
       <!-- Body content -->
-      <v-card flat class="scroll" :height="size">
+      <v-card flat  class="scroll" :max-height="size">
         <v-list id="friends-list">
           <v-list-tile
             v-for="friend in friends"
@@ -32,8 +32,8 @@
               <v-list-tile-title class="text-uppercase" align-center>
                 <v-layout row align-center>
                   <!-- Icon -->
-                  <i class="material-icons pr-5">
-                    chat
+                  <i class="material-icons pr-5 mb-3">
+                    whatshot
                   </i>
                   <p :id="'row-friendlist-'+friend.userId">{{ friend.userName }} {{ friend.userFirstname }}</p>
                 </v-layout>
@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style>
-  /*.friend-row:hover {
-    background-color: #eee !important;
-  }*/
+  .v-list {
+    background-color: #fafafa !important;
+  }
 </style>
