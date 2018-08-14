@@ -79,16 +79,6 @@ export default {
       mql: window.matchMedia('(min-width: 600px)')
     }
   },
-  computed: {
-    toogleBtnVisibility () {
-      return document.querySelector('.hidden-sm-and-up')
-    }
-  },
-  watch: {
-    menuVisible (v) {
-      console.log(this.toogleBtnVisibility)
-    }
-  },
   methods: {
     toogleMenu () {
       this.menuVisible = !this.menuVisible
@@ -101,7 +91,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.toogleBtnVisibility)
     this.mql.addListener(this.screenTest)
   }
 
