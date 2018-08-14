@@ -1,7 +1,12 @@
 <template>
-  <v-container grid-list-md text-xs-center id="topbar">
-    <v-layout row wrap justify-center>
-      <v-flex xs2>
+  <v-container fluid grid-list-md text-xs-center id="topbar">
+    <v-layout row wrap justify-center align-center>
+      <v-flex xs1 text-xs-start>
+        <v-card flat to="/home">
+          <img src="../../assets/images/logo.png">
+        </v-card>
+      </v-flex>
+      <v-flex xs2 offset-xs1>
         <v-card flat>
           <img src="../../assets/images/map.png">
           <hr>
@@ -45,3 +50,9 @@ export default {
   name: 'Topbar'
 }
 </script>
+
+<style>
+  .top-icon {
+    background-color:  blue !important;
+  }
+</style>

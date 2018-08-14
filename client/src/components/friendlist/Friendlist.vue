@@ -4,7 +4,7 @@
       <v-card-title primary-title>
         <h3 class="noto text-grey">FRIENDS</h3>
       </v-card-title>
-      <v-card class="scroll" :height="size">
+      <v-card flat class="scroll" :height="size">
         <v-list>
           <v-list-tile
             v-for="friend in friends"
