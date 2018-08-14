@@ -13,7 +13,7 @@
             </v-card-text>
           </v-flex>
           <v-flex xs12>
-            <v-card-text class="font-italic text-grey">
+            <v-card-text class="font-italic text-grey text-lowercase">
               {{ user.user_pseudo}}
             </v-card-text>
           </v-flex>
@@ -31,27 +31,36 @@
         </v-card-text>
       </v-flex>
       <v-flex xs3>
-        <friendlist></friendlist>
+        <friendlist :friend_list="friends"></friendlist>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import {User} from '../../models/User_model'
+import {User} from '../../models/user_model/User_model'
 import friendList from '../friendlist/Friendlist'
+import _userService from '../../models/user_model/User_services'
+
 let userModel = new User()
 let user = userModel.mutations()
+let friends = []
+
 user.user_firstname = 'Fabre'
 user.user_name = 'Enzo'
 user.user_pseudo = '@enzolezozio'
 user.user_description = "Salut la compagnie ! Moi c'est Enzo mais tu peux m'appeler Zozio comme tout mes amis ! Haha. J'espère qu'on se verra vite dans les nuits Montpellieraines, bisous hihi !"
+
 export default {
   name: 'Profile',
+  created: function () {
+    console.log('Created')
+  },
   data () {
     return {
       message: 'Welcome to Your On est là hein App',
-      user: user
+      user: user,
+      friends: friends
     }
   },
   components: {

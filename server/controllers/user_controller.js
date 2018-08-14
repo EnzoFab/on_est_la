@@ -9,25 +9,21 @@ orm.setup(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD,
 });
 
 /* VARIABLE USED */
-const Type = orm.model('public.type');
+const User = orm.model('public.user');
 const sequelize = orm.sequelize();
 
 module.exports = {
     create(req, res) {
-        let new_type = {
-            type_name: req.body.typeName,
-            type_description: req.body.typeDescription
-        };
-        return Type
-            .create(new_type)
-            .then((type) => res.status(201).send(type))
+        return User
+            .create(req.body)
+            .then((user) => res.status(201).send(user))
             .catch((error) => res.status(400).send(error));
     },
 
     findAll(req, res) {
-        console.log('no me')
-        return sequelize.query('SELECT * FROM type', { model: Type })
-            .then((types) => res.status(201).send(types))
+        return User
+            .findAll()
+            .then((users) => res.status(201).send(users))
             .catch((error) => res.status(400).send(error));
     }
 };

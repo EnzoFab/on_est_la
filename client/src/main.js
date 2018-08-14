@@ -8,7 +8,10 @@ import 'vuetify/dist/vuetify.min.css'
 import { sync } from 'vuex-router-sync'
 import store from '@/store/store'
 import 'material-design-icons-iconfont/dist/fonts/material-icons.css'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
+Vue.use(VueAxios, axios)
 Vue.use(Vuetify)
 
 sync(store, router)

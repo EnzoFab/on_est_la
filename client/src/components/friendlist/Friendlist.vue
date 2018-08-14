@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import {User} from '../../models/User_model'
+import {User} from '../../models/user_model/User_model'
 import {SearchService} from '../../helpers/Search'
 const searchService = new SearchService()
 export default {
