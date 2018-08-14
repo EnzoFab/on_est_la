@@ -6,12 +6,12 @@ DARK GREY: #4a4a49
 
 @font-face {
   font-family: primetime;
-  src: url('./assets/polices/primetime.ttf');
+  src: url('../src/assets/polices/primetime.ttf');
 }
 
 @font-face {
   font-family: customizedFont;
-  src: url('./assets/polices/NotoSans-Regular.ttf');
+  src: url('../src/assets/polices/NotoSans-Regular.ttf');
 }
 
 
@@ -74,7 +74,7 @@ body, html {
 
 /* HOMEPAGE */
 #homepage {
-  background-image: url("./assets/images/home_wallpaper.jpg") !important;
+  background-image: url("../src/assets/images/home_wallpaper.jpg") !important;
   background-repeat: no-repeat;
   height: 100%;
   /* Center and scale the image nicely */
@@ -167,3 +167,5 @@ body::-webkit-scrollbar-track {
 .scroll {
   overflow-y: auto;
 }
+
+

@@ -6,15 +6,15 @@
       </div>
     </div>
   </div> -->
-    <v-slide-y-transition>
+    <v-fade-transition>
       <atom-spinner
         :animation-duration="1000"
         :size="100"
-        :color="'#EF6C00'"
+        :color="'#1A237E'"
         v-if="isLoading"
-        style="margin-left: 49%"
+        style="margin-left: auto;  margin-right: auto"
       />
-    </v-slide-y-transition>
+    </v-fade-transition>
 
 </template>
 
