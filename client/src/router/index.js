@@ -12,13 +12,15 @@ export default new Router({
     {
       path: '/',
       name: 'source',
-      component: home
+      component: home,
+      meta: {title: 'On est là hein'} // change the title of the page
     },
 
     {
       path: '/home',
       name: 'home',
-      component: home
+      component: home,
+      meta: {title: 'On est là hein'}
     },
 
     {

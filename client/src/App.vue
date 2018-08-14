@@ -1,15 +1,15 @@
 <template>
   <div>
     <topbar></topbar>
-    <!--<CustomSpinner :isLoading="showSpinner" class="mb-"/>
+    <!--<CustomSpinner :isLoading="showSpinner" class="mb-3"/> -->
     <transition name="custom-classes-transition"
                 enter-active-class="animated fadeIn"
                 leave-active-class="animated bounceOutDown"
                 mode="out-in"
                 :duration="500"
-    >-->
+    >
       <router-view/>
-    <!--</transition>-->
+    </transition>
   </div>
 </template>
 
@@ -31,5 +31,42 @@ export default {
 }
 </script>
 
-<style src="./Style.css">
+<style>
+  .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @import '~vuetify/src/stylus/main.styl';
 </style>
