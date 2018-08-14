@@ -17,6 +17,5 @@ export class SearchService {
         }
       }
     }
-    console.log(p)
   }
 }

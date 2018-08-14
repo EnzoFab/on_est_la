@@ -50,24 +50,29 @@
 </template>
 
 <script>
-import {User} from '../../models/user_model/User_model'
+// import {User} from '../../models/user_model/User_model'
 import {SearchService} from '../../helpers/Search'
 const searchService = new SearchService()
+
 export default {
   name: 'Friendlist',
+  props: ['friendlist'],
   data () {
     return {
       search: '',
-      friends: fakeFriends(10),
+      friends: this.friendlist,
       size: 300,
       searchFunction: function () {
         searchService.search()
       }
     }
+  },
+  created: function () {
+    console.log('hey : ', this.friendlist)
   }
 }
 
-function fakeFriends (nb) {
+/* function fakeFriends (nb) {
   let f = []
   for (let i = 0; i < nb; i++) {
     let ff = new User()
@@ -78,7 +83,7 @@ function fakeFriends (nb) {
     f.push(friend)
   }
   return f
-}
+} */
 </script>
 
 <style>

@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import {Model} from 'vue-mc'
 
 /**

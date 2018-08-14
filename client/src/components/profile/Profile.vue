@@ -1,6 +1,6 @@
 <template>
   <v-container fluid grid-list-sm text-xs-center>
-    <v-layout row wrap align-center>
+    <v-layout row wrap align-center :v-if="isReady">
       <!-- Profile picture & Names -->
       <v-flex xs3>
         <v-layout row wrap >
@@ -27,47 +27,19 @@
 
       <v-flex xs6>
         <v-card-text>
-          1
+          <div>
+            <v-btn small color="error">Error</v-btn>
+          </div>
         </v-card-text>
       </v-flex>
       <v-flex xs3>
-        <friendlist :friend_list="friends"></friendlist>
+        <friendlist :friendlist="friends"></friendlist>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
-<script>
-import {User} from '../../models/user_model/User_model'
-import friendList from '../friendlist/Friendlist'
-// import _userService from '../../models/user_model/User_services'
-
-let userModel = new User()
-let user = userModel.mutations()
-let friends = []
-
-user.user_firstname = 'Fabre'
-user.user_name = 'Enzo'
-user.user_pseudo = '@enzolezozio'
-user.user_description = "Salut la compagnie ! Moi c'est Enzo mais tu peux m'appeler Zozio comme tout mes amis ! Haha. J'espère qu'on se verra vite dans les nuits Montpellieraines, bisous hihi !"
-
-export default {
-  name: 'Profile',
-  created: function () {
-    console.log('Created')
-  },
-  data () {
-    return {
-      message: 'Welcome to Your On est là hein App',
-      user: user,
-      friends: friends
-    }
-  },
-  components: {
-    'friendlist': friendList
-  }
-}
-</script>
+<script src="./ProfileLogic.js"></script>
 
 <style scoped>
   .profile-legend {
