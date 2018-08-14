@@ -30,8 +30,8 @@
           1
         </v-card-text>
       </v-flex>
-        <friendlist></friendlist>
       <v-flex xs3>
+        <friendlist></friendlist>
       </v-flex>
     </v-layout>
   </v-container>
