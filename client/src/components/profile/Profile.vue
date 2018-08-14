@@ -40,7 +40,7 @@
 <script>
 import {User} from '../../models/user_model/User_model'
 import friendList from '../friendlist/Friendlist'
-import _userService from '../../models/user_model/User_services'
+// import _userService from '../../models/user_model/User_services'
 
 let userModel = new User()
 let user = userModel.mutations()
