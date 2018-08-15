@@ -16,7 +16,7 @@ export default {
     return {
       demoEvents: [{
         date: '2018/11/12', // Required
-        title: 'Foo' // Required
+        title: 'Fo' // Required
       }, {
         date: '2018/12/16',
         title: 'Bar',
