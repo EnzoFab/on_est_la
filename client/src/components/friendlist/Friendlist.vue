@@ -24,7 +24,7 @@
             v-for="friend in friends"
             :key="friend.userId"
             avatar
-            @click="true"
+            @click="clickedFriend(friend)"
             :id="'friendlist-'+friend.userId"
           >
             <v-list-tile-content class="friend-row">
@@ -83,6 +83,11 @@ export default {
   },
   created: function () {
     console.log('hey : ', this.friendlist)
+  },
+  methods: {
+    clickedFriend: function (friend) {
+      this.$emit('clickedFriend', friend)
+    }
   },
   watch: {
     friendlist: function update (value, oldValue) {

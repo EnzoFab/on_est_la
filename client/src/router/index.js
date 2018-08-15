@@ -27,7 +27,13 @@ export default new Router({
 
     {
       path: '/my-profile',
-      name: 'profile',
+      name: 'my-profile',
+      component: profile
+    },
+
+    {
+      path: '/cc/:pseudo',
+      name: 'user-profile',
       component: profile
     },
 

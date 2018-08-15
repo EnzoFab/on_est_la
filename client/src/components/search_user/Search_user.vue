@@ -2,7 +2,11 @@
   <v-container v-model="isReady">
     <v-layout row wrap justify-center>
       <v-flex xs4>
-        <autocomplete @input="loadUserSearch" :isAsync="true" :items="items"></autocomplete>
+        <autocomplete
+          @clickedFriend="viewFriendProfile"
+          @input="loadUserSearch"
+          :isAsync="true"
+          :items="items"></autocomplete>
       </v-flex>
     </v-layout>
   </v-container>
@@ -12,6 +16,7 @@
 /* eslint-disable */
 import Autocomplete from "../autocomplete/Autocomplete";
 import _userService from '../../models/user_model/User_services'
+
 
 let items = []
 
@@ -32,8 +37,10 @@ export default {
     },
     loadUserSearch: async function (value) {
       await findAllFromSearchBar(value)
-      console.log('items : ', items)
       this.items = items
+    },
+    viewFriendProfile: function (value) {
+      this.$router.push({ name: 'user-profile', params: { pseudo: value.userPseudo.toString().toLowerCase() } })
     }
   }
 }

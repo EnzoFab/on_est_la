@@ -222,6 +222,15 @@ body::-webkit-scrollbar-track {
   overflow-y: auto;
 }
 
+
+
+/* HOVER */
+.hover-success:hover {
+  background-color: #4caf50 !important;
+}
+
+
+
 /* BTN */
 .v-btn {
   font-family: customizedFont;

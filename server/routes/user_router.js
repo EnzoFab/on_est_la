@@ -5,6 +5,7 @@ const userController = require('../controllers').user;
 
 router.get('/find_all', userController.findAll);
 router.get('/find_one/:userId', userController.findOne);
+router.get('/find_one_from_pseudo/:userPseudo', userController.findOneFromPseudo);
 
 router.post('/create', userController.create);
 router.post('/find_all_from_search_bar', userController.findFromSearchBar);

@@ -10,16 +10,19 @@
           @keydown.up="onArrowUp"
           @keydown.enter="onEnter"
     ></v-text-field>
-    <friendlist v-show="isOpen" :friendlist="results" :isSearchable="false" :sizeInput="400"></friendlist>
+    <spinner v-show="isLoading" :isLoading="isLoading" class="mb-3"/>
+    <friendlist @clickedFriend="clickedFriend" v-show="isOpen && !isLoading" :friendlist="results" :isSearchable="false" :sizeInput="400"></friendlist>
   </div>
 </template>
 
 <script>
+import CustomSpinner from '../Spinner'
 import Friendlist from '../friendlist/Friendlist'
 
 export default {
   name: 'Autocomplete',
   components: {
+    spinner: CustomSpinner,
     friendlist: Friendlist
   },
   props: {
@@ -79,6 +82,9 @@ export default {
     setResult: function setResult (result) {
       this.search = result
       this.isOpen = false
+    },
+    clickedFriend: function (friend) {
+      this.$emit('clickedFriend', friend)
     }
   },
   watch: {

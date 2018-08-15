@@ -4,22 +4,23 @@
       <!-- Profile picture & Names -->
       <v-flex text-xs-center xs3 class="border-right">
         <v-layout row wrap >
+          <v-flex xs12 class="primetime text-darkgrey">
+            <v-btn @mouseover="changeContentFollowBtn(true)"
+                   @mouseleave="changeContentFollowBtn(false)"
+                   depressed large class="mb-4 hover-success" color="error">{{ msgFollow }}</v-btn>
+          </v-flex>
           <v-flex xs12 class="thumbnail">
             <img class="img-circle img-profile" src="../../assets/images/enzo.jpg">
           </v-flex>
-          <v-flex xs12>
-            <v-card-text class="primetime text-darkgrey">
-              <h2>{{user.user_name}} {{ user.user_firstname}}</h2>
-            </v-card-text>
+          <v-flex xs12 class="primetime text-darkgrey">
+              <h2>{{user.userName}} {{ user.userFirstname}}</h2>
           </v-flex>
-          <v-flex xs12>
-            <v-card-text class="font-italic text-grey text-lowercase">
-              {{ user.user_pseudo}}
-            </v-card-text>
+          <v-flex xs12 class="font-italic text-grey text-lowercase">
+              {{ user.userPseudo}}
           </v-flex>
           <v-flex xs12>
             <v-card-text class="text-justify profile-legend bold">
-              {{ user.user_description}}
+              {{ user.userDescription}}
             </v-card-text>
           </v-flex>
         </v-layout>

@@ -26,5 +26,17 @@ export default {
           reject(error)
         })
     })
+  },
+
+  findOneFromPseudo: function (userPseudo) {
+    return new Promise((resolve, reject) => {
+      let uri = 'http://localhost:1330/api/user/find_one_from_pseudo/' + userPseudo
+      axios.get(uri)
+        .then(response => {
+          resolve(response.data)
+        }, error => {
+          reject(error)
+        })
+    })
   }
 }

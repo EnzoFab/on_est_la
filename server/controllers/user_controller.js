@@ -132,5 +132,15 @@ module.exports = {
             })
             .then((users) => res.status(201).send({data: users}))
             .catch((error) => res.status(400).send(error));
+    },
+    findOneFromPseudo(req, res) {
+        return User
+            .findAll({
+                where: {
+                    userPseudo: req.params.userPseudo
+                }
+            })
+                .then((user) => res.status(201).send(user))
+                .catch((error) => res.status(400).send(error))
     }
 };
