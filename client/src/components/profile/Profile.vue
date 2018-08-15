@@ -2,7 +2,7 @@
   <v-container fluid grid-list-sm>
     <v-layout row wrap :v-if="isReady">
       <!-- Profile picture & Names -->
-      <v-flex text-xs-center xs3>
+      <v-flex text-xs-center xs3 class="border-right">
         <v-layout row wrap >
           <v-flex xs12 class="thumbnail">
             <img class="img-circle img-profile" src="../../assets/images/enzo.jpg">
@@ -26,7 +26,7 @@
       </v-flex>
 
       <!-- Stats -->
-      <v-flex xs6 text-xs-left>
+      <v-flex class="pl-4" xs6 text-xs-left>
         <v-card-text v-model="friendsList">
           <!-- Foolowers -->
           <v-tooltip left>
@@ -101,8 +101,8 @@
       </v-flex>
 
       <!-- Friend list -->
-      <v-flex xs3>
-        <friendlist v-if="isFriendsReady" :friendlist="friendsList"></friendlist>
+      <v-flex class="border-left" xs3>
+        <friendlist v-if="isFriendsReady" :friendlist="friendsList" :sizeInput="300"></friendlist>
       </v-flex>
     </v-layout>
   </v-container>

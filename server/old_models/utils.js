@@ -1,6 +1,6 @@
 /**
- * Utility methods to modify and customize auto generated models without affecting further auto generations.
- * Require this module from model customization scripts located in path/to/model/definitions-files-custom directory.
+ * Utility methods to modify and customize auto generated old_models without affecting further auto generations.
+ * Require this module from models customization scripts located in path/to/models/definitions-files-custom directory.
  * @class
  * @author Özüm Eldoğan
  */

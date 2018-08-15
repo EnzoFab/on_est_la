@@ -1,0 +1,14 @@
+/* LOCAL DATABASE SETTINGS */
+
+In order to use the database in Localhost, please set your database informations into a .env file inside the server folder.
+Here is an example :
+
+    NODE_ENV=
+    DB_NAME=onestla
+    DB_USERNAME=postgres
+    DB_PASSWORD=postgres
+    DB_HOSTNAME=localhost
+    DB_PORT=5432
+    PORT=1330
+    SECRET=hein
+    DIALECT=postgres

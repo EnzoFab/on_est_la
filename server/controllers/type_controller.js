@@ -14,12 +14,8 @@ const sequelize = orm.sequelize();
 
 module.exports = {
     create(req, res) {
-        let new_type = {
-            type_name: req.body.typeName,
-            type_description: req.body.typeDescription
-        };
         return Type
-            .create(new_type)
+            .create(req.body)
             .then((type) => res.status(201).send(type))
             .catch((error) => res.status(400).send(error));
     },

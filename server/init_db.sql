@@ -5,7 +5,7 @@
 
 
 ------------------------------------------------------------
--- Table: User
+-- Drop
 ------------------------------------------------------------
 DROP TABLE IF EXISTS public.Participate CASCADE;
 DROP TABLE IF EXISTS public.Own CASCADE;
@@ -32,7 +32,7 @@ CREATE TABLE public.User(
 	user_pseudo             VARCHAR (50) NOT NULL ,
 	user_description        VARCHAR (200)  ,
 	user_visibility         VARCHAR (20) NOT NULL ,
-	user_picture            BYTEA    ,
+	user_picture            VARCHAR (250)   ,
 	CONSTRAINT User_PK PRIMARY KEY (user_id)
 )WITHOUT OIDS;
 
@@ -71,7 +71,7 @@ CREATE TABLE public.group(
 	group_id              SERIAL NOT NULL ,
 	group_name            VARCHAR (25) NOT NULL ,
 	group_description     VARCHAR (250) NOT NULL ,
-	group_picture         BYTEA  NOT NULL ,
+	group_picture         VARCHAR (250) NOT NULL ,
 	group_date_creation   DATE  NOT NULL  ,
 	CONSTRAINT group_PK PRIMARY KEY (group_id)
 )WITHOUT OIDS;
@@ -101,7 +101,8 @@ CREATE TABLE public.Frequent(
 ------------------------------------------------------------
 CREATE TABLE public.Is_Friend(
 	user_id               INT  NOT NULL ,
-	user_id_Have_Friend   INT  NOT NULL  ,
+	user_id_Have_Friend   INT  NOT NULL ,
+	isfriend_state        VARCHAR (50) NOT NULL  ,
 	CONSTRAINT Is_Friend_PK PRIMARY KEY (user_id,user_id_Have_Friend)
 
 	,CONSTRAINT Is_Friend_User_FK FOREIGN KEY (user_id) REFERENCES public.User(user_id)
@@ -149,3 +150,14 @@ CREATE TABLE public.Participate(
 
 
 
+
+------------------------------------------------------------
+-- Insert
+------------------------------------------------------------
+
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pernelle', 'Léo', '2018-01-01', 'macouille@gmail.com', '0610071008', 'Pernichtre', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Terrien', 'Jaimse', '2018-01-01', 'macouille@gmail.com', '0610071008', 'lejameuxestextra', 'Benjamin Pavard t es là t es mon sauce', 'public', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Fabre', 'Enzo', '2018-01-01', 'macouille@gmail.com', '0610071008', 'zozolezozio', 'Benjamin Pavard t es là t es mon sauce', 'public', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pluche', 'Cyril', '2018-01-01', 'macouille@gmail.com', '0610071008', 'pluchezerrr', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Thauvin', 'Florian', '2018-02-02', 'macouille@gmail.com', '0610568902', 'flothauv', 'On est là on a arnaqué la coupe du monde mdr', 'public', '\x6e756c6c');
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pluche', 'Eric', '2018-01-01', 'Pluche@gmail.com', '0303030303', 'pluchito', 'salut les copains', 'private', NULL);

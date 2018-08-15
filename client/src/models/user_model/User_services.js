@@ -6,7 +6,6 @@ export default {
       let uri = 'http://localhost:1330/api/user/find_all'
       axios.get(uri)
         .then(response => {
-          console.log('Server data : ', response.data)
           resolve(response.data)
         }, error => {
           reject(error)
@@ -14,7 +13,18 @@ export default {
     })
   },
 
-  test: function test () {
-    console.log('bouuh')
+  findAllFromSearchBar: function findAllFromSearchBar (search) {
+    return new Promise((resolve, reject) => {
+      let uri = 'http://localhost:1330/api/user/find_all_from_search_bar'
+      let body = {
+        search: search
+      }
+      axios.post(uri, body)
+        .then(response => {
+          resolve(response.data)
+        }, error => {
+          reject(error)
+        })
+    })
   }
 }

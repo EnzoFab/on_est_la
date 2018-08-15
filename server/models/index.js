@@ -23,7 +23,7 @@ var Sequelize           = require('sequelize'),
 /**
  * Requires given npm module file and defines sequelize module according to exported object from that module.
  * @private
- * @param {string} file - Location of the npm module file which contains models definition.
+ * @param {string} file - Location of the npm module file which contains model definition.
  */
 function defineModel(file) {
     var object      = require(file),
@@ -44,9 +44,9 @@ function defineModel(file) {
 /**
  * Define 'hasMany' and 'belongsTo' relations.
  * @private
- * @param {string} modelName - Name of the models
+ * @param {string} modelName - Name of the model
  * @param {string} relationType - Type of the relation 'hasMany' or 'belongsTo'
- * @param {string} targetModelName - Name of the target models which this relation related to.
+ * @param {string} targetModelName - Name of the target model which this relation related to.
  * @param {Object} options - Sequelize options of relation.
  */
 function defineRelation(modelName, relationType, targetModelName, options) {
@@ -65,7 +65,7 @@ function defineRelation(modelName, relationType, targetModelName, options) {
  * @private
  * @returns {Array}
  * @example
- * var list = getFileList('../models'); // ['./definition-files-custom/public_cart.js', './definition-files/public_account.js]
+ * var list = getFileList('../model'); // ['./definition-files-custom/public_cart.js', './definition-files/public_account.js]
  */
 function getFileList() {
     var i, file, isOverridden = {}, files = [], customFiles, baseFiles;
@@ -113,7 +113,7 @@ function processAllRelations(callback) {
 
 
 /**
- * Initializes old_models.
+ * Initializes models.
  * @private
  */
 function init() {
@@ -135,14 +135,14 @@ function init() {
 module.exports = {};
 
 /**
- * Sets up sequelize old_models based on models files in given directory for given database details.
+ * Sets up sequelize models based on model files in given directory for given database details.
  * @param {string} database - Name of the database to connect
  * @param {string} username - Username of the database
  * @param {string} password - Password of the database
  * @param {Object} obj - Object to pass new Sequelize() function. See Sequelize for details.
  * @example
- * var orm = require('../models');
- * orm.setup('path/to/models', 'database', 'user', 'password', {
+ * var orm = require('../model');
+ * orm.setup('path/to/model', 'database', 'user', 'password', {
      *     host: '127.0.0.1',
      *     logging: false,
      *     native: true
@@ -164,9 +164,9 @@ module.exports.setup = function (database, username, password, obj) {
 };
 
 /**
- * Returns requested models with given name.
+ * Returns requested model with given name.
  * @param {string} name - Model name
- * @returns {object} - Sequelize models
+ * @returns {object} - Sequelize model
  */
 module.exports.model = function (name) {
     return models[name];

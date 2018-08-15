@@ -1,9 +1,9 @@
 <template>
-  <v-layout row justify-end align-center>
+  <v-layout row justify-center align-center>
     <!-- Friend list card -->
     <v-flex xs10>
       <!-- Headers -->
-      <v-layout row justify-space-between>
+      <v-layout row justify-space-between v-if="isSearchable">
         <v-card-title flat primary-title>
           <h3 class="noto text-grey">HOMIES</h3>
         </v-card-title>
@@ -18,8 +18,8 @@
         </v-flex>
       </v-layout>
       <!-- Body content -->
-      <v-card flat  class="scroll" :max-height="size">
-        <v-list id="friends-list">
+      <v-card flat class="scroll" :height="size">
+        <v-list id="friends-list" two-line>
           <v-list-tile
             v-for="friend in friends"
             :key="friend.userId"
@@ -27,7 +27,6 @@
             @click="true"
             :id="'friendlist-'+friend.userId"
           >
-            <!-- Hover zone -->
             <v-list-tile-content class="friend-row">
               <v-list-tile-title class="text-uppercase" align-center>
                 <v-layout row align-center>
@@ -38,6 +37,9 @@
                   <p :id="'row-friendlist-'+friend.userId">{{ friend.userName }} {{ friend.userFirstname }}</p>
                 </v-layout>
               </v-list-tile-title>
+              <v-list-tile-sub-title class="font-italic text-grey">
+                @{{ friend.userPseudo }}
+              </v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-avatar>
               <img src='../../assets/images/enzo.jpg'>
@@ -56,12 +58,24 @@ const searchService = new SearchService()
 
 export default {
   name: 'Friendlist',
-  props: ['friendlist'],
+  props: {
+    friendlist: {},
+    isSearchable: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    sizeInput: {
+      type: Number,
+      required: false,
+      default: 300
+    }
+  },
   data () {
     return {
       search: '',
       friends: this.friendlist,
-      size: 300,
+      size: this.sizeInput,
       searchFunction: function () {
         searchService.search()
       }
@@ -69,6 +83,11 @@ export default {
   },
   created: function () {
     console.log('hey : ', this.friendlist)
+  },
+  watch: {
+    friendlist: function update (value, oldValue) {
+      this.friends = value
+    }
   }
 }
 
@@ -87,7 +106,7 @@ export default {
 </script>
 
 <style>
-  .v-list {
+  .v-list, .v-card {
     background-color: #fafafa !important;
   }
 </style>

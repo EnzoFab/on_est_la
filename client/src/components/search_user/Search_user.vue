@@ -1,33 +1,56 @@
 <template>
-    <v-container v-model="isReady">
-      {{ isReady }}
-        <v-btn color="info" v-on:click="test">Change</v-btn>
-      <v-flex v-if="isReady">
-        <v-btn color="success">Success</v-btn>
+  <v-container v-model="isReady">
+    <v-layout row wrap justify-center>
+      <v-flex xs4>
+        <autocomplete @input="loadUserSearch" :isAsync="true" :items="items"></autocomplete>
       </v-flex>
-    </v-container>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 /* eslint-disable */
-const isReady = false
+import Autocomplete from "../autocomplete/Autocomplete";
+import _userService from '../../models/user_model/User_services'
+
+let items = []
 
 export default {
   name: 'Search_user',
+  components: {
+    Autocomplete
+  },
   data () {
     return {
-      isReady: true
+      isReady: true,
+      items: []
     }
   },
   methods: {
     test: function () {
       this.isReady = false
+    },
+    loadUserSearch: async function (value) {
+      await findAllFromSearchBar(value)
+      console.log('items : ', items)
+      this.items = items
     }
   }
 }
 
-function test () {
-  this.isReady = false
+async function findAllFromSearchBar (value) {
+  if (value !== null && value !== '') {
+    await _userService.findAllFromSearchBar(value)
+      .then((res) => {
+        items = res.data
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  } else {
+    items = []
+  }
+
 }
 </script>
 

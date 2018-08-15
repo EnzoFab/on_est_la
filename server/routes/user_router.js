@@ -3,7 +3,10 @@ const router = express.Router();
 
 const userController = require('../controllers').user;
 
-router.post('/create', userController.create);
 router.get('/find_all', userController.findAll);
+router.get('/find_one/:userId', userController.findOne);
+
+router.post('/create', userController.create);
+router.post('/find_all_from_search_bar', userController.findFromSearchBar);
 
 module.exports = router;
