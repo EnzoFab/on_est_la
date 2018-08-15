@@ -32,7 +32,7 @@
         <v-flex md2 lg2 xl2 sm2  xs9 offset-xs3
                 offset-md0 offset-lg0 offset-xl0 offset-sm0
         >
-          <v-card flat to="/home">
+          <v-card flat to="/calendar">
             <img src="../../assets/images/calendar.png" @click="active(1)" @mouseover="show[1].show = true" @mouseleave="show[1].show = false">
             <hr>
             <transition name="fade"><h2 v-if="show[1].show || show[1].active">Les Bails</h2></transition>

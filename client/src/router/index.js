@@ -4,6 +4,7 @@ import profile from '@/components/profile/Profile'
 import home from '@/components/home/Home'
 import searchUser from '@/components/search_user/Search_user'
 import Map from '@/components/map/Map'
+import Calendar from '@/components/calendar/Calendar'
 
 Vue.use(Router)
 
@@ -46,6 +47,12 @@ export default new Router({
       path: '/search-friends',
       name: 'search-friends',
       component: searchUser
+    },
+
+    {
+      path: '/calendar',
+      name: 'calendar',
+      component: Calendar
     }
   ]
 })
