@@ -65,6 +65,11 @@ export default {
       required: false,
       default: true
     },
+    isLink: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     sizeInput: {
       type: Number,
       required: false,
@@ -82,15 +87,19 @@ export default {
     }
   },
   created: function () {
-    console.log('hey : ', this.friendlist)
+    console.log('created', this.friends)
   },
   methods: {
     clickedFriend: function (friend) {
       this.$emit('clickedFriend', friend)
+      if (this.isLink) {
+        this.$router.push({ name: 'user-profile', params: { pseudo: friend.userPseudo.toString().toLowerCase() } })
+      }
     }
   },
   watch: {
     friendlist: function update (value, oldValue) {
+      console.log('change : ', value)
       this.friends = value
     }
   }

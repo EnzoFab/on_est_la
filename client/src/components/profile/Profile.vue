@@ -1,13 +1,27 @@
 <template>
   <v-container fluid grid-list-sm>
-    <v-layout row wrap :v-if="isReady">
+    <spinner v-show="!isReady" :isLoading="!isReady" class="mb-3"/>
+    <v-layout row wrap v-if="isReady">
       <!-- Profile picture & Names -->
       <v-flex text-xs-center xs3 class="border-right">
         <v-layout row wrap >
           <v-flex xs12 class="primetime text-darkgrey">
-            <v-btn @mouseover="changeContentFollowBtn(true)"
-                   @mouseleave="changeContentFollowBtn(false)"
-                   depressed large class="mb-4 hover-success" color="error">{{ msgFollow }}</v-btn>
+            <!-- Follow button -->
+            <v-btn v-if="isFriend == 'not-friend'"
+                   @mouseover="changeContentFollowBtn(true, false)"
+                   @mouseleave="changeContentFollowBtn(false, false)"
+                   @click="becomeFriend"
+                   depressed large class="mb-4 hover-success" color="error"
+            >
+              {{ msgFollow }}
+            </v-btn>
+            <v-btn v-else
+                   @mouseover="changeContentFollowBtn(true, false)"
+                   @mouseleave="changeContentFollowBtn(false, false)"
+                   depressed large class="mb-4 hover-success" color="success"
+            >
+              {{ msgFollow }}
+            </v-btn>
           </v-flex>
           <v-flex xs12 class="thumbnail">
             <img class="img-circle img-profile" src="../../assets/images/enzo.jpg">
@@ -16,7 +30,7 @@
               <h2>{{user.userName}} {{ user.userFirstname}}</h2>
           </v-flex>
           <v-flex xs12 class="font-italic text-grey text-lowercase">
-              {{ user.userPseudo}}
+              @{{ user.userPseudo}}
           </v-flex>
           <v-flex xs12>
             <v-card-text class="text-justify profile-legend bold">
@@ -103,7 +117,11 @@
 
       <!-- Friend list -->
       <v-flex class="border-left" xs3>
-        <friendlist v-if="isFriendsReady" :friendlist="friendsList" :sizeInput="300"></friendlist>
+        <friendlist v-if="isFriendsReady"
+                    :friendlist="friendsList"
+                    :sizeInput="300"
+                    :isLink="true"
+        ></friendlist>
       </v-flex>
     </v-layout>
   </v-container>

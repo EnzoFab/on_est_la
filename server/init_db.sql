@@ -155,7 +155,7 @@ CREATE TABLE public.Participate(
 -- Insert
 ------------------------------------------------------------
 
-INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pernelle', 'Léo', '2018-01-01', 'macouille@gmail.com', '0610071008', 'Pernichtre', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('pernelle', 'Léo', '2018-01-01', 'macouille@gmail.com', '0610071008', 'Pernichtre', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);
 INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Terrien', 'Jaimse', '2018-01-01', 'macouille@gmail.com', '0610071008', 'lejameuxestextra', 'Benjamin Pavard t es là t es mon sauce', 'public', NULL);
 INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Fabre', 'Enzo', '2018-01-01', 'macouille@gmail.com', '0610071008', 'zozolezozio', 'Benjamin Pavard t es là t es mon sauce', 'public', NULL);
 INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pluche', 'Cyril', '2018-01-01', 'macouille@gmail.com', '0610071008', 'pluchezerrr', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);

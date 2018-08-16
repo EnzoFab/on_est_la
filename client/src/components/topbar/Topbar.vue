@@ -50,8 +50,12 @@
         <v-flex md2 lg2 xl2 sm2  xs9 offset-xs3
                 offset-md0 offset-lg0 offset-xl0 offset-sm0
         >
-          <v-card flat to="/my-profile">
-            <img src="../../assets/images/profile.png" @click="active(3)" @mouseover="show[3].show = true" @mouseleave="show[3].show = false">
+          <v-card flat>
+            <!-- active(3) -->
+            <img src="../../assets/images/profile.png"
+                 @click="profileHandler"
+                 @mouseover="show[3].show = true"
+                 @mouseleave="show[3].show = false">
             <hr>
             <transition name="fade"><h2 v-if="show[3].show || show[3].active">Ma Grosse Tête</h2></transition>
           </v-card>
@@ -81,6 +85,10 @@ export default {
     }
   },
   methods: {
+    profileHandler () {
+      this.active(3)
+      this.goToMyProfile()
+    },
     toogleMenu () {
       this.menuVisible = !this.menuVisible
     },
@@ -95,6 +103,10 @@ export default {
       if (i > -1) {
         this.show[i].active = true
       }
+    },
+    goToMyProfile () {
+      let pseudo = 'pluchezerrr' // Need to be taken in the local storage
+      this.$router.push({ name: 'my-profile', params: { pseudo: pseudo } })
     }
   },
   mounted () {
