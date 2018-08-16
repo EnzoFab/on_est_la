@@ -14,7 +14,12 @@
     <v-flex xs2>
       <v-btn @click="addMarker" block flat color="blue">Ajouter</v-btn>
     </v-flex>
-    <v-flex xs12 px-2>
+    <!-- PLACE LIST -->
+    <v-flex xs4>
+
+    </v-flex>
+    <!-- MAP -->
+    <v-flex xs12>
       <gmap-map
         :center="center"
         :zoom="12"
@@ -32,6 +37,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Map',
   data () {
@@ -61,7 +67,8 @@ export default {
           lng: this.currentPlace.geometry.location.lng()
         }
         this.markers.push({
-          position: marker /* icon: 'link' */ })
+          position: marker /* icon: 'link' */
+        })
         this.places.push(this.currentPlace)
         this.center = marker
         this.currentPlace = null

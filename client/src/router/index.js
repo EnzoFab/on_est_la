@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Profile from '@/components/profile/Profile'
 import Home from '@/components/home/Home'
 import SearchUser from '@/components/search_user/Search_user'
-import Map from '@/components/map/Map'
+import MapPage from '@/components/map/MapPage'
 import Calendar from '@/components/calendar/Calendar'
 import AdminHome from '@/components/admin/AdminHome'
 import PlaceManagement from '@/components/admin/placeManagement/PlaceManagement'
@@ -40,9 +40,10 @@ export default new Router({
     },
 
     {
-      path: '/map',
+      path: '/soif',
+      name: 'MapPage',
       map: 'map',
-      component: Map
+      component: MapPage
     },
 
     {

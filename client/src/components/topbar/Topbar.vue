@@ -23,7 +23,7 @@
         <v-flex md2 lg2 xl2 sm2  xs9 offset-xs3
                 offset-md1 offset-lg1 offset-xl1 offset-sm1
         >
-          <v-card flat to="/home">
+          <v-card flat :to="{ name: 'MapPage'}">
             <img src="../../assets/images/map.png" @click="active(0)" @mouseover="show[0].show = true" @mouseleave="show[0].show = false">
             <hr>
             <transition name="fade"><h2 v-if="show[0].show || show[0].active">J'ai Soif</h2></transition>
@@ -50,7 +50,7 @@
         <v-flex md2 lg2 xl2 sm2  xs9 offset-xs3
                 offset-md0 offset-lg0 offset-xl0 offset-sm0
         >
-          <v-card flat>
+          <v-card flat href>
             <!-- active(3) -->
             <img src="../../assets/images/profile.png"
                  @click="profileHandler"
