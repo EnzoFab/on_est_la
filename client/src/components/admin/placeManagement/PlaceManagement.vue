@@ -60,7 +60,8 @@
       hide-actions
       class="elevation-0"
     >
-      <template slot="items" slot-scope="props">
+      <spinner v-show="isLoading" :isLoading="isLoading" class="mb-3"/>
+      <template v-show="isLoading" slot="items" slot-scope="props">
         <td class="text-xs-left">{{ props.item.placeName }}</td>
         <td class="text-xs-left">{{ blockFieldSize(props.item.placeDescription, 50) }}</td>
         <td class="text-xs-left">{{ blockFieldSize(props.item.placeAdressNum + ' ' + props.item.placeAdressStreet + ' ' + props.item.placeAdressCity, 50) }}</td>
@@ -92,12 +93,17 @@
 <script>
 import _service from '../../../models/index'
 import _helper from '../../../helpers'
+import CustomSpinner from '../../Spinner'
 
 export default {
   name: 'PlaceManagement',
+  components: {
+    spinner: CustomSpinner
+  },
   data () {
     return {
       dialog: false,
+      isLoading: true,
       headers: [
         {
           text: 'Place',
@@ -145,9 +151,11 @@ export default {
       this.dialog = true
     },
 
-    deleteItem (item) {
+    async deleteItem (item) {
+      this.isLoading = true
       const index = this.places.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.places.splice(index, 1)
+      confirm('Are you sure you want to delete this item?') && await this.deletePlace(item.placeId) && this.places.splice(index, 1)
+      this.isLoading = false
     },
 
     close () {
@@ -172,9 +180,11 @@ export default {
       this.close()
     },
     async loadPlaces () {
+      this.isLoading = true
       await _service.place.findAll()
         .then((res) => {
           this.places = res
+          this.isLoading = false
         })
         .catch(e => {
           console.log('Unable to load places')
@@ -186,14 +196,26 @@ export default {
           // nothing
         })
         .catch(e => {
-          console.log('Unable to create place')
+          console.log('Unable to create place. ', e)
+        })
+    },
+    async deletePlace (placeId) {
+      this.isLoading = true
+      await _service.place.delete(placeId)
+        .then((res) => {
+          this.isLoading = false
+        })
+        .catch(e => {
+          console.log('Unable to delete place. ', e)
         })
     }
   },
 
   created: async function () {
+    this.isLoading = true
     Object.assign(this.editedItem, _service.PlaceModel)
     await this.loadPlaces()
+    this.isLoading = false
   }
 }
 </script>

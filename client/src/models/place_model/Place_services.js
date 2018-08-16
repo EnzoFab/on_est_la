@@ -2,7 +2,6 @@ import axios from 'axios'
 
 export default {
   create: function create (body) {
-    console.log('body before server : ', body)
     return new Promise((resolve, reject) => {
       let uri = 'http://localhost:1330/api/place/create'
       axios.post(uri, body)
@@ -18,6 +17,18 @@ export default {
     return new Promise((resolve, reject) => {
       let uri = 'http://localhost:1330/api/place/find_all'
       axios.get(uri)
+        .then(response => {
+          resolve(response.data)
+        }, error => {
+          reject(error)
+        })
+    })
+  },
+
+  delete: function create (placeId) {
+    return new Promise((resolve, reject) => {
+      let uri = 'http://localhost:1330/api/place/delete/' + placeId
+      axios.post(uri)
         .then(response => {
           resolve(response.data)
         }, error => {

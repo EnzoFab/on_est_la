@@ -26,5 +26,17 @@ module.exports = {
             .findAll()
             .then((places) => res.status(201).send(places))
             .catch((error) => res.status(400).send(error));
+    },
+
+    delete(req, res) {
+        console.log(req.params.placeId)
+        return Place
+            .destroy({
+                where: {
+                    placeId: req.params.placeId
+                }
+            })
+            .then((places) => res.status(201).send(places))
+            .catch((error) => res.status(400).send(error));
     }
 };
