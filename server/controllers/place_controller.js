@@ -28,15 +28,26 @@ module.exports = {
             .catch((error) => res.status(400).send(error));
     },
 
+    update(req, res) {
+        return Place
+            .update(req.body, {
+                where: {
+                    placeId: req.body.placeId
+                }
+            })
+            .then((place) => res.status(201).send(place))
+            .catch((error) => res.status(400).send(error));
+    },
+
     delete(req, res) {
-        console.log(req.params.placeId)
+        console.log(req.body)
         return Place
             .destroy({
                 where: {
                     placeId: req.params.placeId
                 }
             })
-            .then((places) => res.status(201).send(places))
+            .then((place) => res.status(201).send(true))
             .catch((error) => res.status(400).send(error));
     }
 };

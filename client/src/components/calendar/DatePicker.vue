@@ -18,7 +18,7 @@
       medium
       dark
       color="indigo darken-4"
-    ><v-icon>alarm</v-icon></v-btn>
+    ><v-icon>date_range</v-icon></v-btn>
     <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
   </v-menu>
 </template>
@@ -54,7 +54,7 @@ export default {
   watch: {
     date (val) {
       this.dateFormatted = this.formatDate(this.date)
-      this.$emit('datePicked', this.dateFormatted)
+      this.$emit('datePicked', this.date)
     }
   },
 

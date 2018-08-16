@@ -25,6 +25,18 @@ export default {
     })
   },
 
+  update: function update (body) {
+    return new Promise((resolve, reject) => {
+      let uri = 'http://localhost:1330/api/place/update'
+      axios.put(uri, body)
+        .then(response => {
+          resolve(response.data)
+        }, error => {
+          reject(error)
+        })
+    })
+  },
+
   delete: function create (placeId) {
     return new Promise((resolve, reject) => {
       let uri = 'http://localhost:1330/api/place/delete/' + placeId

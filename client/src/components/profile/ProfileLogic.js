@@ -120,7 +120,7 @@ async function becomeFriend() {
     userIdHaveFriend: 4, // Should be the active user from localstorage
     isfriendState: 'waiting'
   }
-  await _services.isfriend.create(body)
+  await _service.isfriend.create(body)
     .then((res) => {
       isFriend = res
     })

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-toolbar flat color="white">
+    <spinner v-show="isLoading" :isLoading="isLoading" class="mb-3"/>
+    <v-toolbar flat color="white" v-show="!isLoading">
       <v-toolbar-title>Liste des repaires</v-toolbar-title>
       <v-divider
         class="mx-2"
@@ -59,9 +60,9 @@
       :items="places"
       hide-actions
       class="elevation-0"
+      v-show="!isLoading"
     >
-      <spinner v-show="isLoading" :isLoading="isLoading" class="mb-3"/>
-      <template v-show="isLoading" slot="items" slot-scope="props">
+      <template slot="items" slot-scope="props">
         <td class="text-xs-left">{{ props.item.placeName }}</td>
         <td class="text-xs-left">{{ blockFieldSize(props.item.placeDescription, 50) }}</td>
         <td class="text-xs-left">{{ blockFieldSize(props.item.placeAdressNum + ' ' + props.item.placeAdressStreet + ' ' + props.item.placeAdressCity, 50) }}</td>
@@ -103,7 +104,7 @@ export default {
   data () {
     return {
       dialog: false,
-      isLoading: true,
+      isLoading: false,
       headers: [
         {
           text: 'Place',
@@ -152,10 +153,8 @@ export default {
     },
 
     async deleteItem (item) {
-      this.isLoading = true
       const index = this.places.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && await this.deletePlace(item.placeId) && this.places.splice(index, 1)
-      this.isLoading = false
+      confirm('Are you sure you want to delete this item?') && await this.deletePlace(item.placeId, index)
     },
 
     close () {
@@ -170,11 +169,10 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.places[this.editedIndex], this.editedItem)
         // Need to update in database
+        this.updatePlace(this.editedItem)
       } else {
         this.places.push(this.editedItem)
         // Need to create into the database
-
-        console.log(this.editedItem)
         this.createPlaces(this.editedItem)
       }
       this.close()
@@ -188,6 +186,7 @@ export default {
         })
         .catch(e => {
           console.log('Unable to load places')
+          this.isLoading = false
         })
     },
     async createPlaces (value) {
@@ -199,15 +198,33 @@ export default {
           console.log('Unable to create place. ', e)
         })
     },
-    async deletePlace (placeId) {
+    async updatePlace (value) {
       this.isLoading = true
-      await _service.place.delete(placeId)
+      await _service.place.update(value)
         .then((res) => {
-          this.isLoading = false
+          // nothing
         })
         .catch(e => {
-          console.log('Unable to delete place. ', e)
+          console.log('Unable to update place. ', e)
         })
+      this.isLoading = false
+    },
+    async deletePlace (placeId, index) {
+      this.isLoading = true
+      try {
+        await _service.place.delete(placeId)
+          .then((res) => {
+            this.isLoading = false
+          })
+          .catch(e => {
+            console.log('Unable to delete place. ', e)
+            this.isLoading = false
+          })
+      } catch (e) {
+        console.log('Unable to delete place. ', e)
+        this.isLoading = false
+      }
+      this.places.splice(index, 1)
     }
   },
 
@@ -215,7 +232,6 @@ export default {
     this.isLoading = true
     Object.assign(this.editedItem, _service.PlaceModel)
     await this.loadPlaces()
-    this.isLoading = false
   }
 }
 </script>
