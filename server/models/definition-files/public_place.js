@@ -65,6 +65,11 @@ module.exports = {
             field: "place_adress_postal_code",
             allowNull: false
         },
+        "placeAdressCity": {
+            type: Seq.STRING(50),
+            field: "place_adress_city",
+            allowNull: false
+        },
         "placeAdressCountry": {
             type: Seq.STRING(50),
             field: "place_adress_country",
@@ -72,8 +77,7 @@ module.exports = {
         },
         "placeAdressDetails": {
             type: Seq.STRING(250),
-            field: "place_adress_details",
-            allowNull: false
+            field: "place_adress_details"
         }
     },
     relations: [{

@@ -53,8 +53,7 @@
 
 <script>
 // import {User} from '../../models/user_model/User_model'
-import {SearchService} from '../../helpers/Search'
-const searchService = new SearchService()
+import _helper from '../../helpers/'
 
 export default {
   name: 'Friendlist',
@@ -82,7 +81,7 @@ export default {
       friends: this.friendlist,
       size: this.sizeInput,
       searchFunction: function () {
-        searchService.search()
+        _helper.search.search()
       }
     }
   },

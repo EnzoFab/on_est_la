@@ -14,8 +14,8 @@
 
 <script>
 /* eslint-disable */
-import Autocomplete from "../autocomplete/Autocomplete";
-import _userService from '../../models/user_model/User_services'
+import Autocomplete from "../autocomplete/Autocomplete"
+import _service from '../../models/index'
 
 
 let items = []
@@ -47,7 +47,7 @@ export default {
 
 async function findAllFromSearchBar (value) {
   if (value !== null && value !== '') {
-    await _userService.findAllFromSearchBar(value)
+    await _service.user.findAllFromSearchBar(value)
       .then((res) => {
         items = res.data
       })

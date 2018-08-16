@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import profile from '@/components/profile/Profile'
-import home from '@/components/home/Home'
-import searchUser from '@/components/search_user/Search_user'
+import Profile from '@/components/profile/Profile'
+import Home from '@/components/home/Home'
+import SearchUser from '@/components/search_user/Search_user'
 import Map from '@/components/map/Map'
 import Calendar from '@/components/calendar/Calendar'
+import AdminHome from '@/components/admin/AdminHome'
+import PlaceManagement from '@/components/admin/placeManagement/PlaceManagement'
 
 Vue.use(Router)
 
@@ -14,33 +16,27 @@ export default new Router({
     {
       path: '/',
       name: 'source',
-      component: home,
+      component: Home,
       meta: {title: 'On est là hein'} // change the title of the page
     },
 
     {
       path: '/home',
       name: 'home',
-      component: home,
+      component: Home,
       meta: {title: 'On est là hein'}
     },
 
     {
       path: '/cc/:pseudo',
       name: 'my-profile',
-      component: profile
+      component: Profile
     },
 
     {
       path: '/cc/:pseudo',
       name: 'user-profile',
-      component: profile
-    },
-
-    {
-      path: '/test',
-      name: 'test',
-      component: searchUser
+      component: Profile
     },
 
     {
@@ -52,13 +48,26 @@ export default new Router({
     {
       path: '/search-friends',
       name: 'search-friends',
-      component: searchUser
+      component: SearchUser
     },
 
     {
       path: '/calendar',
       name: 'calendar',
       component: Calendar
+    },
+
+    {
+      path: '/admin',
+      name: 'adminHome',
+      component: AdminHome,
+      children: [
+        {
+          path: 'place',
+          name: 'placeManagement',
+          component: PlaceManagement
+        }
+      ]
     }
   ]
 })

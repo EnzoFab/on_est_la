@@ -47,8 +47,9 @@ CREATE TABLE public.Place(
 	place_adress_num           VARCHAR (50) NOT NULL ,
 	place_adress_street        VARCHAR (250) NOT NULL ,
 	place_adress_postal_code   VARCHAR (5) NOT NULL ,
+	place_adress_city          VARCHAR (50) NOT NULL ,
 	place_adress_country       VARCHAR (50) NOT NULL ,
-	place_adress_details       VARCHAR (250) NOT NULL  ,
+	place_adress_details       VARCHAR (250)   ,
 	CONSTRAINT Place_PK PRIMARY KEY (place_id)
 )WITHOUT OIDS;
 
@@ -161,3 +162,9 @@ INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail,
 INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pluche', 'Cyril', '2018-01-01', 'macouille@gmail.com', '0610071008', 'pluchezerrr', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);
 INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Thauvin', 'Florian', '2018-02-02', 'macouille@gmail.com', '0610568902', 'flothauv', 'On est là on a arnaqué la coupe du monde mdr', 'public', '\x6e756c6c');
 INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pluche', 'Eric', '2018-01-01', 'Pluche@gmail.com', '0303030303', 'pluchito', 'salut les copains', 'private', NULL);
+
+
+INSERT INTO "place" (place_name, place_description, place_adress_num, place_adress_street, place_adress_postal_code, place_adress_city, place_adress_country) VALUES ('Panama Café', 'Cette discothèque-bar au style latino dispose de 2 salles aux ambiances différentes, pour une clientèle jeune', '5', 'rue de la république', '34000', 'Montpellier', 'France');
+INSERT INTO "place" (place_name, place_description, place_adress_num, place_adress_street, place_adress_postal_code, place_adress_city, place_adress_country) VALUES ('Rockstorr', 'Concerts de groupes locaux et internationaux, hommages et sets de DJ dans une salle de rock réputée.', '20', 'rue de Verdun', '34000', 'Montpellier', 'France');
+INSERT INTO "place" (place_name, place_description, place_adress_num, place_adress_street, place_adress_postal_code, place_adress_city, place_adress_country) VALUES ('PZ City Club', 'Sur 2 niveaux, cette discothèque est spécialisée dans les soirées étudiantes et dispose de lumières tamisées.', '4', 'quaie du Verdanson', '34000', 'Montpellier', 'France');
+INSERT INTO "place" (place_name, place_description, place_adress_num, place_adress_street, place_adress_postal_code, place_adress_city, place_adress_country) VALUES ('Cargo', 'Ce bar et boîte de nuit avec mezzanine organise de nombreuses soirées à thèmes et des cours de salsa.', '5', 'rue du grand Saint-Jean', '34000', 'Montpellier', 'France');

@@ -1,8 +1,9 @@
 import {User} from '../../models/user_model/User_model'
 import friendList from '../friendlist/Friendlist'
-import _userService from '../../models/user_model/User_services'
-import _isFriendService from '../../models/isfriend_model/Isfriend_services'
+// import _userService from '../../models/user_model/User_services'
+// import _isFriendService from '../../models/isfriend_model/Isfriend_services'
 import CustomSpinner from '../Spinner'
+import _service from '../../models/index'
 
 
 /* ============ MODELS ============ */
@@ -17,7 +18,7 @@ let isFriend = 'not-friend'
 /* ============ EXPORT ============ */
 export default {
   name: 'Profile',
-    data() {
+  data () {
     return {
       data: [],
       user: user,
@@ -40,10 +41,10 @@ export default {
     changeContentFollowBtn: function (state, init) {
       let msg1 = ''
       let msg2 = ''
-      if (this.isFriend == 'friend') {
+      if (this.isFriend === 'friend') {
         msg1 = "C'est la famille"
         msg2 = "zbeub zbeub"
-      } else if (this.isFriend == 'not-friend') {
+      } else if (this.isFriend === 'not-friend') {
         msg1 = 'Follow cette douceur'
         msg2 = 'ah gros...'
         if (init) {
@@ -92,7 +93,7 @@ export default {
 
 /* ============ LOAD METHODS ============ */
 async function loadFriends () {
-  await _userService.findAll()
+  await _service.user.findAll()
     .then((res) => {
       friends = res
     })
@@ -102,7 +103,7 @@ async function loadFriends () {
 }
 
 async function loadUserProfile (userPseudo) {
-  await _userService.findOneFromPseudo(userPseudo)
+  await _service.user.findOneFromPseudo(userPseudo)
     .then((res) => {
       user = res[0]
     })
@@ -119,7 +120,7 @@ async function becomeFriend() {
     userIdHaveFriend: 4, // Should be the active user from localstorage
     isfriendState: 'waiting'
   }
-  await _isFriendService.create(body)
+  await _services.isfriend.create(body)
     .then((res) => {
       isFriend = res
     })

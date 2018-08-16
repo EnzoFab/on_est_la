@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-export class SearchService {
-  search() {
+export default {
+  search () {
     let input, filter, list, p
     input = document.getElementById("friends-search");
     if(input) {
