@@ -1,6 +1,10 @@
 import axios from 'axios'
 
 export default {
+  signIn (identifiant, password) {
+
+  },
+
   findAll: function findAll () {
     return new Promise((resolve, reject) => {
       let uri = 'http://localhost:1330/api/user/find_all'

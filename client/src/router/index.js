@@ -7,6 +7,7 @@ import MapPage from '@/components/map/MapPage'
 import Calendar from '@/components/calendar/Calendar'
 import AdminHome from '@/components/admin/AdminHome'
 import PlaceManagement from '@/components/admin/placeManagement/PlaceManagement'
+import Sign from '@/components/sign/Sign'
 
 Vue.use(Router)
 
@@ -24,6 +25,13 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: Home,
+      meta: {title: 'On est là hein'}
+    },
+
+    {
+      path: '/sign-in',
+      name: 'sign-in',
+      component: Sign,
       meta: {title: 'On est là hein'}
     },
 

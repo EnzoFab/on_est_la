@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <topbar></topbar>
+    <topbar v-if="false"></topbar>
     <!--<CustomSpinner :isLoading="showSpinner" class="mb-3"/> -->
     <transition name="custom-classes-transition"
                 enter-active-class="animated fadeIn"
