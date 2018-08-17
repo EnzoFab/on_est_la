@@ -85,9 +85,6 @@ export default {
       }
     }
   },
-  created: function () {
-    console.log('created', this.friends)
-  },
   methods: {
     clickedFriend: function (friend) {
       this.$emit('clickedFriend', friend)
@@ -98,7 +95,6 @@ export default {
   },
   watch: {
     friendlist: function update (value, oldValue) {
-      console.log('change : ', value)
       this.friends = value
     }
   }

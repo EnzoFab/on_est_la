@@ -20,5 +20,18 @@ module.exports = {
             .create(req.body)
             .then((isfriend) => res.status(201).send(true))
             .catch((error) => res.status(400).send(error));
+    },
+
+    delete(req, res) {
+        console.log(req.body)
+        return Isfriend
+            .destroy({
+                where: {
+                    userId: req.body.userId,
+                    userIdHaveFriend: req.body.userIdHaveFriend
+                }
+            })
+            .then((place) => res.status(201).send(true))
+            .catch((error) => res.status(400).send(error));
     }
 };

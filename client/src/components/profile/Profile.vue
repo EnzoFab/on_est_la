@@ -1,26 +1,19 @@
 <template>
   <v-container fluid grid-list-sm>
-    <spinner v-show="!isReady" :isLoading="!isReady" class="mb-3"/>
-    <v-layout row wrap v-if="isReady">
+    <spinner v-show="isLoading" :isLoading="isLoading" class="mb-3"></spinner>
+    <v-layout row wrap v-if="!isLoading">
       <!-- Profile picture & Names -->
       <v-flex text-xs-center xs3 class="border-right">
         <v-layout row wrap >
           <v-flex xs12 class="primetime text-darkgrey">
             <!-- Follow button -->
-            <v-btn v-if="isFriend == 'not-friend'"
-                   @mouseover="changeContentFollowBtn(true, false)"
-                   @mouseleave="changeContentFollowBtn(false, false)"
-                   @click="becomeFriend"
+            <v-btn @mouseover="changeBtnHover(true)"
+                   @mouseleave="changeBtnHover(false)"
+                   @click="friendBtnAction"
+                   block
                    depressed large class="mb-4 hover-success" color="error"
             >
-              {{ msgFollow }}
-            </v-btn>
-            <v-btn v-else
-                   @mouseover="changeContentFollowBtn(true, false)"
-                   @mouseleave="changeContentFollowBtn(false, false)"
-                   depressed large class="mb-4 hover-success" color="success"
-            >
-              {{ msgFollow }}
+              {{ btnLabel }}
             </v-btn>
           </v-flex>
           <v-flex xs12 class="thumbnail">
@@ -117,7 +110,7 @@
 
       <!-- Friend list -->
       <v-flex class="border-left" xs3>
-        <friendlist v-if="isFriendsReady"
+        <friendlist v-if="!isLoading"
                     :friendlist="friendsList"
                     :sizeInput="300"
                     :isLink="true"

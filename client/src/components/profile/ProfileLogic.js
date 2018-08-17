@@ -2,8 +2,6 @@ import friendList from '../friendlist/Friendlist'
 import CustomSpinner from '../Spinner'
 import _service from '../../models/index'
 
-/* ============ VARIABLES ============ */
-let isFriendsReady = false
 let user = new _service.UserModel()
 let friends = []
 let isFriend = 'not-friend'
@@ -11,114 +9,123 @@ let isFriend = 'not-friend'
 /* ============ EXPORT ============ */
 export default {
   name: 'Profile',
-  data () {
-    return {
-      data: [],
-      user: user,
-      friendsList: [],
-      isReady: false,
-      isFriendsReady: false,
-      console: console,
-      msgFollow: 'Follow cette douceur',
-      isFriend: false
-    }
-  },
   components: {
     spinner: CustomSpinner,
     'friendlist': friendList
   },
   created: async function () {
-    this.onCreated()
+    this.loadData()
+  },
+  /* ============ VARIABLES ============ */
+  data () {
+    return {
+      data: [],
+      user: user,
+      relationWithUser: 'not-friend',
+      friendsList: [],
+      isLoading: false,
+      btnLabel: 'Follow cette douceur',
+      btnLabelOff: 'Follow cette douceur',
+      btnLabelHover: 'Deviens mon pote'
+    }
   },
   methods: {
-    changeContentFollowBtn: function (state, init) {
-      let msg1 = ''
-      let msg2 = ''
-      if (this.isFriend === 'friend') {
-        msg1 = "C'est la famille"
-        msg2 = "zbeub zbeub"
-      } else if (this.isFriend === 'not-friend') {
-        msg1 = 'Follow cette douceur'
-        msg2 = 'ah gros...'
-        if (init) {
-          this.msgFollow = msg1
-        }
+    /* ============ LOAD METHODS ============ */
+    async loadFriends () {
+      this.isLoading = true
+      await _service.user.findAll()
+        .then((res) => {
+          this.friendsList = res
+          this.isLoading = false
+        })
+        .catch(e => {
+          console.log('Unable to load friends')
+        })
+    },
+    async loadUserProfile () {
+      this.isLoading = true
+      this.user.userPseudo = this.$router.history.current.params.pseudo
+      await _service.user.findOneFromPseudo(this.user.userPseudo)
+        .then((res) => {
+          this.user = res[0]
+        })
+        .catch(e => {
+          console.log('Unable to load user')
+        })
+      this.isLoading = false
+    },
+    /* ============ VIEW METHODS ============ */
+    async loadData () {
+      this.isLoading = true
+
+      await this.loadUserProfile()
+      await this.loadFriends()
+      this.relationWithUser = 'not-friend' // Should be compute by the back-end
+    },
+
+     async friendBtnAction () {
+      // Action to perform depending on the state with the user
+      if (this.relationWithUser === 'not-friend'){
+        await this.follow()
       } else {
-        msg2 = "Comportement"
-        msg1 = "Bah ouais"
-      }
-      if (!init) {
-        if (state) {
-          this.msgFollow = msg1
-        } else {
-          this.msgFollow = msg2
-        }
+        await this.unfollow()
       }
     },
-    becomeFriend: async function () {
-      let answer = await becomeFriend()
-      console.log(answer)
-      this.msgFollow = "C'est la famille"
-      this.isFriend = 'waiting'
+    changeBtnContent () {
+      console.log('new relation ', this.relationWithUser)
+      if (this.relationWithUser === 'friend') {
+        this.btnLabelHover = 'unfollow cet escroc'
+        this.btnLabelOff = ''
+        this.btnLabel = this.btnLabelOff
+      } else if (this.relationWithUser === 'waiting') {
+        this.btnLabelHover = 'annuler ma demande'
+        this.btnLabelOff = 'en attente'
+        this.btnLabel = this.btnLabelOff
+      } else {
+        this.btnLabelHover = 'Follow  cette douceur'
+        this.btnLabelOff = 'deviens mon pote'
+        this.btnLabel = this.btnLabelOff
+      }
     },
-    onCreated: async function () {
-      this.isReady = false
-      this.isFriend = 'not-friend' // Should be compute by the back-end
+    changeBtnHover (onBtn) {
+      if (onBtn) {
+        this.btnLabel = this.btnLabelHover
+      } else {
+        this.btnLabel = this.btnLabelOff
+      }
+    },
 
-      user.userPseudo = this.$router.history.current.params.pseudo
-      await loadFriends()
-      this.friendsList = friends
-      this.isFriendsReady = true
-
-      await loadUserProfile(user.userPseudo)
-      this.user = user
-
-      this.changeContentFollowBtn(this.isFriend, true)
-
-      this.isReady = true
+    async follow () {
+      let body = {
+        userId: this.user.userId, // The user that is wanted to be a friend
+        userIdHaveFriend: 4, // Should be the active user from localstorage
+        isfriendState: 'waiting'
+      }
+      await _service.isfriend.create(body)
+        .then((res) => {
+          this.relationWithUser = 'waiting'
+          this.changeBtnContent()
+        })
+        .catch(e => {
+          console.log('Unable to make friend')
+        })
+    },
+    async unfollow () {
+      let body = {
+        userId: this.user.userId, // The user that is wanted to be unfollowed
+        userIdHaveFriend: 4, // Active user from localstorage
+      }
+      await _service.isfriend.delete(body)
+        .then((res) => {
+          this.relationWithUser = 'not-friend'
+          this.changeBtnContent()
+        })
+        .catch(e => {
+          console.log('Unable to unfollow user')
+        })
     }
   },
   watch: {
-    // call again the method if the route changes
-    '$route': 'onCreated'
-  },
-}
-
-/* ============ LOAD METHODS ============ */
-async function loadFriends () {
-  await _service.user.findAll()
-    .then((res) => {
-      friends = res
-    })
-    .catch(e => {
-      console.log('Unable to load friends')
-    })
-}
-
-async function loadUserProfile (userPseudo) {
-  await _service.user.findOneFromPseudo(userPseudo)
-    .then((res) => {
-      user = res[0]
-    })
-    .catch(e => {
-      console.log('Unable to load user')
-    })
-}
-
-/* ============ METHODS ============ */
-async function becomeFriend() {
-  // State : friend || waiting
-  let body = {
-    userId: user.userId, // The user that is wanted to be a friend
-    userIdHaveFriend: 4, // Should be the active user from localstorage
-    isfriendState: 'waiting'
+    '$route': 'loadData'
   }
-  await _service.isfriend.create(body)
-    .then((res) => {
-      isFriend = res
-    })
-    .catch(e => {
-      console.log('Unable to make friend')
-    })
 }
-
