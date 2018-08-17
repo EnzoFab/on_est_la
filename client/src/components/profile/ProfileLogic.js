@@ -1,17 +1,10 @@
-import {User} from '../../models/user_model/User_model'
 import friendList from '../friendlist/Friendlist'
-// import _userService from '../../models/user_model/User_services'
-// import _isFriendService from '../../models/isfriend_model/Isfriend_services'
 import CustomSpinner from '../Spinner'
 import _service from '../../models/index'
 
-
-/* ============ MODELS ============ */
-let userModel = new User()
-
 /* ============ VARIABLES ============ */
 let isFriendsReady = false
-let user = userModel.mutations()
+let user = new _service.UserModel()
 let friends = []
 let isFriend = 'not-friend'
 

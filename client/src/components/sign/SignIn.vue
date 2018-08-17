@@ -1,4 +1,4 @@
-<template id="signInContent">
+<template class="signForm">
   <v-form @keyup.native.enter="submit" ref="form" v-model="valid" lazy-validation>
     <v-text-field
       v-model="identifiant"
@@ -13,7 +13,6 @@
       :rules="passwordRules"
       placeholder="Mot de passe"
       required
-      class="signField"
       color="indigo darken-4"
     ></v-text-field>
     <v-layout row wrap>
@@ -78,8 +77,7 @@ export default {
     },
 
     signUp () {
-      this.$emit('changeViewToSignUp', true)
-      console.log('emitted')
+      this.$emit('changeViewToSignUp', 'up')
     }
   }
 }

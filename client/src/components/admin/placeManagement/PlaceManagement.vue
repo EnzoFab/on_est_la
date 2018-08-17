@@ -230,7 +230,7 @@ export default {
 
   created: async function () {
     this.isLoading = true
-    Object.assign(this.editedItem, _service.PlaceModel)
+    Object.assign(this.editedItem, new _service.PlaceModel())
     await this.loadPlaces()
   }
 }

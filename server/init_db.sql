@@ -27,14 +27,17 @@ CREATE TABLE public.User(
 	user_firstname          VARCHAR (50) NOT NULL ,
 	user_name               VARCHAR (50) NOT NULL ,
 	user_date_inscription   DATE  NOT NULL ,
+	user_pass               VARCHAR (50) NOT NULL ,
 	user_mail               VARCHAR (50) NOT NULL ,
-	user_phone              VARCHAR (10) NOT NULL ,
+	user_token              VARCHAR (250) NOT NULL ,
+	user_phone              VARCHAR (10)  ,
 	user_pseudo             VARCHAR (50) NOT NULL ,
 	user_description        VARCHAR (200)  ,
 	user_visibility         VARCHAR (20) NOT NULL ,
 	user_picture            VARCHAR (250)   ,
 	CONSTRAINT User_PK PRIMARY KEY (user_id)
 )WITHOUT OIDS;
+
 
 
 ------------------------------------------------------------
@@ -156,12 +159,12 @@ CREATE TABLE public.Participate(
 -- Insert
 ------------------------------------------------------------
 
-INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('pernelle', 'Léo', '2018-01-01', 'macouille@gmail.com', '0610071008', 'pernichtre', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);
-INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Terrien', 'Jaimse', '2018-01-01', 'macouille@gmail.com', '0610071008', 'lejameuxestextra', 'Benjamin Pavard t es là t es mon sauce', 'public', NULL);
-INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Fabre', 'Enzo', '2018-01-01', 'macouille@gmail.com', '0610071008', 'zozolezozio', 'Benjamin Pavard t es là t es mon sauce', 'public', NULL);
-INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pluche', 'Cyril', '2018-01-01', 'macouille@gmail.com', '0610071008', 'pluchezerrr', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);
-INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Thauvin', 'Florian', '2018-02-02', 'macouille@gmail.com', '0610568902', 'flothauv', 'On est là on a arnaqué la coupe du monde mdr', 'public', '\x6e756c6c');
-INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pluche', 'Eric', '2018-01-01', 'Pluche@gmail.com', '0303030303', 'pluchito', 'salut les copains', 'private', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_mail, user_pass, user_token, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('pernelle', 'Léo', '2018-01-01', 'onestla', 'tokenouaisouais', 'macouille@gmail.com', '0610071008', 'pernichtre', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_pass, user_token, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Terrien', 'Jaimse', '2018-01-01', 'onestla', 'tokenouaisouais', 'macouille@gmail.com', '0610071008', 'lejameuxestextra', 'Benjamin Pavard t es là t es mon sauce', 'public', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_pass, user_token, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Fabre', 'Enzo', '2018-01-01', 'onestla', 'tokenouaisouais', 'macouille@gmail.com', '0610071008', 'zozolezozio', 'Benjamin Pavard t es là t es mon sauce', 'public', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_pass, user_token, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pluche', 'Cyril', '2018-01-01', 'onestla', 'tokenouaisouais', 'macouille@gmail.com', '0610071008', 'pluchezerrr', 'Benjamin Pavard t es là t es mon sauce', 'private', NULL);
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_pass, user_token, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Thauvin', 'Florian', '2018-02-02', 'onestla', 'tokenouaisouais', 'macouille@gmail.com', '0610568902', 'flothauv', 'On est là on a arnaqué la coupe du monde mdr', 'public', '\x6e756c6c');
+INSERT INTO "user" (user_firstname, user_name, user_date_inscription, user_pass, user_token, user_mail, user_phone, user_pseudo, user_description, user_visibility, user_picture) VALUES ('Pluche', 'Eric', '2018-01-01', 'onestla', 'tokenouaisouais', 'Pluche@gmail.com', '0303030303', 'pluchito', 'salut les copains', 'private', NULL);
 
 
 INSERT INTO "place" (place_name, place_description, place_adress_num, place_adress_street, place_adress_postal_code, place_adress_city, place_adress_country) VALUES ('Panama Café', 'Cette discothèque-bar au style latino dispose de 2 salles aux ambiances différentes, pour une clientèle jeune', '5', 'rue de la république', '34000', 'Montpellier', 'France');

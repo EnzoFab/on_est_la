@@ -5,6 +5,18 @@ export default {
 
   },
 
+  signUp (body) {
+    return new Promise((resolve, reject) => {
+      let uri = 'http://localhost:1330/api/user/create'
+      axios.post(uri, body)
+        .then(response => {
+          resolve(response.data)
+        }, error => {
+          reject(error)
+        })
+    })
+  },
+
   findAll: function findAll () {
     return new Promise((resolve, reject) => {
       let uri = 'http://localhost:1330/api/user/find_all'
