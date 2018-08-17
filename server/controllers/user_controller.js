@@ -13,6 +13,31 @@ const User = orm.model('public.user');
 const Sequelize = orm.Sequelize();
 const sequelize = orm.sequelize();
 
+/* Parse parameters labels from database to Sequelize models */
+function parseRawQuery (data) {
+    let answer = [];
+    for (let qUser of data){
+        let mUser = {
+            userId: qUser.user_id,
+            userFirstname: qUser.user_firstname,
+            userName: qUser.user_name,
+            userDateInscription: qUser.user_date_inscription,
+            userPass: qUser.user_pass,
+            userMail: qUser.user_mail,
+            userToken: qUser.user_token,
+            userPhone: qUser.user_phone,
+            userPseudo: qUser.user_pseudo,
+            userDescription: qUser.user_description,
+            userVisibility: qUser.user_visibility,
+            userPicture: qUser.user_picture
+        };
+        answer.push(mUser)
+    };
+
+    console.log(answer)
+    return answer
+}
+
 module.exports = {
     create(req, res) {
         return User
@@ -25,6 +50,22 @@ module.exports = {
         return User
             .findAll()
             .then((users) => res.status(201).send(users))
+            .catch((error) => res.status(400).send(error));
+    },
+
+    findAllFriends(req, res) {
+        return sequelize
+            .query('SELECT * FROM public.user WHERE user_id IN (' +
+                    'SELECT I.user_id FROM public.is_friend I WHERE I.user_id_have_friend = :userId' +
+                    ')',
+                { replacements: { userId: req.params.userId }, type: sequelize.QueryTypes.SELECT }
+            )
+            .then((users) =>
+                parseRawQuery(users)
+            )
+            .then((users) =>
+                res.status(201).send(users)
+            )
             .catch((error) => res.status(400).send(error));
     },
 

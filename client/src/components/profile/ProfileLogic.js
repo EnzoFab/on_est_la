@@ -33,9 +33,10 @@ export default {
     /* ============ LOAD METHODS ============ */
     async loadFriends () {
       this.isLoading = true
-      await _service.user.findAll()
+      await _service.user.findAllFriends(this.user.userId)
         .then((res) => {
           this.friendsList = res
+          console.log(this.friendsList)
           this.isLoading = false
         })
         .catch(e => {

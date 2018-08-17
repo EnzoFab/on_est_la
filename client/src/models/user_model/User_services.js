@@ -29,6 +29,18 @@ export default {
     })
   },
 
+  findAllFriends (userId) {
+    return new Promise((resolve, reject) => {
+      let uri = 'http://localhost:1330/api/user/find_all_friends/' + userId
+      axios.get(uri)
+        .then(response => {
+          resolve(response.data)
+        }, error => {
+          reject(error)
+        })
+    })
+  },
+
   findAllFromSearchBar: function findAllFromSearchBar (search) {
     return new Promise((resolve, reject) => {
       let uri = 'http://localhost:1330/api/user/find_all_from_search_bar'
