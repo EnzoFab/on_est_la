@@ -20,5 +20,11 @@ module.exports = {
             answer.push(mUser)
         }
         return answer
+    },
+
+    validMailPassword(user) {
+        const validEmail = typeof user.userMail === 'string' && user.userMail.trim() !== "";
+        const validPassword = typeof user.userPass === 'string' && user.userPass.trim() !== "" && user.userPass.trim().length >= 6;
+        return validEmail && validPassword;
     }
 }

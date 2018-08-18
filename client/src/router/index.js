@@ -30,7 +30,7 @@ export default new Router({
 
     {
       path: '/sign-in',
-      name: 'sign-in',
+      name: 'sign',
       component: Sign,
       meta: {title: 'On est là hein'}
     },

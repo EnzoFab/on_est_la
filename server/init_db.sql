@@ -27,14 +27,15 @@ CREATE TABLE public.User(
 	user_firstname          VARCHAR (50) NOT NULL ,
 	user_name               VARCHAR (50) NOT NULL ,
 	user_date_inscription   DATE  NOT NULL ,
-	user_pass               VARCHAR (50) NOT NULL ,
+	user_pass               VARCHAR (250) NOT NULL ,
 	user_mail               VARCHAR (50) NOT NULL ,
 	user_token              VARCHAR (250) NOT NULL ,
 	user_phone              VARCHAR (10)  ,
 	user_pseudo             VARCHAR (50) NOT NULL ,
 	user_description        VARCHAR (200)  ,
 	user_visibility         VARCHAR (20) NOT NULL ,
-	user_picture            VARCHAR (250)   ,
+	user_picture            VARCHAR (250)  ,
+	user_account_state      VARCHAR (250)   ,
 	CONSTRAINT User_PK PRIMARY KEY (user_id)
 )WITHOUT OIDS;
 

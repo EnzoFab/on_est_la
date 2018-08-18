@@ -20,7 +20,8 @@ export default class User extends Model {
       userPseudo: '',
       userDescription: '',
       userVisibility: 'public',
-      userPicture: ''
+      userPicture: '',
+      userAccountState: ''
     }
   }
 
@@ -38,7 +39,8 @@ export default class User extends Model {
       userPseudo: String,
       userDescription: String,
       userVisibility: String,
-      userPicture: String
+      userPicture: String,
+      userAccountState: String
     }
   }
 
@@ -56,7 +58,8 @@ export default class User extends Model {
       userPseudo: String.and(required),
       userDescription: String.and(length<200),
       userVisibility: String,
-      userPicture: String
+      userPicture: String,
+      userAccountState: String
     }
   }
 

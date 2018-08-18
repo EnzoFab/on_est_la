@@ -1,6 +1,8 @@
 /* IMPORTS */
 require('dotenv').config();
 const helper = require('../helpers');
+const policy = require('../policy');
+
 
 /* SET UP DB LINK */
 const orm = require('../models');
@@ -16,7 +18,8 @@ const Sequelize = orm.Sequelize();
 const sequelize = orm.sequelize();
 
 module.exports = {
-    create(req, res) {
+    create (req, res) {
+        req.body.userAccountState = 'created';
         return User
             .create(req.body)
             .then((user) => res.status(201).send(user))
@@ -52,6 +55,7 @@ module.exports = {
             .then((user) => res.status(201).send(user))
             .catch((error) => res.status(400).send(error));
     },
+
     findFromSearchBar(req, res) {
         const Op = Sequelize.Op;
         let data = req.body.search.split(' ');

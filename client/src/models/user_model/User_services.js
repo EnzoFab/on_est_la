@@ -1,13 +1,26 @@
 import axios from 'axios'
 
 export default {
-  signIn (identifiant, password) {
-
+  async signIn (identifiant, password) {
+    let body = {
+      userMail: identifiant,
+      userPass: password
+    }
+    return new Promise((resolve, reject) => {
+      let uri = 'http://localhost:1330/api/auth/log_in'
+      axios.post(uri, body)
+        .then(response => {
+          this.storeUserInformation(response.data)
+          resolve(response.data)
+        }, error => {
+          reject(error)
+        })
+    })
   },
 
   signUp (body) {
     return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/user/create'
+      let uri = 'http://localhost:1330/api/auth/sign_up'
       axios.post(uri, body)
         .then(response => {
           resolve(response.data)
@@ -66,5 +79,11 @@ export default {
           reject(error)
         })
     })
+  },
+
+  /* ========= LOCAL STORAGE ========= */
+  async storeUserInformation (values) {
+    console.log(values)
+    localStorage.setItem('Token', values.token)
   }
 }

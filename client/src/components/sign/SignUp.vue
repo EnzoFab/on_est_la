@@ -3,19 +3,20 @@
     <v-text-field
       v-model="newUser.userName"
       :rules="rules[0]"
-      placeholder="Nom"
+      placeholder="Prénom"
       required
       color="indigo darken-4"
     ></v-text-field>
     <v-text-field
       v-model="newUser.userFirstname"
       :rules="rules[1]"
-      placeholder="Prénom"
+      placeholder="Nom"
       required
       color="indigo darken-4"
     ></v-text-field>
     <v-text-field
       v-model="newUser.userPseudo"
+      :error-messages="pseudoCheckMessage"
       :rules="rules[2]"
       placeholder="Pseudo"
       required
@@ -33,11 +34,13 @@
       :rules="rules[4]"
       placeholder="Mot de passe"
       required
+      type="password"
       color="indigo darken-4"
     ></v-text-field>
     <v-text-field
       v-model="passConfirmation"
       :rules="rules[5]"
+      type="password"
       placeholder="Mot de passe (confirmation)"
       required
       color="indigo darken-4"
@@ -96,7 +99,8 @@ export default {
       [v => !!v || 'Confirme ton mdp bordel.']
     ],
     alert: false,
-    errorMessage: ''
+    errorMessage: '',
+    pseudoCheckMessage: ''
   }),
 
   methods: {
@@ -106,15 +110,15 @@ export default {
           if (this.passConfirmation === this.newUser.userPass) {
             this.newUser.userDateInscription = new Date()
             this.$emit('load', true)
-            await _service.user.signUp(this.newUser)
-              .then(res => {
-                this.$emit('formSended', res)
-                this.$emit('load', false)
-              })
-              .catch(e => {
-                this.errorMessage = 'Impossible de créer le compte.'
-                this.alert = true
-              })
+            try {
+              let res = await _service.user.signUp(this.newUser)
+              this.$emit('formSended', res)
+              this.$emit('load', false)
+            } catch (e) {
+              this.$emit('load', false)
+              this.errorMessage = 'Cet email est déjà utilisé soeurette.'
+              this.alert = true
+            }
           } else {
             this.errorMessage = 'Confirmation de mot de passe incorrecte.'
             this.alert = true
@@ -126,8 +130,26 @@ export default {
       }
     },
 
+    async isPseudoTaken () {
+      try {
+        let res = await _service.user.findOneFromPseudo(this.newUser.userPseudo)
+        if (res.length > 0) {
+          this.pseudoCheckMessage = 'Pseudo déjà pris morray.'
+        } else {
+          this.pseudoCheckMessage = ''
+        }
+      } catch (e) {
+        this.pseudoCheckMessage = 'Pseudo déjà pris morray.'
+      }
+    },
+
     signIn () {
       this.$emit('changeViewToSignIn', 'in')
+    }
+  },
+  watch: {
+    'newUser.userPseudo': function (v) {
+      if (v) this.isPseudoTaken()
     }
   },
   created () {

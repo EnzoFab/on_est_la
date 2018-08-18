@@ -7,6 +7,7 @@
     >
       <v-flex xs10 sm6 lg3>
         <spinner v-show="isLoading" :isLoading="isLoading" class="mb-3"/>
+
         <signin v-show="!isLoading" v-if="signForm === 'in'" @changeViewToSignUp="changeForm"></signin>
         <signup v-show="!isLoading"
                 v-if="signForm === 'up'"

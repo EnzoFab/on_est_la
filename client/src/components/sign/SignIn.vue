@@ -11,6 +11,7 @@
     <v-text-field
       v-model="password"
       :rules="passwordRules"
+      type="password"
       placeholder="Mot de passe"
       required
       color="indigo darken-4"
@@ -66,13 +67,14 @@ export default {
   methods: {
     async submit () {
       if (this.$refs.form.validate()) {
-        await _service.user.signIn(this.identifiant, this.password)
-          .then(res => {
-            // nothing
-          })
-          .catch(e => {
-            this.alert = true
-          })
+        try {
+          await _service.user.signIn(this.identifiant, this.password)
+          this.alert = false
+          console.log('REUSSI')
+        } catch (e) {
+          console.log(e)
+          this.alert = true
+        }
       }
     },
 
