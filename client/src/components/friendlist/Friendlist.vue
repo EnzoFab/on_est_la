@@ -95,6 +95,7 @@ export default {
   },
   watch: {
     friendlist: function update (value, oldValue) {
+      console.log('a jour')
       this.friends = value
     }
   }

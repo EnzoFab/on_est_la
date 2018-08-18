@@ -35,7 +35,31 @@
 
       <!-- Stats -->
       <v-flex class="pl-4" xs6 text-xs-left>
-        <v-card-text v-model="friendsList">
+        <v-card-text v-model="listoffriends">
+          <!-- Notifications -->
+          <v-layout row align-center class="mb-5"
+                    slot="activator"
+                    color="primary"
+                    dark
+          >
+            <v-badge
+              color="amber accent-4"
+              left
+              overlap
+              class="mr-4"
+            >
+              <span slot="badge">{{ invitations.length }}</span>
+              <v-icon
+                large
+                color="indigo darken-4"
+                @click="dialogOpen(true)"
+              >notifications</v-icon>
+            </v-badge>
+            <v-layout column>
+              <h3>Notifications</h3>
+            </v-layout>
+          </v-layout>
+
           <!-- Foolowers -->
           <v-tooltip left>
             <v-layout row align-center class="mb-4"
@@ -51,7 +75,7 @@
                 </v-avatar>
               </v-badge>
               <v-layout column>
-                <h3 class="bold" style="color: #1A237E">{{ friendsList.length }}</h3>
+                <h3 class="bold" style="color: #1A237E">{{ listoffriends.length }}</h3>
                 <h3>Followers</h3>
               </v-layout>
             </v-layout>
@@ -111,11 +135,49 @@
       <!-- Friend list -->
       <v-flex class="border-left" xs3>
         <friendlist v-if="!isLoading"
-                    :friendlist="friendsList"
+                    :friendlist="listoffriends"
                     :sizeInput="300"
                     :isLink="true"
         ></friendlist>
       </v-flex>
+      <!-- Dialog Notifications -->
+      <v-dialog v-model="dialogNotifications" scrollable max-width="600px">
+        <v-card>
+          <v-card-title>Notifications</v-card-title>
+          <v-divider></v-divider>
+          <v-card-text style="height: 400px;">
+            <v-list two-line subheader>
+              <v-list-tile
+                v-for="item in invitations"
+                :key="item.userId"
+                avatar
+                @click="true"
+              >
+                <v-list-tile-avatar @click="goToProfile(item)">
+                  picture
+                </v-list-tile-avatar>
+                <v-list-tile-content @click="goToProfile(item)">
+                  <v-list-tile-title>{{ item.userName + ' ' + item.userFirstname }}</v-list-tile-title>
+                  <v-list-tile-sub-title>{{ '@' + item.userPseudo }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                  <v-btn icon ripple>
+                    <v-icon color="success" @click="acceptInvitationFromNotification(item.userId)">check_circle</v-icon>
+                  </v-btn>
+                  <v-btn icon ripple @click="refuseInvitationFromNotification(item.userId)">
+                    <v-icon color="error">close</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn color="blue darken-1" flat @click.native="dialogOpen(false)">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="dialogOpen(false)">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </v-container>
 </template>

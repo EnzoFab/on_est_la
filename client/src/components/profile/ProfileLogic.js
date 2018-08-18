@@ -22,11 +22,13 @@ export default {
       data: [],
       user: user,
       relationWithUser: 'not-friend',
-      friendsList: [],
+      listoffriends: [],
       isLoading: false,
       btnLabel: 'Follow cette douceur',
       btnLabelOff: 'Follow cette douceur',
-      btnLabelHover: 'Deviens mon pote'
+      btnLabelHover: 'Deviens mon pote',
+      invitations: [],
+      dialogNotifications: false
     }
   },
   methods: {
@@ -35,13 +37,26 @@ export default {
       this.isLoading = true
       await _service.user.findAllFriends(this.user.userId)
         .then((res) => {
-          this.friendsList = res
-          console.log(this.friendsList)
+          this.listoffriends = res
+          console.log(res)
           this.isLoading = false
         })
         .catch(e => {
           console.log('Unable to load friends')
         })
+    },
+    async loadAllInvitations () {
+      this.isLoading = true
+      // We will use userId = 4
+      await _service.isfriend.findAllInvitations(4)
+        .then((res) => {
+          this.invitations = res
+          this.isLoading = false
+        })
+        .catch(e => {
+          console.log('Unable to load user')
+        })
+      this.isLoading = false
     },
     async loadUserProfile () {
       this.isLoading = true
@@ -58,10 +73,13 @@ export default {
     /* ============ VIEW METHODS ============ */
     async loadData () {
       this.isLoading = true
+      this.dialogNotifications = false
+
 
       await this.loadUserProfile()
       await this.loadFriends()
-      this.relationWithUser = 'not-friend' // Should be compute by the back-end
+      await this.findRelation()
+      await this.loadAllInvitations()
     },
 
      async friendBtnAction () {
@@ -73,7 +91,6 @@ export default {
       }
     },
     changeBtnContent () {
-      console.log('new relation ', this.relationWithUser)
       if (this.relationWithUser === 'friend') {
         this.btnLabelHover = 'unfollow cet escroc'
         this.btnLabelOff = ''
@@ -94,6 +111,86 @@ export default {
       } else {
         this.btnLabel = this.btnLabelOff
       }
+    },
+    dialogOpen (state) {
+      console.log('open !')
+      this.dialogNotifications = state
+    },
+    goToProfile (friend) {
+      this.$router.push({ name: 'user-profile', params: { pseudo: friend.userPseudo.toString().toLowerCase() } })
+      this.dialogNotifications = false
+    },
+
+
+    async acceptInvitation () {
+      let bodyInverse = {
+        userId: 4,// Should be the active user from localstorage
+        userIdHaveFriend: this.user.userId, // The user that is wanted to be a friend
+        isfriendState: 'friend'
+      }
+      let answer = false
+      await _service.isfriend.update(bodyInverse)
+        .then((res) => {
+          answer = res
+        })
+        .catch(e => {
+          console.log('Unable to accept invitation')
+        })
+      if (answer) {
+        let body = {
+          userId: this.user.userId, // The user that is wanted to be a friend
+          userIdHaveFriend: 4, // Should be the active user from localstorage
+          isfriendState: 'friend'
+        }
+        await _service.isfriend.create(body)
+          .then((res) => {
+            this.relationWithUser = 'friend'
+            this.changeBtnContent()
+          })
+          .catch(e => {
+            console.log('Unable to create the new friend')
+          })
+      }
+    },
+    async acceptInvitationFromNotification (userId) {
+      let bodyInverse = {
+        userId: 4,// Should be the active user from localstorage
+        userIdHaveFriend: userId, // The user that is wanted to be a friend
+        isfriendState: 'friend'
+      }
+      let answer = false
+      await _service.isfriend.update(bodyInverse)
+        .then((res) => {
+          this.loadAllInvitations()
+          this.loadFriends()
+          this.dialogNotifications = false
+        })
+        .catch(e => {
+          console.log('Unable to accept invitation')
+        })
+      let body = {
+        userId: userId, // The user that is wanted to be a friend
+        userIdHaveFriend: 4,// Should be the active user from localstorage
+        isfriendState: 'friend'
+      }
+      await _service.isfriend.create(body)
+        .catch(e => {
+          console.log('Unable to create the link')
+        })
+    },
+    async refuseInvitationFromNotification (userId) {
+      let bodyInverse = {
+        userId: 4,// Should be the active user from localstorage
+        userIdHaveFriend: userId, // The user that wanted to be friend
+      }
+      await _service.isfriend.delete(bodyInverse)
+        .then((res) => {
+          this.loadAllInvitations()
+          this.dialogNotifications = false
+        })
+        .catch(e => {
+          console.log('Unable to refuse invitation')
+        })
     },
 
     async follow () {
@@ -117,12 +214,35 @@ export default {
         userIdHaveFriend: 4, // Active user from localstorage
       }
       await _service.isfriend.delete(body)
-        .then((res) => {
-          this.relationWithUser = 'not-friend'
-          this.changeBtnContent()
-        })
         .catch(e => {
           console.log('Unable to unfollow user')
+        })
+      if (this.relationWithUser === 'friend') {
+        await _service.isfriend.delete(body)
+          .catch(e => {
+            console.log('Unable to unfollow user')
+          })
+      }
+      this.relationWithUser = 'not-friend'
+      this.changeBtnContent()
+    },
+    async findRelation () {
+      this.isLoading = true
+      let body = {
+        userId: this.user.userId, // The user of the profile
+        userIdHaveFriend: 4, // Should be the active user from localstorage
+      }
+      await _service.isfriend.findOneInvitation(body)
+        .then((res) => {
+          this.relationWithUser = res[0].isfriendState
+          this.changeBtnContent()
+          this.isLoading = false
+        })
+        .catch(e => {
+          this.relationWithUser = 'not-friend'
+          console.log('Unable to get the relation')
+          this.changeBtnContent()
+          this.isLoading = false
         })
     }
   },
