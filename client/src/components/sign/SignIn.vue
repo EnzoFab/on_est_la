@@ -70,7 +70,7 @@ export default {
         try {
           await _service.user.signIn(this.identifiant, this.password)
           this.alert = false
-          console.log('REUSSI')
+          this.$router.push({name: 'home'})
         } catch (e) {
           console.log(e)
           this.alert = true

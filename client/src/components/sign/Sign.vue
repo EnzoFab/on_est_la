@@ -76,7 +76,7 @@ export default {
 
 <style scoped>
 #signContent {
-  padding-top: 10% !important;
+  padding-top: 11% !important;
 }
 
 .v-form {

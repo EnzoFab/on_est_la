@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const ERRORTYPE = require('../policy/errorType');
+const errorType = require('../policy').errorType;
 
 module.exports = {
     // creer un token pour un utilisateur
@@ -12,7 +12,7 @@ module.exports = {
         return (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') // il a un bearer
             || (req.query && req.query.token) // ou un token
     },
-    jwtDecode (req, callback) {
+    jwtDecode: function (req, callback) {
         if (this.jwtCheckToken(req)) {
             let token = req.headers.authorization.split(' ')[1]
                 || req.headers['x-access-token'] || req.body.token || req.params.token ;
@@ -20,7 +20,7 @@ module.exports = {
                 callback(err, decoded)
             })
         } else {
-            callback(ERRORTYPE.FORBIDDEN, null)
+            callback(errorType.customError('Token invalide', null, 403))
         }
     }
 }

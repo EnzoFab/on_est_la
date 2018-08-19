@@ -1,6 +1,6 @@
 /* IMPORTS */
 require('dotenv').config();
-const helper = require('../helpers');
+const helperJ = require('../helpers/jwt_helper');
 const policy = require('../policy');
 const userController = require('./user_controller')
 
@@ -19,7 +19,7 @@ const sequelize = orm.sequelize();
 module.exports = {
     logIn (req, res) {
         req.body.userPass = undefined;
-        let token = helper.jwtHelper.jwtSignMember(req.body);
+        let token = helperJ.jwtSignMember(req.body);
         res.status(201).send({
             data: req.body,
             token: token

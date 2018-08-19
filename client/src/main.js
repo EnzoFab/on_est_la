@@ -14,6 +14,7 @@ import VueAxios from 'vue-axios'
 import 'vue-event-calendar/dist/style.css' // ^1.1.10, CSS has been extracted as one file, so you can easily update it.
 import vueEventCalendar from 'vue-event-calendar'
 import moment from 'moment'
+// import _service from './models'
 
 // locale can be 'zh' , 'en' , 'es', 'pt-br', 'ja', 'ko', 'fr', 'it', 'ru', 'de', 'vi', 'ua', 'no, 'no-nn'
 Vue.use(vueEventCalendar, {locale: 'fr'})

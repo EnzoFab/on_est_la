@@ -75,8 +75,13 @@
 </template>
 
 <script>
+import Sidebar from './Sidebar'
+
 export default {
   name: 'Topbar',
+  components: {
+    sidebar: Sidebar
+  },
   data () {
     return {
       menuVisible: true,

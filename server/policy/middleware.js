@@ -1,6 +1,7 @@
 /* IMPORTS */
 require('dotenv').config();
-const helper = require('../helpers');
+const helper = require('../helpers/index');
+const helperJ = require('../helpers/jwt_helper');
 const bcrypt = require('bcrypt');
 const errorType = require('./errorType');
 
@@ -96,5 +97,41 @@ module.exports = {
                 }
 
             })
+    },
+
+    decodeToken (req, res, next) {
+        helperJ.jwtDecode(req, function(err, decoded) {
+            if (err) {
+                res.status(400).send(err);
+            } else {
+                console.log(decoded.userId)
+                User
+                    .findById(decoded.userId)
+                    .then((user) => {
+                        if (user) {
+                            user.userPass = undefined
+                            res.status(201).send(user)
+                        } else {
+                            res.status(400).send(errorType.customError('Token invalide', null, 403))
+                        }
+
+                    })
+                    .catch((e) => res.status(400).send(errorType.customError('Token invalide', null, 403)))
+            }
+        })
+    },
+
+    isLogged (error, decode) {
+        console.log('isLogged')
+        if (error) {
+            next(errorType.FORBIDDEN)
+        } else {
+            User
+                .findById(decode.userId)
+                .then((user) => {
+                    next(user)
+                })
+                .catch((error) => next(errorType.customError('Token invalide', null, 403)));
+        }
     }
 }

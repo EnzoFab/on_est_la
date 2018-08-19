@@ -1,6 +1,20 @@
 import axios from 'axios'
 
 export default {
+
+  isLogged () {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem('Token')
+    return new Promise((resolve, reject) => {
+      let uri = 'http://localhost:1330/api/auth/is_logged'
+      axios.post(uri)
+        .then(response => {
+          resolve(response.data)
+        }, error => {
+          reject(error)
+        })
+    })
+  },
+
   async signIn (identifiant, password) {
     let body = {
       userMail: identifiant,
@@ -82,8 +96,19 @@ export default {
   },
 
   /* ========= LOCAL STORAGE ========= */
-  async storeUserInformation (values) {
-    console.log(values)
-    localStorage.setItem('Token', values.token)
+  storeUserInformation (values) {
+    localStorage.setItem('Token', 'Bearer ' + values.token)
+  },
+
+  getLocalUserInformations () {
+    let informations = {
+      userPseudo: localStorage.getItem('Token')
+    }
+    return informations
+  },
+
+  clearLocalUserInformations () {
+    localStorage.removeItem('Token')
   }
+
 }
