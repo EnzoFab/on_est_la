@@ -8,8 +8,9 @@
           <v-flex xs12 class="primetime text-darkgrey">
             <!-- Follow button -->
             <v-btn
-              color="info"
+              :color="btnColor"
               block
+              :disabled="isUserActive"
               depressed large class="mb-4"
               @click="friendBtnAction"
             >
@@ -37,7 +38,7 @@
       <v-flex class="pl-4" xs6 text-xs-left>
         <v-card-text v-model="listoffriends">
           <!-- Notifications -->
-          <v-layout row align-center class="mb-5"
+          <v-layout v-if="isUserActive" row align-center class="mb-5"
                     slot="activator"
                     color="primary"
                     dark
@@ -87,7 +88,7 @@
           </v-tooltip>
 
           <!-- Apéritifs -->
-          <v-tooltip left>
+          <v-tooltip v-if="isViewPublic" left>
             <v-layout row align-center class="mb-4"
                       slot="activator"
                       color="primary"
@@ -109,7 +110,7 @@
           </v-tooltip>
 
           <!-- Stats -->
-          <v-tooltip left>
+          <v-tooltip v-if="isViewPublic" left>
             <v-layout row align-center class="mb-4"
                       slot="activator"
                       color="primary"
@@ -162,9 +163,9 @@
                 </v-list-tile-content>
                 <v-list-tile-action>
                   <v-btn icon ripple>
-                    <v-icon color="success" @click="acceptInvitationFromNotification(item.userId)">check_circle</v-icon>
+                    <v-icon color="success" @click="acceptInvitation(item.userId)">check_circle</v-icon>
                   </v-btn>
-                  <v-btn icon ripple @click="refuseInvitationFromNotification(item.userId)">
+                  <v-btn icon ripple @click="refuseInvitation(item.userId)">
                     <v-icon color="error">close</v-icon>
                   </v-btn>
                 </v-list-tile-action>

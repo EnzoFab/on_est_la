@@ -120,13 +120,7 @@ export default {
       places: [],
       editedIndex: -1,
       editedItem: {},
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      }
+      defaultItem: new _service.PlaceModel().defaults()
     }
   },
 
@@ -143,6 +137,35 @@ export default {
   },
 
   methods: {
+    /* ========= LOAD METHODS ========= */
+    async loadPlaces () {
+      this.isLoading = true
+      this.places = await _service.place.findAll()
+      this.isLoading = false
+    },
+
+    /* ========= CRUD ========= */
+    async createPlaces (value) {
+      this.isLoading = true
+      let res = await _service.place.create(value)
+      this.editedItem.placeId = res.placeId
+      this.isLoading = false
+    },
+    async updatePlace (value) {
+      this.isLoading = true
+      await _service.place.update(value)
+      this.isLoading = false
+    },
+    async deletePlace (placeId, index) {
+      this.isLoading = true
+      let res = await _service.place.delete(placeId)
+      if (res) {
+        this.places.splice(index, 1)
+      }
+      this.isLoading = false
+    },
+
+    /* ========= DATA TABLE ========= */
     blockFieldSize (value, size) {
       return _helper.text.blockFieldSize(value, size)
     },
@@ -151,20 +174,17 @@ export default {
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
-
     async deleteItem (item) {
       const index = this.places.indexOf(item)
       confirm('Are you sure you want to delete this item?') && await this.deletePlace(item.placeId, index)
     },
-
     close () {
       this.dialog = false
       setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedItem = new _service.PlaceModel().defaults()
         this.editedIndex = -1
       }, 300)
     },
-
     save () {
       if (this.editedIndex > -1) {
         Object.assign(this.places[this.editedIndex], this.editedItem)
@@ -176,62 +196,13 @@ export default {
         this.createPlaces(this.editedItem)
       }
       this.close()
-    },
-    async loadPlaces () {
-      this.isLoading = true
-      await _service.place.findAll()
-        .then((res) => {
-          this.places = res
-          this.isLoading = false
-        })
-        .catch(e => {
-          console.log('Unable to load places')
-          this.isLoading = false
-        })
-    },
-    async createPlaces (value) {
-      await _service.place.create(value)
-        .then((res) => {
-          // nothing
-        })
-        .catch(e => {
-          console.log('Unable to create place. ', e)
-        })
-    },
-    async updatePlace (value) {
-      this.isLoading = true
-      await _service.place.update(value)
-        .then((res) => {
-          // nothing
-        })
-        .catch(e => {
-          console.log('Unable to update place. ', e)
-        })
-      this.isLoading = false
-    },
-    async deletePlace (placeId, index) {
-      this.isLoading = true
-      try {
-        await _service.place.delete(placeId)
-          .then((res) => {
-            this.isLoading = false
-          })
-          .catch(e => {
-            console.log('Unable to delete place. ', e)
-            this.isLoading = false
-          })
-      } catch (e) {
-        console.log('Unable to delete place. ', e)
-        this.isLoading = false
-      }
-      this.places.splice(index, 1)
     }
   },
 
   created: async function () {
     this.isLoading = true
-    Object.assign(this.editedItem, new _service.PlaceModel())
     await this.loadPlaces()
+    this.isLoading = false
   }
 }
 </script>

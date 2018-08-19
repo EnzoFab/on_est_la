@@ -49,7 +49,8 @@
         </v-layout>
       </v-flex>
       <v-flex xs6>
-        <!--<mapcard/>-->
+        <!-- MAP -->
+        <mapcard/>
       </v-flex>
     </v-layout>
     <!-- PLACE DIALOG -->

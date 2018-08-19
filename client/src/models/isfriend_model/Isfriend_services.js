@@ -1,56 +1,53 @@
 import axios from 'axios'
 
 export default {
-  create (body) {
+  async create (body) {
     let uri = 'http://localhost:1330/api/isfriend/create'
-    return axios.post(uri, body)
+    try {
+      let res = await axios.post(uri, body)
+      return res.data.isfriendState
+    } catch (e) {
+      return 'not-friend'
+    }
   },
 
-  findOneInvitation (body) {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/isfriend/find_one_invitation'
-      axios.post(uri, body)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+  async findOneInvitation (body) {
+    let uri = 'http://localhost:1330/api/isfriend/find_one_invitation'
+    try {
+      let res = await axios.post(uri, body)
+      return res.data[0].isfriendState
+    } catch (e) {
+      return 'not-friend'
+    }
   },
 
-  findAllInvitations (userId) {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/isfriend/find_all_invitations/' + userId
-      axios.get(uri)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+  async findAllInvitations (userId) {
+    let uri = 'http://localhost:1330/api/isfriend/find_all_invitations/' + userId
+    try {
+      let res = await axios.get(uri)
+      return res.data
+    } catch (e) {
+      return []
+    }
   },
 
-  update (body) {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/isfriend/update'
-      axios.post(uri, body)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+  async update (body) {
+    let uri = 'http://localhost:1330/api/isfriend/update'
+    try {
+      let res = await axios.post(uri, body)
+      return res
+    } catch (e) {
+      return false
+    }
   },
 
   delete (body) {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/isfriend/delete'
-      axios.post(uri, body)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+    let uri = 'http://localhost:1330/api/isfriend/delete'
+    try {
+      let res = axios.post(uri, body)
+      return res
+    } catch (e) {
+      return false
+    }
   }
 }

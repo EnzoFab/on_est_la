@@ -62,16 +62,14 @@ export default {
     })
   },
 
-  findAllFriends (userId) {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/user/find_all_friends/' + userId
-      axios.get(uri)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+  async findAllFriends (userId) {
+    let uri = 'http://localhost:1330/api/user/find_all_friends/' + userId
+    try {
+      let res = await axios.get(uri)
+      return res.data
+    } catch (e) {
+      return []
+    }
   },
 
   findAllFromSearchBar: function findAllFromSearchBar (search) {
@@ -89,16 +87,14 @@ export default {
     })
   },
 
-  findOneFromPseudo: function (userPseudo) {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/user/find_one_from_pseudo/' + userPseudo
-      axios.get(uri)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+  async findOneFromPseudo (userPseudo) {
+    let uri = 'http://localhost:1330/api/user/find_one_from_pseudo/' + userPseudo
+    try {
+      let res = await axios.get(uri)
+      return res.data
+    } catch (e) {
+      return []
+    }
   },
 
   /* ========= LOCAL STORAGE ========= */

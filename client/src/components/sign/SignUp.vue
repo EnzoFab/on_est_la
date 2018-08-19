@@ -131,15 +131,11 @@ export default {
     },
 
     async isPseudoTaken () {
-      try {
-        let res = await _service.user.findOneFromPseudo(this.newUser.userPseudo)
-        if (res.length > 0) {
-          this.pseudoCheckMessage = 'Pseudo déjà pris morray.'
-        } else {
-          this.pseudoCheckMessage = ''
-        }
-      } catch (e) {
+      let res = await _service.user.findOneFromPseudo(this.newUser.userPseudo)
+      if (res.length > 0) {
         this.pseudoCheckMessage = 'Pseudo déjà pris morray.'
+      } else {
+        this.pseudoCheckMessage = ''
       }
     },
 

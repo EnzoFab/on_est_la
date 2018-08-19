@@ -9,15 +9,15 @@ export default class Place extends Model {
   // Default attributes that define the "empty" state.
   defaults () {
     return {
-      placeId: null,
-      placeName: null,
-      placeDescription: null,
-      placeAdressNum: null,
-      placeAdressStreet: null,
-      placeAdressPostalCode: null,
-      placeAdressPostalCity: null,
-      placeAdressPostalCountry: null,
-      placeAdressPostalDetails: null
+      placeId: '',
+      placeName: '',
+      placeDescription: '',
+      placeAdressNum: '',
+      placeAdressStreet: '',
+      placeAdressPostalCode: '',
+      placeAdressCity: '',
+      placeAdressCountry: '',
+      placeAdressDetails: ''
     }
   }
 
@@ -27,7 +27,7 @@ export default class Place extends Model {
       placeId:   (id) => Number(id) || null,
       placeName: String,
       placeDescription: String,
-      placeAdressNum: Date,
+      placeAdressNum: String,
       placeAdressStreet: String,
       placeAdressCode: String,
       placeAdressCity: String,

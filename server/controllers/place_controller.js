@@ -14,7 +14,6 @@ const sequelize = orm.sequelize();
 
 module.exports = {
     create(req, res) {
-        console.log(req.body)
         return Place
             .create(req.body)
             .then((place) => res.status(201).send(place))

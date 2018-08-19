@@ -1,51 +1,45 @@
 import axios from 'axios'
 
 export default {
-  create: function create (body) {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/place/create'
-      axios.post(uri, body)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+  async create (body) {
+    let uri = 'http://localhost:1330/api/place/create'
+    try {
+      let res = await axios.post(uri, body)
+      return res.data
+    } catch (e) {
+      return {}
+    }
   },
 
-  findAll: function findAll () {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/place/find_all'
-      axios.get(uri)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+  async findAll () {
+    let uri = 'http://localhost:1330/api/place/find_all'
+    try {
+      let res = await axios.get(uri)
+      return res.data
+    } catch (e) {
+      return []
+    }
   },
 
-  update: function update (body) {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/place/update'
-      axios.put(uri, body)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+  async update (body) {
+    let uri = 'http://localhost:1330/api/place/update'
+    try {
+      await axios.post(uri, body)
+      return true
+    } catch (e) {
+      return false
+    }
   },
 
-  delete: function create (placeId) {
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/place/delete/' + placeId
-      axios.post(uri)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+  async delete (placeId) {
+    let uri = 'http://localhost:1330/api/place/delete/' + placeId
+    console.log(placeId)
+    try {
+      await axios.post(uri)
+      return true
+    } catch (e) {
+        return false
+    }
+
   }
 }
