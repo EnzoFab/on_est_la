@@ -19,8 +19,10 @@ export default new Vuex.Store({
       return state.isLogged
     },
     getUser (state) {
-      console.log('ok', state)
       return state.user
+    },
+    getToken (state) {
+      return state.token
     }
   },
   mutations: {

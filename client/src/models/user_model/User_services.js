@@ -4,14 +4,14 @@ import store from '@/store/store'
 export default {
 
   async isLogged () {
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('Token')
+    axios.defaults.headers.common['Authorization'] = store.getters.getToken
     let uri = 'http://localhost:1330/api/auth/is_logged'
     let res = await axios.post(uri)
     return res.data
   },
 
   async getLoggedUser () {
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('Token')
+    axios.defaults.headers.common['Authorization'] = store.getters.getToken
     let uri = 'http://localhost:1330/api/auth/find_logged'
     let res = await axios.post(uri)
     return res.data
