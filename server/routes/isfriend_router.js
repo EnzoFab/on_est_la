@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const isfriendController = require('../controllers').isFriend;
+const middleware = require('../policy').middleware;
 
 router.get('/find_all_invitations/:userId', isfriendController.findAllInvitations);
 

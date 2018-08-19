@@ -26,6 +26,10 @@ module.exports = {
         })
     },
 
+    isLoggeg (req, res) {
+
+    },
+
     findLogged (req, res) {
         helperJ.jwtDecode(req, function(err, decoded) {
             if (err) {

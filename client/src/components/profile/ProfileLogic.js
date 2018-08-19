@@ -3,8 +3,6 @@ import CustomSpinner from '../Spinner'
 import _service from '../../models/index'
 
 let user = new _service.UserModel()
-let friends = []
-let isFriend = 'not-friend'
 
 /* ============ EXPORT ============ */
 export default {
@@ -25,8 +23,6 @@ export default {
       listoffriends: [],
       isLoading: false,
       btnLabel: 'Follow cette douceur',
-      btnLabelOff: 'Follow cette douceur',
-      btnLabelHover: 'Deviens mon pote',
       invitations: [],
       dialogNotifications: false
     }
@@ -82,6 +78,7 @@ export default {
     },
 
      async friendBtnAction () {
+      console.log('ACTION')
       // Action to perform depending on the state with the user
       if (this.relationWithUser === 'not-friend'){
         await this.follow()
@@ -91,24 +88,11 @@ export default {
     },
     changeBtnContent () {
       if (this.relationWithUser === 'friend') {
-        this.btnLabelHover = 'unfollow cet escroc'
-        this.btnLabelOff = ''
-        this.btnLabel = this.btnLabelOff
+        this.btnLabel = ''
       } else if (this.relationWithUser === 'waiting') {
-        this.btnLabelHover = 'annuler ma demande'
-        this.btnLabelOff = 'en attente'
-        this.btnLabel = this.btnLabelOff
+        this.btnLabel = 'en attente'
       } else {
-        this.btnLabelHover = 'Follow  cette douceur'
-        this.btnLabelOff = 'deviens mon pote'
-        this.btnLabel = this.btnLabelOff
-      }
-    },
-    changeBtnHover (onBtn) {
-      if (onBtn) {
-        this.btnLabel = this.btnLabelHover
-      } else {
-        this.btnLabel = this.btnLabelOff
+        this.btnLabel = 'deviens mon pote'
       }
     },
     dialogOpen (state) {
@@ -193,18 +177,19 @@ export default {
 
     async follow () {
       let body = {
-        userId: this.user.userId, // The user that is wanted to be a friend
-        userIdHaveFriend: 4, // Should be the active user from localstorage
+        userId: this.user.userId, // The user that will receive the invitation
+        userIdHaveFriend: 4, // active user
         isfriendState: 'waiting'
       }
-      await _service.isfriend.create(body)
+      console.log('body : ', body)
+      /*await _service.isfriend.create(body)
         .then((res) => {
           this.relationWithUser = 'waiting'
           this.changeBtnContent()
         })
         .catch(e => {
           console.log('Unable to make friend')
-        })
+        })*/
     },
     async unfollow () {
       let body = {

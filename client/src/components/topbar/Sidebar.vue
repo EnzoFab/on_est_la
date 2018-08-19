@@ -40,13 +40,10 @@ export default {
   },
   methods: {
     async logOut () {
-
       await _service.user.clearLocalUserInformations()
       this.$router.push({name: 'sign'})
-    }
-  },
-  watch: {
-    async '$route' (to, from) {
+    },
+    async loadActiveUser () {
       await _service.user.getLoggedUser()
         .then(res => {
           this.activeUser = res
@@ -55,6 +52,14 @@ export default {
           console.log(e)
         })
     }
+  },
+  watch: {
+    async '$route' (to, from) {
+      await this.loadActiveUser()
+    }
+  },
+  async created () {
+    await this.loadActiveUser()
   }
 }
 </script>

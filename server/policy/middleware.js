@@ -108,7 +108,6 @@ module.exports = {
                     .findById(decoded.userId)
                     .then((user) => {
                         if (user) {
-                            user.userPass = undefined
                             res.status(201).send(true)
                         } else {
                             res.status(201).send(false)

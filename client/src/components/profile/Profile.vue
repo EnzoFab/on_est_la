@@ -7,11 +7,11 @@
         <v-layout row wrap >
           <v-flex xs12 class="primetime text-darkgrey">
             <!-- Follow button -->
-            <v-btn @mouseover="changeBtnHover(true)"
-                   @mouseleave="changeBtnHover(false)"
-                   @click="friendBtnAction"
-                   block
-                   depressed large class="mb-4 hover-success" color="error"
+            <v-btn
+              color="info"
+              block
+              depressed large class="mb-4"
+              @click="friendBtnAction"
             >
               {{ btnLabel }}
             </v-btn>
@@ -188,5 +188,41 @@
   .profile-legend {
     padding-left: 15%;
     padding-right: 15%;
+  }
+  .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 </style>
