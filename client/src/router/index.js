@@ -8,10 +8,12 @@ import Calendar from '@/components/calendar/Calendar'
 import AdminHome from '@/components/admin/AdminHome'
 import PlaceManagement from '@/components/admin/placeManagement/PlaceManagement'
 import Sign from '@/components/sign/Sign'
+import _service from '../models'
+import store from '@/store/store'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -32,26 +34,22 @@ export default new Router({
       path: '/sign-in',
       name: 'sign',
       component: Sign,
-      meta: {title: 'On est là hein'}
-    },
-
-    {
-      path: '/cc/:pseudo',
-      name: 'my-profile',
-      component: Profile
+      meta: {title: 'prout'}
     },
 
     {
       path: '/cc/:pseudo',
       name: 'user-profile',
-      component: Profile
+      component: Profile,
+      meta: {title: 'caca'}
     },
 
     {
       path: '/soif',
       name: 'MapPage',
       map: 'map',
-      component: MapPage
+      component: MapPage,
+      meta: {title: 'haha'}
     },
 
     {
@@ -80,3 +78,29 @@ export default new Router({
     }
   ]
 })
+
+/* ======== GLOBAL GUARDS ======== */
+
+// First function triggered
+router.beforeEach(async (to, from, next) => {
+  // re-route
+  if (await _service.user.isLogged()) {
+    // User logged
+    store.commit('setIsLogged', true)
+    if (to.path === '/sign-in') {
+      next('/home')
+    } else {
+      next()
+    }
+  } else {
+    // User not logged
+    store.commit('setIsLogged', false)
+    if (to.path === '/sign-in') {
+      next()
+    } else {
+      next('./sign-in')
+    }
+  }
+})
+
+export default router

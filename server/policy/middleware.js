@@ -3,7 +3,7 @@ require('dotenv').config();
 const helper = require('../helpers/index');
 const helperJ = require('../helpers/jwt_helper');
 const bcrypt = require('bcrypt');
-const errorType = require('./errorType');
+const errorType = require('../policy/errorType');
 
 
 /* SET UP DB LINK */
@@ -102,21 +102,22 @@ module.exports = {
     decodeToken (req, res, next) {
         helperJ.jwtDecode(req, function(err, decoded) {
             if (err) {
-                res.status(400).send(err);
+                res.status(201).send(false)
             } else {
-                console.log(decoded.userId)
                 User
                     .findById(decoded.userId)
                     .then((user) => {
                         if (user) {
                             user.userPass = undefined
-                            res.status(201).send(user)
+                            res.status(201).send(true)
                         } else {
-                            res.status(400).send(errorType.customError('Token invalide', null, 403))
+                            res.status(201).send(false)
                         }
 
                     })
-                    .catch((e) => res.status(400).send(errorType.customError('Token invalide', null, 403)))
+                    .catch((e) =>{
+                        res.status(201).send(false)
+                    })
             }
         })
     },

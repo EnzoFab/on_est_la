@@ -38,7 +38,6 @@ export default {
       await _service.user.findAllFriends(this.user.userId)
         .then((res) => {
           this.listoffriends = res
-          console.log(res)
           this.isLoading = false
         })
         .catch(e => {
@@ -113,7 +112,6 @@ export default {
       }
     },
     dialogOpen (state) {
-      console.log('open !')
       this.dialogNotifications = state
     },
     goToProfile (friend) {

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const errorType = require('../policy').errorType;
+const errorType = require('../policy/errorType');
 
 module.exports = {
     // creer un token pour un utilisateur

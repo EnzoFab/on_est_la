@@ -67,12 +67,11 @@ export default {
   methods: {
     async submit () {
       if (this.$refs.form.validate()) {
-        try {
-          await _service.user.signIn(this.identifiant, this.password)
+        let signed = await _service.user.signIn(this.identifiant, this.password)
+        if (signed) {
           this.alert = false
           this.$router.push({name: 'home'})
-        } catch (e) {
-          console.log(e)
+        } else {
           this.alert = true
         }
       }

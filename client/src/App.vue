@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <sidebar v-if="isLogged"></sidebar>
+    <sidebar v-if="this.$store.getters.getIsLogged"></sidebar>
     <!--<CustomSpinner :isLoading="showSpinner" class="mb-3"/> -->
     <transition name="custom-classes-transition"
                 enter-active-class="animated fadeIn"
@@ -16,8 +16,6 @@
 <script>
 import topbar from '@/components/topbar/Topbar'
 import navbar from '@/components/topbar/Navbar'
-import _service from './models/index'
-
 import CustomSpinner from './components/Spinner'
 import Sidebar from './components/topbar/Sidebar'
 
@@ -31,51 +29,17 @@ export default {
   },
   data () {
     return {
-      isLogged: false
     }
   },
   methods: {
-    async isUserLogged () {
-      console.log('triggered')
-      try {
-        /* eslint-disable */
-        let activeUser = await _service.user.isLogged()
-        this.isLogged = true
-      } catch (e) {
-        this.isLogged = false
-      }
-    }
+
   },
   async created () {
-    await this.isUserLogged()
-    this.$router.beforeEach((to, from, next) => {
-      try {
-        /* eslint-disable */
-        let activeUser = _service.user.isLogged()
-          .then((res) => {
-            this.isLogged = true
-            console.log(this.isLogged)
-            next()
-          })
-          .catch(e => {
-            console.log(this.isLogged)
-            this.isLogged = false
-            next('sign-in')
-          })
-      } catch (e) {
-        console.log(this.isLogged)
-        this.isLogged = false
-        next('sign-in')
-      }
-    })
   },
   computed: {
     showSpinner () {
       return this.$store.getters.getSpinnerVisibility
     }
-  },
-  watch: {
-    '$router': 'isUserLogged'
   }
 }
 </script>

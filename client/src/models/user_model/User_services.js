@@ -2,17 +2,18 @@ import axios from 'axios'
 
 export default {
 
-  isLogged () {
+  async isLogged () {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem('Token')
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/auth/is_logged'
-      axios.post(uri)
-        .then(response => {
-          resolve(response.data)
-        }, error => {
-          reject(error)
-        })
-    })
+    let uri = 'http://localhost:1330/api/auth/is_logged'
+    let res = await axios.post(uri)
+    return res.data
+  },
+
+  async getLoggedUser () {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem('Token')
+    let uri = 'http://localhost:1330/api/auth/find_logged'
+    let res = await axios.post(uri)
+    return res.data
   },
 
   async signIn (identifiant, password) {
@@ -20,16 +21,18 @@ export default {
       userMail: identifiant,
       userPass: password
     }
-    return new Promise((resolve, reject) => {
-      let uri = 'http://localhost:1330/api/auth/log_in'
-      axios.post(uri, body)
-        .then(response => {
-          this.storeUserInformation(response.data)
-          resolve(response.data)
-        }, error => {
-          reject(error)
+    let uri = 'http://localhost:1330/api/auth/log_in'
+    let isSigned;
+    try {
+      await axios.post(uri, body)
+        .then((res) => {
+          this.storeUserInformation(res.data)
+          isSigned = true
         })
-    })
+    } catch (e) {
+      isSigned = false
+    }
+    return isSigned
   },
 
   signUp (body) {

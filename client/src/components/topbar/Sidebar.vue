@@ -33,25 +33,28 @@ export default {
   name: 'Sidebar',
   data () {
     return {
-      activeUser: {}
+      activeUser: {
+        userPseudo: {}
+      }
     }
   },
   methods: {
-    async loadActiveUser () {
-      try {
-        this.activeUser = await _service.user.isLogged()
-      } catch (e) {
-        console.log('Impossible to load user')
-      }
-    },
-    logOut () {
-      _service.user.clearLocalUserInformations()
+    async logOut () {
+
+      await _service.user.clearLocalUserInformations()
       this.$router.push({name: 'sign'})
-      this.activeUser = {}
     }
   },
-  async created () {
-    await this.loadActiveUser()
+  watch: {
+    async '$route' (to, from) {
+      await _service.user.getLoggedUser()
+        .then(res => {
+          this.activeUser = res
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    }
   }
 }
 </script>

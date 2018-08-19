@@ -8,11 +8,15 @@ export default new Vuex.Store({
   state: {
     token: (localStorage.getItem('token')) || null,
     user: JSON.parse(localStorage.getItem('user')) || null,
-    loader: true
+    loader: true,
+    isLogged: false
   },
   getters: {
     getSpinnerVisibility (state) {
       return state.loader
+    },
+    getIsLogged (state) {
+      return state.isLogged
     }
   },
   mutations: {
@@ -34,6 +38,9 @@ export default new Vuex.Store({
     removeUser (state) {
       localStorage.removeItem('user')
       state.user = null
+    },
+    setIsLogged (state, value) {
+      state.isLogged = value
     }
   },
   actions: {
