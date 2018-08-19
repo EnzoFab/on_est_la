@@ -27,27 +27,11 @@ module.exports = {
     },
 
     isLoggeg (req, res) {
-
+        res.status(201).send(true)
     },
 
     findLogged (req, res) {
-        helperJ.jwtDecode(req, function(err, decoded) {
-            if (err) {
-                res.status(400).send(err);
-            } else {
-                User
-                    .findById(decoded.userId)
-                    .then((user) => {
-                        if (user) {
-                            user.userPass = undefined
-                            res.status(201).send(user)
-                        } else {
-                            res.status(400).send(policy.errorType.customError('Token invalide', null, 403))
-                        }
-
-                    })
-                    .catch((e) => res.status(400).send(policy.errorType.customError('Token invalide', null, 403)))
-            }
-        })
+        req.body.decoded.userPass = undefined
+        res.status(201).send(req.decoded)
     }
 };

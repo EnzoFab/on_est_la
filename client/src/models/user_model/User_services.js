@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store/store'
 
 export default {
 
@@ -22,11 +23,13 @@ export default {
       userPass: password
     }
     let uri = 'http://localhost:1330/api/auth/log_in'
-    let isSigned;
+    let isSigned
     try {
       await axios.post(uri, body)
         .then((res) => {
-          this.storeUserInformation(res.data)
+          // this.storeUserInformation(res.data)
+          store.commit('setToken', 'Bearer ' + res.data.token)
+          store.commit('setUser', res.data.data)
           isSigned = true
         })
     } catch (e) {
@@ -111,7 +114,8 @@ export default {
   },
 
   clearLocalUserInformations () {
-    localStorage.removeItem('Token')
+    store.commit('removeToken')
+    store.commit('removeUser')
   }
 
 }

@@ -6,8 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: true,
   state: {
-    token: (localStorage.getItem('token')) || null,
-    user: JSON.parse(localStorage.getItem('user')) || null,
+    token: (localStorage.getItem('Token')) || null,
+    user: (JSON.parse(localStorage.getItem('User'))) || null,
     loader: true,
     isLogged: false
   },
@@ -17,22 +17,26 @@ export default new Vuex.Store({
     },
     getIsLogged (state) {
       return state.isLogged
+    },
+    getUser (state) {
+      console.log('ok', state)
+      return state.user
     }
   },
   mutations: {
     setToken (state, token) {
-      localStorage.setItem('token', token)
+      localStorage.setItem('Token', token)
       state.token = token
     },
     setUser (state, user) {
-      localStorage.setItem('user', JSON.stringify(user))
+      localStorage.setItem('User', JSON.stringify(user))
       state.user = user
     },
     setLoader (state, loader) {
       state.loader = loader
     },
     removeToken (state) {
-      localStorage.removeItem('token')
+      localStorage.removeItem('Token')
       state.token = null
     },
     removeUser (state) {

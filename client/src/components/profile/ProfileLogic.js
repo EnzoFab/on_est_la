@@ -1,6 +1,7 @@
 import friendList from '../friendlist/Friendlist'
 import CustomSpinner from '../Spinner'
 import _service from '../../models/index'
+import store from '@/store/store'
 
 let user = new _service.UserModel()
 
@@ -176,20 +177,20 @@ export default {
     },
 
     async follow () {
+      console.log(store.getters)
       let body = {
         userId: this.user.userId, // The user that will receive the invitation
-        userIdHaveFriend: 4, // active user
+        userIdHaveFriend: store.getters.getUser.userId,
         isfriendState: 'waiting'
       }
-      console.log('body : ', body)
-      /*await _service.isfriend.create(body)
+      await _service.isfriend.create(body)
         .then((res) => {
-          this.relationWithUser = 'waiting'
+          this.relationWithUser = res.data.isfriendState
           this.changeBtnContent()
         })
         .catch(e => {
           console.log('Unable to make friend')
-        })*/
+        })
     },
     async unfollow () {
       let body = {

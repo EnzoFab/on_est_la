@@ -108,7 +108,8 @@ module.exports = {
                     .findById(decoded.userId)
                     .then((user) => {
                         if (user) {
-                            res.status(201).send(true)
+                            req.body.decoded = user
+                            next()
                         } else {
                             res.status(201).send(false)
                         }

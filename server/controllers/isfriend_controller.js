@@ -19,7 +19,7 @@ module.exports = {
     create(req, res) {
         return Isfriend
             .create(req.body)
-            .then((isfriend) => res.status(201).send(true))
+            .then((isfriend) => res.status(201).send(isfriend))
             .catch((error) => res.status(400).send(error));
     },
 

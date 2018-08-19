@@ -7,7 +7,7 @@ const authController = require('../controllers').auth;
 
 router.post('/sign_up', middleware.verificationAuth, middleware.hashPassword, userController.create);
 router.post('/log_in', middleware.verificationLogin, middleware.comparePassword, authController.logIn);
-router.post('/is_logged', middleware.decodeToken);
-router.post('/find_logged', authController.findLogged);
+router.post('/is_logged', middleware.decodeToken, authController.isLoggeg);
+router.post('/find_logged', middleware.decodeToken, authController.findLogged);
 
 module.exports = router;

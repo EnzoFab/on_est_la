@@ -28,14 +28,13 @@
 
 <script>
 import _service from '../../models/index'
+import store from '@/store/store'
 
 export default {
   name: 'Sidebar',
   data () {
     return {
-      activeUser: {
-        userPseudo: {}
-      }
+      activeUser: {}
     }
   },
   methods: {
@@ -44,13 +43,7 @@ export default {
       this.$router.push({name: 'sign'})
     },
     async loadActiveUser () {
-      await _service.user.getLoggedUser()
-        .then(res => {
-          this.activeUser = res
-        })
-        .catch(e => {
-          console.log(e)
-        })
+      this.activeUser = store.getters.getUser
     }
   },
   watch: {
