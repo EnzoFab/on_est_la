@@ -237,6 +237,7 @@ module.exports = {
         }
     },
     sortEventsForCalendar (req, res, next) {
+        /* req.body.events = {user: {], frequents: {frequent: {}, place: {}} */
         try {
             let events = []
             // For each friend
@@ -262,10 +263,9 @@ module.exports = {
                 // For each of his frequents
                 for (let f of event.frequents) {
                     for (let e of events) {
-                        if (e.date === f.frequent.frequentDateStart) {
-                            if (e.place === f.place) {
+                        if (e.date === moment(f.frequent.frequentDateStart).format('YYYY/MM/DD')) {
+                            if (e.place.placeId === f.place.placeId) {
                                 e.users.push(event.user)
-
                             }
                         }
                     }

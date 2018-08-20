@@ -52,14 +52,13 @@ module.exports = {
     },
 
     delete(req, res) {
-        console.log(req.body)
         return Place
             .destroy({
                 where: {
                     placeId: req.params.placeId
                 }
             })
-            .then((place) => res.status(201).send(true))
+            .then((res) => res.status(201).send(true))
             .catch((error) => res.status(400).send(error));
     }
 };

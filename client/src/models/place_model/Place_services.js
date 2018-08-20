@@ -3,7 +3,6 @@ import store from '@/store/store'
 
 export default {
   async create (body) {
-    console.log('BODY : ', body)
     let uri = 'http://localhost:1330/api/place/create'
     try {
       let res = await axios.post(uri, body)
@@ -49,7 +48,6 @@ export default {
 
   async delete (placeId) {
     let uri = 'http://localhost:1330/api/place/delete/' + placeId
-    console.log(placeId)
     try {
       await axios.post(uri)
       return true

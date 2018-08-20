@@ -18,7 +18,7 @@ import moment from 'moment'
 // import _service from './models'
 
 // locale can be 'zh' , 'en' , 'es', 'pt-br', 'ja', 'ko', 'fr', 'it', 'ru', 'de', 'vi', 'ua', 'no, 'no-nn'
-Vue.use(vueEventCalendar, {locale: 'fr'})
+Vue.use(vueEventCalendar, {locale: 'fr', color: '#1a237e'})
 Vue.use(require('vue-moment'))
 moment.locale('fr')
 Vue.use(moment)

@@ -21,9 +21,29 @@ module.exports = {
     },
 
     findAll(req, res) {
-        console.log('no me')
-        return sequelize.query('SELECT * FROM type', { model: Type })
+        return Type
+            .findAll()
             .then((types) => res.status(201).send(types))
+            .catch((error) => res.status(400).send(error));
+    },
+
+    update(req, res) {
+        return Type
+            .update(req.body, {
+                where: {
+                    typeId: req.body.typeId
+                }
+            })
+            .then((type) => res.status(201).send(type))
+            .catch((error) => res.status(400).send(error));
+    },
+
+    delete(req, res) {
+        return Type
+            .destroy({
+                where: req.body
+            })
+            .then((res) => res.status(201).send(true))
             .catch((error) => res.status(400).send(error));
     }
 };
