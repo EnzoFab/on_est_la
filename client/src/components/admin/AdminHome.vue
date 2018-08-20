@@ -13,8 +13,8 @@
 import Sidemenu from '../sidemenu/Sidemenu'
 
 const menuItems = [
-  { title: 'Places', icon: 'flag' },
-  { title: 'About', icon: 'question_answer' }
+  { title: 'Places', icon: 'flag', link: {name: 'placeManagement'} },
+  { title: 'Types', icon: 'question_answer', link: {name: 'typeManagement'} }
 ]
 
 export default {

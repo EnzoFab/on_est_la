@@ -50,7 +50,7 @@ export default {
     })
   },
 
-  findAll: function findAll () {
+  findAll () {
     return new Promise((resolve, reject) => {
       let uri = 'http://localhost:1330/api/user/find_all'
       axios.get(uri)

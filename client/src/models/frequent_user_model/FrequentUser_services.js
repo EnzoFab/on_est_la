@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '../../store/store'
 
 export default {
 
@@ -21,6 +22,26 @@ export default {
       return true
     } catch (e) {
       return false
+    }
+  },
+
+  async findAllFrequentFriends () {
+    let uri = 'http://localhost:1330/api/frequent_user/find_all_for_calendar/' + store.getters.getUser.userId
+    try {
+      let res = await axios.get(uri)
+      return res.data
+    } catch (e) {
+      return []
+    }
+  },
+
+  async findAllFrequentFromUser () {
+    let uri = 'http://localhost:1330/api/frequent_user/find_all_frequent_from_user/' + store.getters.getUser.userId
+    try {
+      let res = await axios.get(uri)
+      return res.data
+    } catch (e) {
+      return []
     }
   }
 }

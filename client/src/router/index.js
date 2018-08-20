@@ -7,6 +7,7 @@ import MapPage from '@/components/map/MapPage'
 import Calendar from '@/components/calendar/Calendar'
 import AdminHome from '@/components/admin/AdminHome'
 import PlaceManagement from '@/components/admin/placeManagement/PlaceManagement'
+import TypeManagement from '@/components/admin/typeManagement/TypeManagement'
 import Sign from '@/components/sign/Sign'
 import _service from '../models'
 import store from '@/store/store'
@@ -80,6 +81,11 @@ const router = new Router({
           path: 'place',
           name: 'placeManagement',
           component: PlaceManagement
+        },
+        {
+          path: 'type',
+          name: 'typeManagement',
+          component: TypeManagement
         }
       ]
     }

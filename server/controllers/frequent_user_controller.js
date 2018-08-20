@@ -32,6 +32,9 @@ module.exports = {
             .then((user) => res.status(201).send(user))
             .catch((error) => res.status(400).send(error))
     },
+    sendEventsForCalendar (req, res) {
+        res.status(201).send(req.body.sortedEvents)
+    },
     delete(req, res) {
         console.log(req.body)
         return FrequentUser

@@ -4,6 +4,7 @@ const helper = require('../helpers/index');
 const helperJ = require('../helpers/jwt_helper');
 const bcrypt = require('bcrypt');
 const errorType = require('../policy/errorType');
+const moment = require('moment')
 
 
 /* SET UP DB LINK */
@@ -16,6 +17,7 @@ orm.setup(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD,
 
 /* VARIABLE USED */
 const User = orm.model('public.user');
+const Place = orm.model('public.place');
 const FrequentUser = orm.model('public.frequentUser');
 const FrequentDate = orm.model('public.frequentDate');
 const Sequelize = orm.Sequelize();
@@ -136,8 +138,9 @@ module.exports = {
                 .catch((error) => next(errorType.customError('Token invalide', null, 403)));
         }
     },
-    
-    findFrenquentedPlacesFromUser (req, res, next) {
+
+    // Used in the MapPage view
+    findFrequentedPlacesFromUser (req, res, next) {
         FrequentUser
             .findAll({
                 where: {
@@ -157,6 +160,122 @@ module.exports = {
                 next()
             })
             .catch((error) => next(error))
+    },
+
+    findUserForCalendar (req, res, next) {
+        User
+            .findById(req.params.userId)
+            .then((user) => {
+                req.body.friends = [user.dataValues]
+                next()
+            })
+            .catch((error) => next(error));
+    },
+
+    // Used for the calendar events
+    findAllFriends (req, res, next) {
+        sequelize
+            .query('SELECT * FROM public.user WHERE user_id IN (' +
+                'SELECT I.user_id FROM public.is_friend I WHERE I.user_id_have_friend = :userId AND I.isfriend_state = :isfriendState' +
+                ')',
+                { replacements: { userId: req.params.userId, isfriendState: 'friend' }, type: sequelize.QueryTypes.SELECT }
+            )
+            .then((friends) => {
+                req.body.friends = helper.userHelper.parseRawQuery(friends)
+                next()
+            })
+            .catch(e => {
+                next(e)
+            })
+    },
+    async findFrequentForCalendar (req, res, next) {
+        try {
+            let answer = []
+            for (let e of req.body.friends) {
+                let element = e
+                let filterFrequents = []
+                // Get all frequent for this user
+                await FrequentUser
+                    .findAll({
+                        where: {
+                            userId: element.userId,
+                        }
+                    })
+                    .then(async (frequents) => {
+                        // Get all place information about each frequents
+                        for (let f of frequents) {
+                            await Place
+                                .findAll({
+                                    where: {
+                                        placeId: f.dataValues.placeId,
+                                    }
+                                })
+                                .then((place) => {
+                                    let event = {
+                                        frequent: f.dataValues,
+                                        place: place[0].dataValues
+                                    };
+                                    filterFrequents.push(event)
+                                })
+                        }
+
+                        let friendEvent = {
+                            user: {
+                                userName: e.userName,
+                                userFirstname: e.userFirstname,
+                                userPseudo: e.userPseudo
+                            },
+                            frequents: filterFrequents
+                        }
+                        answer.push(friendEvent)
+                    })
+            }
+            req.body.events = answer;
+            next()
+        } catch (e) {
+            next(e)
+        }
+    },
+    sortEventsForCalendar (req, res, next) {
+        try {
+            let events = []
+            // For each friend
+            for (let event of req.body.events) {
+                // For each of his frequents
+                for (let f of event.frequents) {
+                    let e = {
+                        date: moment(f.frequent.frequentDateStart).format('YYYY/MM/DD'),
+                        title: f.place.placeName,
+                        desc: f.place.placeDescription,
+                        frequentDateStart: f.frequent.frequentDateStart,
+                        place: f.place,
+                        users: []
+                    }
+                    if (events.indexOf(e) === -1) {
+                        // We add distinct date/place for the calendar
+                        events.push(e)
+                    }
+                }
+            }
+            // We insert now each user, where needed
+            for (let event of req.body.events) {
+                // For each of his frequents
+                for (let f of event.frequents) {
+                    for (let e of events) {
+                        if (e.date === f.frequent.frequentDateStart) {
+                            if (e.place === f.place) {
+                                e.users.push(event.user)
+
+                            }
+                        }
+                    }
+                }
+            }
+            req.body.sortedEvents = events
+            next()
+        } catch(e) {
+            next(e)
+        }
     },
 
     generateDate (req, res, next) {
