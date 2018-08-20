@@ -147,8 +147,10 @@ export default {
     /* ========= CRUD ========= */
     async createPlaces (value) {
       this.isLoading = true
-      let res = await _service.place.create(value)
-      this.editedItem.placeId = res.placeId
+      console.log('CREATION DATA')
+      this.editedItem = await _service.place.create(value)
+      console.log('DONE')
+      console.log('ID GIVEN')
       this.isLoading = false
     },
     async updatePlace (value) {
@@ -179,21 +181,27 @@ export default {
       confirm('Are you sure you want to delete this item?') && await this.deletePlace(item.placeId, index)
     },
     close () {
+      console.log('CLOSE')
       this.dialog = false
       setTimeout(() => {
         this.editedItem = new _service.PlaceModel().defaults()
         this.editedIndex = -1
       }, 300)
+      console.log('NEW ITEM : ', this.editedItem)
     },
-    save () {
+    async save () {
       if (this.editedIndex > -1) {
         Object.assign(this.places[this.editedIndex], this.editedItem)
         // Need to update in database
-        this.updatePlace(this.editedItem)
+        await this.updatePlace(this.editedItem)
       } else {
-        this.places.push(this.editedItem)
+        console.log('SAVE CREATE')
+        console.log('EDITED ITEM ADDED TO LIST')
+        console.log('BEFORE INSERTION DATABASE : ', this.editedItem)
         // Need to create into the database
-        this.createPlaces(this.editedItem)
+        await this.createPlaces(this.editedItem)
+        console.log('BEFORE INSERTION : ', this.editedItem)
+        this.places.push(this.editedItem)
       }
       this.close()
     }
@@ -202,6 +210,7 @@ export default {
   created: async function () {
     this.isLoading = true
     await this.loadPlaces()
+    console.log('DEFAULT ITEM : ', this.defaultItem)
     this.isLoading = false
   }
 }

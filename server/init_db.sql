@@ -11,7 +11,9 @@ DROP TABLE IF EXISTS public.Participate CASCADE;
 DROP TABLE IF EXISTS public.Own CASCADE;
 DROP TABLE IF EXISTS public.Is_Friend CASCADE;
 DROP TABLE IF EXISTS public.Belong CASCADE;
-DROP TABLE IF EXISTS public.Frequent CASCADE;
+DROP TABLE IF EXISTS public.Frequent_Date CASCADE;
+DROP TABLE IF EXISTS public.Frequent_Group CASCADE;
+DROP TABLE IF EXISTS public.Frequent_User CASCADE;
 DROP TABLE IF EXISTS public.Place CASCADE;
 DROP TABLE IF EXISTS public.Type CASCADE;
 DROP TABLE IF EXISTS public.Group CASCADE;
@@ -38,7 +40,6 @@ CREATE TABLE public.User(
 	user_account_state      VARCHAR (250)   ,
 	CONSTRAINT User_PK PRIMARY KEY (user_id)
 )WITHOUT OIDS;
-
 
 
 ------------------------------------------------------------
@@ -70,34 +71,24 @@ CREATE TABLE public.Type(
 
 
 ------------------------------------------------------------
--- Table: group
+-- Table: Group
 ------------------------------------------------------------
-CREATE TABLE public.group(
+CREATE TABLE public.Group(
 	group_id              SERIAL NOT NULL ,
 	group_name            VARCHAR (25) NOT NULL ,
 	group_description     VARCHAR (250) NOT NULL ,
 	group_picture         VARCHAR (250) NOT NULL ,
 	group_date_creation   DATE  NOT NULL  ,
-	CONSTRAINT group_PK PRIMARY KEY (group_id)
+	CONSTRAINT Group_PK PRIMARY KEY (group_id)
 )WITHOUT OIDS;
 
 
 ------------------------------------------------------------
--- Table: Frequent
+-- Table: Frequent_Date
 ------------------------------------------------------------
-CREATE TABLE public.Frequent(
-	user_id               INT  NOT NULL ,
-	place_id              INT  NOT NULL ,
-	group_id              INT  NOT NULL ,
-	frequent_date_start   DATE  NOT NULL ,
-	frequent_date_end     DATE  NOT NULL ,
-	frequent_visibility   VARCHAR (20) NOT NULL ,
-	frequent_feedback     VARCHAR (250) NOT NULL  ,
-	CONSTRAINT Frequent_PK PRIMARY KEY (user_id,place_id,group_id)
-
-	,CONSTRAINT Frequent_User_FK FOREIGN KEY (user_id) REFERENCES public.User(user_id)
-	,CONSTRAINT Frequent_Place0_FK FOREIGN KEY (place_id) REFERENCES public.Place(place_id)
-	,CONSTRAINT Frequent_group1_FK FOREIGN KEY (group_id) REFERENCES public.group(group_id)
+CREATE TABLE public.Frequent_Date(
+	frequent_date_start   DATE  NOT NULL  ,
+	CONSTRAINT Frequent_Date_PK PRIMARY KEY (frequent_date_start)
 )WITHOUT OIDS;
 
 
@@ -136,7 +127,7 @@ CREATE TABLE public.Own(
 	user_id    INT  NOT NULL  ,
 	CONSTRAINT Own_PK PRIMARY KEY (group_id,user_id)
 
-	,CONSTRAINT Own_group_FK FOREIGN KEY (group_id) REFERENCES public.group(group_id)
+	,CONSTRAINT Own_Group_FK FOREIGN KEY (group_id) REFERENCES public.Group(group_id)
 	,CONSTRAINT Own_User0_FK FOREIGN KEY (user_id) REFERENCES public.User(user_id)
 )WITHOUT OIDS;
 
@@ -149,10 +140,44 @@ CREATE TABLE public.Participate(
 	user_id    INT  NOT NULL  ,
 	CONSTRAINT Participate_PK PRIMARY KEY (group_id,user_id)
 
-	,CONSTRAINT Participate_group_FK FOREIGN KEY (group_id) REFERENCES public.group(group_id)
+	,CONSTRAINT Participate_Group_FK FOREIGN KEY (group_id) REFERENCES public.Group(group_id)
 	,CONSTRAINT Participate_User0_FK FOREIGN KEY (user_id) REFERENCES public.User(user_id)
 )WITHOUT OIDS;
 
+
+------------------------------------------------------------
+-- Table: Frequent_User
+------------------------------------------------------------
+CREATE TABLE public.Frequent_User(
+	user_id                    INT  NOT NULL ,
+	place_id                   INT  NOT NULL ,
+	frequent_date_start        DATE  NOT NULL ,
+	frequent_user_date_end     DATE  NOT NULL ,
+	frequent_user_visibility   VARCHAR (250) NOT NULL ,
+	frequent_user_feedback     VARCHAR (250)   ,
+	CONSTRAINT Frequent_User_PK PRIMARY KEY (user_id,place_id,frequent_date_start)
+
+	,CONSTRAINT Frequent_User_User_FK FOREIGN KEY (user_id) REFERENCES public.User(user_id)
+	,CONSTRAINT Frequent_User_Place0_FK FOREIGN KEY (place_id) REFERENCES public.Place(place_id)
+	,CONSTRAINT Frequent_User_Frequent_Date1_FK FOREIGN KEY (frequent_date_start) REFERENCES public.Frequent_Date(frequent_date_start)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: Frequent_group
+------------------------------------------------------------
+CREATE TABLE public.Frequent_group(
+	group_id                    INT  NOT NULL ,
+	place_id                    INT  NOT NULL ,
+	frequent_group_date_start   DATE  NOT NULL ,
+	frequent_group_date_end     DATE  NOT NULL ,
+	frequent_group_visibility   VARCHAR (250) NOT NULL ,
+	frequent_group_feedback     VARCHAR (250)   ,
+	CONSTRAINT Frequent_group_PK PRIMARY KEY (group_id,place_id)
+
+	,CONSTRAINT Frequent_group_Group_FK FOREIGN KEY (group_id) REFERENCES public.Group(group_id)
+	,CONSTRAINT Frequent_group_Place0_FK FOREIGN KEY (place_id) REFERENCES public.Place(place_id)
+)WITHOUT OIDS;
 
 
 

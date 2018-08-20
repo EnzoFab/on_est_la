@@ -1,4 +1,5 @@
 require('dotenv').config();
+const helper = require('../helpers');
 
 /* SET UP DB LINK */
 const orm = require('../models');
@@ -23,7 +24,19 @@ module.exports = {
     findAll(req, res) {
         return Place
             .findAll()
-            .then((places) => res.status(201).send(places))
+            .then((places) =>{
+                res.status(201).send(places)
+            })
+            .catch((error) => res.status(400).send(error));
+    },
+
+    findAllForUser(req, res) {
+        return Place
+            .findAll()
+            .then((places) =>{
+                let sorted = helper.placeHelper.computeMaterialIcon(req, places)
+                res.status(201).send(sorted)
+            })
             .catch((error) => res.status(400).send(error));
     },
 

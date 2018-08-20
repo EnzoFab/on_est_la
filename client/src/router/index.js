@@ -10,6 +10,7 @@ import PlaceManagement from '@/components/admin/placeManagement/PlaceManagement'
 import Sign from '@/components/sign/Sign'
 import _service from '../models'
 import store from '@/store/store'
+import LeafletMap from '../components/map/LeafletMap'
 
 Vue.use(Router)
 
@@ -50,6 +51,12 @@ const router = new Router({
       map: 'map',
       component: MapPage,
       meta: {title: 'haha'}
+    },
+
+    {
+      path: '/leaflet',
+      name: 'Leaflet',
+      component: LeafletMap
     },
 
     {

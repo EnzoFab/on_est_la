@@ -1,4 +1,5 @@
 <template>
+
   <v-layout row wrap>
     <v-flex xs6 offset-xs5>
       <h2>Partager une soirée</h2>
@@ -33,7 +34,7 @@
         ></gmap-marker>
       </gmap-map>
     </v-flex>
-  </v-layout>
+  </v-layout> */
 </template>
 
 <script>
@@ -44,7 +45,8 @@ export default {
     return {
       // default to Montreal to keep it simple
       // change this to whatever makes sense
-      center: { lat: 45.508, lng: -73.587 },
+      // Panama : 43.606331, 3.877829
+      center: { lat: 43.606, lng: 3.877 },
       markers: [],
       places: [],
       currentPlace: null

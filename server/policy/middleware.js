@@ -16,6 +16,8 @@ orm.setup(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD,
 
 /* VARIABLE USED */
 const User = orm.model('public.user');
+const FrequentUser = orm.model('public.frequentUser');
+const FrequentDate = orm.model('public.frequentDate');
 const Sequelize = orm.Sequelize();
 const sequelize = orm.sequelize();
 
@@ -123,7 +125,6 @@ module.exports = {
     },
 
     isLogged (error, decode) {
-        console.log('isLogged')
         if (error) {
             next(errorType.FORBIDDEN)
         } else {
@@ -134,5 +135,54 @@ module.exports = {
                 })
                 .catch((error) => next(errorType.customError('Token invalide', null, 403)));
         }
+    },
+    
+    findFrenquentedPlacesFromUser (req, res, next) {
+        FrequentUser
+            .findAll({
+                where: {
+                    userId: req.body.userId,
+                    frequentDateStart: req.body.frequentDateStart
+                }
+            })
+            .then((frequents) => {
+                let places = []
+                let frequentations = []
+                for (let f of frequents) {
+                    places.push(f.dataValues.placeId)
+                    frequentations.push(f.dataValues)
+                }
+                req.body.frequentedPlaces = places
+                req.body.frequentations = frequentations
+                next()
+            })
+            .catch((error) => next(error))
+    },
+
+    generateDate (req, res, next) {
+        FrequentDate
+            .findAll({
+                where: {
+                    frequentDateStart: req.body.frequentDateStart
+                }
+            })
+            .then((date) => {
+                // We create the date only if she don't exist yet
+                if (date.length === 0) {
+                    FrequentDate
+                        .create({
+                            frequentDateStart: req.body.frequentDateStart
+                        })
+                        .then((newDate) => {
+                            req.body.frequentDateStart = newDate.dataValues.frequentDateStart
+                            next()
+                        })
+                        .catch((error) => next(error))
+                } else {
+                    req.body.frequentDateStart = date[0].dataValues.frequentDateStart
+                    next()
+                }
+            })
+            .catch((error) => next(error))
     }
 }
