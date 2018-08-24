@@ -87,7 +87,8 @@
       </v-flex>
       <v-flex xs6>
         <!-- MAP -->
-        <!--<mapcard></mapcard>-->
+        <mapcard :places="places" :width="500" :height="500" :zoom="15">
+        </mapcard>
       </v-flex>
     </v-layout>
     <!-- PLACE DIALOG -->
@@ -222,5 +223,8 @@ export default {
   .v-stepper {
     background-color: transparent !important;
     box-shadow: none !important;
+  }
+  #map {
+    margin: auto !important;
   }
 </style>

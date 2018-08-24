@@ -26,6 +26,17 @@ module.exports = {
             .catch((error) => res.status(400).send(error));
     },
 
+    update (req, res) {
+        return User
+            .update(req.body, {
+                where: {
+                    userId: req.body.userId
+                }
+            })
+            .then((user) => res.status(201).send(user))
+            .catch((error) => res.status(400).send(error));
+    },
+
     findAll(req, res) {
         return User
             .findAll()

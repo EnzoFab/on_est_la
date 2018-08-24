@@ -7,7 +7,6 @@ import PlaceModel from './place_model/Place_model'
 import UserModel from './user_model/User_model'
 import TypeModel from './type_model/Type_model'
 
-
 // eslint-disable-next-line
 
 export default {

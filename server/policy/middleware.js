@@ -190,6 +190,7 @@ module.exports = {
     },
     async findFrequentForCalendar (req, res, next) {
         try {
+            const Op = Sequelize.Op;
             let answer = []
             for (let e of req.body.friends) {
                 let element = e
@@ -199,6 +200,9 @@ module.exports = {
                     .findAll({
                         where: {
                             userId: element.userId,
+                            frequentDateStart: {
+                                [Op.gte]: new Date(),
+                            }
                         }
                     })
                     .then(async (frequents) => {

@@ -38,6 +38,16 @@ export default {
     return isSigned
   },
 
+  async update (body) {
+    let uri = 'http://localhost:1330/api/user/update'
+    try {
+      await axios.post(uri, body)
+      return true
+    } catch (e) {
+      return false
+    }
+  },
+
   signUp (body) {
     return new Promise((resolve, reject) => {
       let uri = 'http://localhost:1330/api/auth/sign_up'
@@ -98,17 +108,6 @@ export default {
   },
 
   /* ========= LOCAL STORAGE ========= */
-  storeUserInformation (values) {
-    localStorage.setItem('Token', 'Bearer ' + values.token)
-  },
-
-  getLocalUserInformations () {
-    let informations = {
-      userPseudo: localStorage.getItem('Token')
-    }
-    return informations
-  },
-
   clearLocalUserInformations () {
     store.commit('removeToken')
     store.commit('removeUser')

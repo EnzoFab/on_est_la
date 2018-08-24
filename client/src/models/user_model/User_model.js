@@ -21,7 +21,8 @@ export default class User extends Model {
       userDescription: '',
       userVisibility: 'public',
       userPicture: '',
-      userAccountState: ''
+      userAccountState: '',
+      userNumberParty: 0
     }
   }
 
@@ -40,7 +41,8 @@ export default class User extends Model {
       userDescription: String,
       userVisibility: String,
       userPicture: String,
-      userAccountState: String
+      userAccountState: String,
+      userNumberParty: Number
     }
   }
 

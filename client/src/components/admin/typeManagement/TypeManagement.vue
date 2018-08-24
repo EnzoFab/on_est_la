@@ -93,7 +93,7 @@ export default {
           value: 'name'
         },
         { text: 'Nom type', sortable: false, value: 'name', align: 'left' },
-        { text: 'Description', sortable: false, value: 'description' },
+        { text: 'Description', sortable: false, value: 'description' }
       ],
       types: [],
       editedIndex: -1,

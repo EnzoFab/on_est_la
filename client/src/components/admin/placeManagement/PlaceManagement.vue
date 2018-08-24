@@ -43,14 +43,19 @@
                 <v-flex xs12>
                   <v-text-field v-model="editedItem.placeAdressCountry" label="Pays"></v-text-field>
                 </v-flex>
+                <v-flex xs6>
+                  <v-text-field v-model="editedItem.placeMapLat" label="Lattitude"></v-text-field>
+                </v-flex>
+                <v-flex xs6>
+                  <v-text-field v-model="editedItem.placeMapLon" label="Longitude"></v-text-field>
+                </v-flex>
               </v-layout>
             </v-container>
           </v-card-text>
 
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+            <v-btn color="error" block flat @click.native="close">Annuler</v-btn>
+            <v-btn color="success" block flat @click.native="save">Sauvegarder</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

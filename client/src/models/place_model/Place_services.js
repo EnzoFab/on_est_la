@@ -39,7 +39,7 @@ export default {
   async update (body) {
     let uri = 'http://localhost:1330/api/place/update'
     try {
-      await axios.post(uri, body)
+      await axios.put(uri, body)
       return true
     } catch (e) {
       return false

@@ -25,7 +25,15 @@ export default {
       btnLabel: 'Follow cette douceur',
       btnColor: 'info',
       invitations: [],
-      dialogNotifications: false
+      dialogNotifications: false,
+      dialogUpdate: false,
+      snackbar: {
+        state: false,
+        y: 'top',
+        mode: '',
+        timeout: 6000,
+        text: 'Modifications enregistrées petit frère !'
+      }
     }
   },
   methods: {
@@ -81,6 +89,13 @@ export default {
       }
       this.changeBtnContent()
       this.isLoading = false
+    },
+
+    /* ============ VIEW METHODS ============ */
+    async saveProfile () {
+      if (this.isUserActive) {
+        this.snackbar.state = await _service.user.update(this.user)
+      }
     },
 
     /* ============ VIEW METHODS ============ */

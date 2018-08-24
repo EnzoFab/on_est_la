@@ -2,7 +2,7 @@ import axios from 'axios'
 // import store from '@/store/store'
 
 export default {
-  async create(body) {
+  async create (body) {
     let uri = 'http://localhost:1330/api/type/create'
     try {
       let res = await axios.post(uri, body)

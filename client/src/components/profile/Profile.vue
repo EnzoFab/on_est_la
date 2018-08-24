@@ -21,15 +21,49 @@
             <img class="img-circle img-profile" src="../../assets/images/enzo.jpg">
           </v-flex>
           <v-flex xs12 class="primetime text-darkgrey">
-              <h2>{{user.userName}} {{ user.userFirstname}}</h2>
+            <h2>{{user.userName}} {{ user.userFirstname}}</h2>
           </v-flex>
           <v-flex xs12 class="font-italic text-grey text-lowercase">
               @{{ user.userPseudo}}
           </v-flex>
           <v-flex xs12>
-            <v-card-text class="text-justify profile-legend bold">
+            <v-textarea
+              v-model="user.userDescription"
+              auto-grow
+              :disabled="!isUserActive"
+              flat
+              solo
+              color="deep-purple"
+              label="Bio"
+              rows="2"
+            ></v-textarea>
+            <v-btn
+              color="success"
+              block
+              v-if="isUserActive"
+              depressed large class="mb-4"
+              @click="saveProfile"
+            >
+              sauvegarder
+            </v-btn>
+            <v-snackbar
+              color="indigo darken-4"
+              v-model="snackbar.state"
+              :timeout="snackbar.timeout"
+              :top="true"
+            >
+              {{ snackbar.text }}
+              <v-btn
+                color="success"
+                flat
+                @click="snackbar.state = false"
+              >
+                alright ok
+              </v-btn>
+            </v-snackbar>
+            <!--<v-card-text class="text-justify profile-legend bold">
               {{ user.userDescription}}
-            </v-card-text>
+            </v-card-text>-->
           </v-flex>
         </v-layout>
       </v-flex>

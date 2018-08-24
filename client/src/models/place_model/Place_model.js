@@ -17,7 +17,9 @@ export default class Place extends Model {
       placeAdressPostalCode: '',
       placeAdressCity: '',
       placeAdressCountry: '',
-      placeAdressDetails: ''
+      placeAdressDetails: '',
+      placeMapLat: '',
+      placeMapLon: ''
     }
   }
 
@@ -33,6 +35,8 @@ export default class Place extends Model {
       placeAdressCity: String,
       placeAdressCountry: String,
       placeAdressDetails: String,
+      placeMapLat: String,
+      placeMapLon: String
     }
   }
 

@@ -6,6 +6,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 var indexRouter = require('./routes/index');
+var cloudinary = require('cloudinary');
+
+// Images database
+cloudinary.config({
+    cloud_name: 'onestla',
+    api_key: '796399148757841',
+    api_secret: 'p8PaI56QhTsaMBO_CvVGNTqey1Y'
+})
 
 var app = express();
 

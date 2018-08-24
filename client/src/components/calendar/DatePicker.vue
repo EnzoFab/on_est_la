@@ -19,11 +19,13 @@
       dark
       color="indigo darken-4"
     ><v-icon>date_range</v-icon></v-btn>
-    <v-date-picker v-model="date" no-title @input="menu2 = false"></v-date-picker>
+    <v-date-picker :min="minDate" v-model="date" no-title @input="menu2 = false"></v-date-picker>
   </v-menu>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'DatePicker',
   props: {
@@ -36,6 +38,11 @@ export default {
       type: String,
       required: false,
       default: 'En vrai, jeudi non ?'
+    },
+    minDate: {
+      type: String,
+      required: false,
+      default: moment(new Date()).format('YYYY-MM-DD')
     }
   },
   data: () => ({

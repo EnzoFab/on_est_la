@@ -37,7 +37,8 @@ CREATE TABLE public.User(
 	user_description        VARCHAR (200)  ,
 	user_visibility         VARCHAR (20) NOT NULL ,
 	user_picture            VARCHAR (250)  ,
-	user_account_state      VARCHAR (250)   ,
+	user_account_state      VARCHAR (250)  ,
+	user_number_party       INT    ,
 	CONSTRAINT User_PK PRIMARY KEY (user_id)
 )WITHOUT OIDS;
 
@@ -54,7 +55,9 @@ CREATE TABLE public.Place(
 	place_adress_postal_code   VARCHAR (5) NOT NULL ,
 	place_adress_city          VARCHAR (50) NOT NULL ,
 	place_adress_country       VARCHAR (50) NOT NULL ,
-	place_adress_details       VARCHAR (250)   ,
+	place_adress_details       VARCHAR (250)  ,
+	place_map_lat              VARCHAR (50)  ,
+	place_map_lon              VARCHAR (50)   ,
 	CONSTRAINT Place_PK PRIMARY KEY (place_id)
 )WITHOUT OIDS;
 
@@ -167,16 +170,17 @@ CREATE TABLE public.Frequent_User(
 -- Table: Frequent_group
 ------------------------------------------------------------
 CREATE TABLE public.Frequent_group(
-	group_id                    INT  NOT NULL ,
 	place_id                    INT  NOT NULL ,
-	frequent_group_date_start   DATE  NOT NULL ,
+	group_id                    INT  NOT NULL ,
+	frequent_date_start         DATE  NOT NULL ,
 	frequent_group_date_end     DATE  NOT NULL ,
 	frequent_group_visibility   VARCHAR (250) NOT NULL ,
 	frequent_group_feedback     VARCHAR (250)   ,
-	CONSTRAINT Frequent_group_PK PRIMARY KEY (group_id,place_id)
+	CONSTRAINT Frequent_group_PK PRIMARY KEY (place_id,group_id,frequent_date_start)
 
-	,CONSTRAINT Frequent_group_Group_FK FOREIGN KEY (group_id) REFERENCES public.Group(group_id)
-	,CONSTRAINT Frequent_group_Place0_FK FOREIGN KEY (place_id) REFERENCES public.Place(place_id)
+	,CONSTRAINT Frequent_group_Place_FK FOREIGN KEY (place_id) REFERENCES public.Place(place_id)
+	,CONSTRAINT Frequent_group_Group0_FK FOREIGN KEY (group_id) REFERENCES public.Group(group_id)
+	,CONSTRAINT Frequent_group_Frequent_Date1_FK FOREIGN KEY (frequent_date_start) REFERENCES public.Frequent_Date(frequent_date_start)
 )WITHOUT OIDS;
 
 
