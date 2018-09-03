@@ -3,7 +3,7 @@
     <spinner v-show="isLoading" :isLoading="isLoading" class="mb-3"></spinner>
     <v-layout row wrap v-if="!isLoading">
       <!-- Profile picture & Names -->
-      <v-flex text-xs-center xs3 class="border-right">
+      <v-flex text-xs-center xs12 md3 class="border-right">
         <v-layout row wrap >
           <v-flex xs12 class="primetime text-darkgrey">
             <!-- Follow button -->
@@ -17,8 +17,8 @@
               {{ btnLabel }}
             </v-btn>
           </v-flex>
-          <v-flex xs12 class="thumbnail">
-            <img class="img-circle img-profile" src="../../assets/images/enzo.jpg">
+          <v-flex xs12>
+            <img height="150" class="img-circle img-profile" src="../../assets/images/enzo.jpg">
           </v-flex>
           <v-flex xs12 class="primetime text-darkgrey">
             <h2>{{user.userName}} {{ user.userFirstname}}</h2>
@@ -69,8 +69,8 @@
       </v-flex>
 
       <!-- Stats -->
-      <v-flex class="pl-4" xs6 text-xs-left>
-        <v-card-text v-model="listoffriends">
+      <v-flex class="pl-4" xs12 md6 text-xs-left>
+        <v-card-text>
           <!-- Notifications -->
           <v-layout v-if="isUserActive" row align-center class="mb-5"
                     slot="activator"
@@ -136,7 +136,7 @@
                 </v-avatar>
               </v-badge>
               <v-layout column>
-                <h3 class="bold" style="color: #1A237E">45</h3>
+                <h3 class="bold" style="color: #1A237E">{{ numberFrequent }}</h3>
                 <h3>Apéritifs</h3>
               </v-layout>
             </v-layout>
@@ -158,7 +158,7 @@
                 </v-avatar>
               </v-badge>
               <v-layout column>
-                <h3 class="bold" style="color: #E65100">2,4</h3>
+                <h3 class="bold" style="color: #E65100">{{ ratioFrequent }}</h3>
                 <h3>Nuits par semaine</h3>
               </v-layout>
             </v-layout>
@@ -168,7 +168,7 @@
       </v-flex>
 
       <!-- Friend list -->
-      <v-flex class="border-left" xs3>
+      <v-flex class="border-left" xs12 md3>
         <friendlist v-if="!isLoading"
                     :friendlist="listoffriends"
                     :sizeInput="300"

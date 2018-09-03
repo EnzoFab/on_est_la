@@ -43,5 +43,15 @@ export default {
     } catch (e) {
       return []
     }
+  },
+
+  async findAllFrequentFromUserId (userId) {
+    let uri = 'http://localhost:1330/api/frequent_user/find_all_frequent_from_user/' + userId
+    try {
+      let res = await axios.get(uri)
+      return res.data
+    } catch (e) {
+      return []
+    }
   }
 }

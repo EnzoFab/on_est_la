@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <sidebar v-if="this.$store.getters.getIsLogged"></sidebar>
+    <sidebar class="hidden-sm-and-down" v-if="this.$store.getters.getIsLogged"></sidebar>
     <!--<CustomSpinner :isLoading="showSpinner" class="mb-3"/> -->
     <transition name="custom-classes-transition"
                 enter-active-class="animated fadeIn"
@@ -10,6 +10,7 @@
     >
       <router-view/>
     </transition>
+    <bottombar class="hidden-md-and-up" v-if="this.$store.getters.getIsLogged"></bottombar>
   </v-app>
 </template>
 
@@ -18,6 +19,7 @@ import topbar from '@/components/topbar/Topbar'
 import navbar from '@/components/topbar/Navbar'
 import CustomSpinner from './components/Spinner'
 import Sidebar from './components/topbar/Sidebar'
+import bottombar from './components/topbar/Bottombar'
 
 export default {
   name: 'App',
@@ -25,6 +27,7 @@ export default {
     Sidebar,
     CustomSpinner,
     navbar,
+    bottombar,
     'topbar': topbar
   },
   data () {

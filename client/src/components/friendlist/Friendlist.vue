@@ -1,13 +1,14 @@
 <template>
   <v-layout row justify-center align-center>
     <!-- Friend list card -->
-    <v-flex xs10>
       <!-- Headers -->
       <v-layout row justify-space-between v-if="isSearchable">
-        <v-card-title flat primary-title>
-          <h3 class="noto text-grey">HOMIES</h3>
-        </v-card-title>
-        <v-flex xs6>
+        <v-flex xs12 md6>
+          <v-card-title flat primary-title>
+            <h3 class="noto text-grey">HOMIES</h3>
+          </v-card-title>
+        </v-flex>
+        <v-flex xs12 md6>
           <v-text-field
             :onkeyup="searchFunction()"
             id="friends-search"
@@ -30,10 +31,6 @@
             <v-list-tile-content class="friend-row">
               <v-list-tile-title class="text-uppercase" align-center>
                 <v-layout row align-center>
-                  <!-- Icon -->
-                  <i class="material-icons pr-5 mb-3">
-                    whatshot
-                  </i>
                   <p :id="'row-friendlist-'+friend.userId">{{ friend.userName }} {{ friend.userFirstname }}</p>
                 </v-layout>
               </v-list-tile-title>
@@ -47,7 +44,6 @@
           </v-list-tile>
         </v-list>
       </v-card>
-    </v-flex>
   </v-layout>
 </template>
 

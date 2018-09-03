@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout row wrap align-center>
-      <v-flex xs6>
+      <v-flex xs12 md6>
         <v-layout row wrap align-center>
           <!-- STEPPER -->
           <v-flex xs12 class="mt-4 mb-4">
@@ -19,7 +19,7 @@
             </v-stepper>
           </v-flex>
           <!-- DATE PICKER -->
-          <v-flex xs6 class="pr-5">
+          <v-flex xs12 md6 class="pr-5">
             <v-layout align-center justify-center>
               <datepicker class="mx-3" @datePicked="changeDate"
               />
@@ -27,7 +27,7 @@
             </v-layout>
           </v-flex>
           <!-- PLACES LIST -->
-          <v-flex xs6>
+          <v-flex xs12 md6>
             <v-text-field
               v-model="search"
               append-icon="search"

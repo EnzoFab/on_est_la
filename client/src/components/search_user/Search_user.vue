@@ -1,7 +1,7 @@
 <template>
   <v-container v-model="isReady">
     <v-layout row wrap justify-center>
-      <v-flex xs4>
+      <v-flex xs12 md4>
         <autocomplete
           @clickedFriend="viewFriendProfile"
           @input="loadUserSearch"

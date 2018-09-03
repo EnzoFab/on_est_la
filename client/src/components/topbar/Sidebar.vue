@@ -1,6 +1,6 @@
 <template>
   <v-toolbar height="150" flat>
-    <v-toolbar-items id="toolbar" class="hidden-sm-and-down align-center">
+    <v-toolbar-items id="toolbar" class="align-center">
       <v-btn class="pl-5 pr-5" flat :to="{ name: 'adminHome'}">
         <img height="100" src="../../assets/images/logo.png">
       </v-btn>

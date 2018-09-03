@@ -1,6 +1,7 @@
 import friendList from '../friendlist/Friendlist'
 import CustomSpinner from '../Spinner'
 import _service from '../../models/index'
+import _helper from '../../helpers/index'
 import store from '@/store/store'
 
 /* ============ EXPORT ============ */
@@ -33,7 +34,9 @@ export default {
         mode: '',
         timeout: 6000,
         text: 'Modifications enregistrées petit frère !'
-      }
+      },
+      numberFrequent: 0,
+      ratioFrequent: 0
     }
   },
   methods: {
@@ -46,6 +49,7 @@ export default {
       await this.loadFriends()
       this.isMyProfile()
       await this.loadAllInvitations()
+      await this.loadStats()
       await this.findRelation()
     },
     async loadFriends () {
@@ -66,6 +70,14 @@ export default {
       this.user.userPseudo = this.$router.history.current.params.pseudo
       let res = await _service.user.findOneFromPseudo(this.user.userPseudo)
       this.user = res[0]
+      this.isLoading = false
+    },
+    async loadStats () {
+      this.isLoading = true
+      // Need to get only finished party
+      let frequent = await _service.frequentUser.findAllFrequentFromUserId(this.user.userId)
+      this.numberFrequent = frequent.length
+      this.ratioFrequent = this.numberFrequent / _helper.date.daysBetweenDates(this.user.userDateInscription, new Date()) * 7
       this.isLoading = false
     },
 
@@ -97,8 +109,6 @@ export default {
         this.snackbar.state = await _service.user.update(this.user)
       }
     },
-
-    /* ============ VIEW METHODS ============ */
     async friendBtnAction () {
       // Action to perform depending on the state with the user
       if (this.relationWithUser === 'not-friend'){
