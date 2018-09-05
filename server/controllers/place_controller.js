@@ -11,6 +11,8 @@ orm.setup(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD,
 
 /* VARIABLE USED */
 const Place = orm.model('public.place');
+const FrequentUser = orm.model('public.frequentUser');
+
 const sequelize = orm.sequelize();
 
 module.exports = {
@@ -30,12 +32,29 @@ module.exports = {
             .catch((error) => res.status(400).send(error));
     },
 
-    findAllForUser(req, res) {
+    findAllPlacesForUser(req, res) {
         return Place
             .findAll()
             .then((places) =>{
-                let sorted = helper.placeHelper.computeMaterialIcon(req, places)
-                res.status(201).send(sorted)
+                let i = 0
+                for (let p of places) {
+                    FrequentUser.findAll({
+                        where: {
+                            placeId: p.placeId,
+                            frequentDateStart: req.body.frequentDateStart
+                        }
+                    })
+                        .then((result) => {
+                            i++
+                            p.dataValues.nbParticipants = result.length
+                            if (i === places.length) {
+                                console.log(places[0])
+                                let sorted = helper.placeHelper.computeMaterialIcon(req, places)
+                                res.status(201).send(sorted)
+                            }
+                        })
+                        .catch((error) => res.status(400).send(error));
+                }
             })
             .catch((error) => res.status(400).send(error));
     },

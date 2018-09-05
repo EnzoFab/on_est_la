@@ -21,12 +21,13 @@ export default {
       user: {},
       isUserActive: false,
       relationWithUser: 'not-friend',
-      listoffriends: [],
+      friendList: [],
       isLoading: false,
       btnLabel: 'Follow cette douceur',
       btnColor: 'info',
       invitations: [],
       dialogNotifications: false,
+      dialogFriendList: false,
       dialogUpdate: false,
       snackbar: {
         state: false,
@@ -54,7 +55,7 @@ export default {
     },
     async loadFriends () {
       this.isLoading = true
-      this.listoffriends = await _service.user.findAllFriends(this.user.userId)
+      this.friendList = await _service.user.findAllFriends(this.user.userId)
       this.isLoading = false
     },
     async loadAllInvitations () {
@@ -128,7 +129,7 @@ export default {
         this.btnLabel = 'deviens mon pote'
         this.btnColor = 'info'
       } else {
-        this.btnLabel = "en vrai t'es doux"
+        this.btnLabel = "Modifier Le Profil"
         this.btnColor = 'info'
       }
     },
@@ -138,8 +139,16 @@ export default {
         this.dialogNotifications = state
       }
     },
+    dialogFriendOpen (state) {
+      // If State = true, then we show notifications to the user only if it's his profile
+      if (true) {
+        this.dialogFriendList = state
+      }
+    },
     goToProfile (friend) {
       // When a user of the friend list had been clicked, we go to his profile
+      this.dialogFriendOpen(false)
+      this.dialogOpen(false)
       this.$router.push({ name: 'user-profile', params: { pseudo: friend.userPseudo.toString().toLowerCase() } })
     },
 
@@ -153,13 +162,13 @@ export default {
       this.relationWithUser = await _service.isfriend.create(body)
       this.changeBtnContent()
     },
-    async unfollow () {
+    async unfollow (userId) {
       let body = {
-        userId: this.user.userId, // The user that is wanted to be unfollowed
+        userId: userId, // The user that is wanted to be unfollowed
         userIdHaveFriend: store.getters.getUser.userId, // Active user
       }
       let deleted = await _service.isfriend.delete(body)
-      if (this.relationWithUser === 'friend' && deleted) {
+      if (this.relationWithUser === 'friend' && deleted || this.isUserActive) {
         let bodyInverse = {
           userId: body.userIdHaveFriend,
           userIdHaveFriend: body.userId

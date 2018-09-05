@@ -1,8 +1,8 @@
 <template>
-  <v-card height="65px" flat>
+  <v-card height="56px" flat id="bottomBar">
     <v-bottom-nav
       :value="true"
-      absolute
+      fixed
       color="transparent"
     >
       <v-btn

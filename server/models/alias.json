@@ -1,0 +1,104 @@
+{
+    "public.belong": {
+        "belongsTo": {
+            "place": null,
+            "type": null
+        }
+    },
+    "public.frequentDate": {
+        "belongsToMany": {
+            "frequentGroupFrequentDate1FkGroups": null,
+            "frequentGroupFrequentDate1FkPlaces": null,
+            "frequentUserFrequentDate1FkPlaces": null,
+            "frequentUserFrequentDate1FkUsers": null
+        },
+        "hasMany": {
+            "frequentGroupFrequentDate1Fks": null,
+            "frequentUserFrequentDate1Fks": null
+        }
+    },
+    "public.frequentGroup": {
+        "belongsTo": {
+            "group": null,
+            "place": null,
+            "relatedFrequentDateStart": null
+        }
+    },
+    "public.frequentUser": {
+        "belongsTo": {
+            "place": null,
+            "relatedFrequentDateStart": null,
+            "user": null
+        }
+    },
+    "public.group": {
+        "belongsToMany": {
+            "frequentGroupGroup0FkPlaces": null,
+            "ownGroupFkUsers": null,
+            "participateGroupFkUsers": null,
+            "relatedFrequentGroupGroup0FkFrequentDateStarts": null
+        },
+        "hasMany": {
+            "frequentGroupGroup0Fks": null,
+            "ownGroupFks": null,
+            "participateGroupFks": null
+        }
+    },
+    "public.isFriend": {
+        "belongsTo": {
+            "relatedUserIdHaveFriend": null,
+            "user": null
+        }
+    },
+    "public.own": {
+        "belongsTo": {
+            "group": null,
+            "user": null
+        }
+    },
+    "public.participate": {
+        "belongsTo": {
+            "group": null,
+            "user": null
+        }
+    },
+    "public.place": {
+        "belongsToMany": {
+            "belongPlace0FkTypes": null,
+            "frequentGroupPlaceFkGroups": null,
+            "frequentUserPlace0FkUsers": null,
+            "relatedFrequentGroupPlaceFkFrequentDateStarts": null,
+            "relatedFrequentUserPlace0FkFrequentDateStarts": null
+        },
+        "hasMany": {
+            "belongPlace0Fks": null,
+            "frequentGroupPlaceFks": null,
+            "frequentUserPlace0Fks": null
+        }
+    },
+    "public.type": {
+        "belongsToMany": {
+            "belongTypeFkPlaces": null
+        },
+        "hasMany": {
+            "belongTypeFks": null
+        }
+    },
+    "public.user": {
+        "belongsToMany": {
+            "frequentUserUserFkPlaces": null,
+            "isFriendUser0FkUsers": null,
+            "ownUser0FkGroups": null,
+            "participateUser0FkGroups": null,
+            "relatedFrequentUserUserFkFrequentDateStarts": null,
+            "relatedIsFriendUserFkUserIdHaveFriends": null
+        },
+        "hasMany": {
+            "frequentUserUserFks": null,
+            "isFriendUser0Fks": null,
+            "isFriendUserFks": null,
+            "ownUser0Fks": null,
+            "participateUser0Fks": null
+        }
+    }
+}

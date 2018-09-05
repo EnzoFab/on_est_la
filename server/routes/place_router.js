@@ -5,7 +5,7 @@ const placeController = require('../controllers').place;
 const middleware = require('../policy').middleware;
 
 router.get('/find_all', placeController.findAll);
-router.post('/find_all_for_user', middleware.findFrequentedPlacesFromUser, placeController.findAllForUser);
+router.post('/find_all_for_user', middleware.findFrequentedPlacesFromUser, placeController.findAllPlacesForUser);
 
 
 router.post('/create', placeController.create);

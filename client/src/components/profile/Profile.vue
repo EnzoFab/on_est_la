@@ -2,50 +2,63 @@
   <v-container fluid grid-list-sm>
     <spinner v-show="isLoading" :isLoading="isLoading" class="mb-3"></spinner>
     <v-layout row wrap v-if="!isLoading">
-      <!-- Profile picture & Names -->
-      <v-flex text-xs-center xs12 md3 class="border-right">
-        <v-layout row wrap >
-          <v-flex xs12 class="primetime text-darkgrey">
+      <!-- Header -->
+      <v-flex text-xs-center xs12 md3>
+        <v-layout row wrap justify-center>
+
+          <!-- Picture -->
+          <v-flex xs4 >
+            <img height="70" class="img-circle img-profile" src="../../assets/images/enzo.jpg">
+          </v-flex>
+
+          <v-flex xs8>
+            <!-- Followers && Aperitif -->
+            <v-layout row>
+              <v-flex @click="dialogFriendOpen(true)">
+                <h3 class="bold" style="color: #1A237E">{{ friendList.length }}</h3>
+                <h3 class="caption">Followers</h3>
+              </v-flex>
+              <v-flex>
+                <h3 class="bold" style="color: #1A237E">{{ numberFrequent }}</h3>
+                <h3 class="caption">Apéritifs</h3>
+              </v-flex>
+            </v-layout>
+
             <!-- Follow button -->
             <v-btn
               :color="btnColor"
               block
+              small
+              v-if="!isUserActive"
               :disabled="isUserActive"
-              depressed large class="mb-4"
+              depressed
               @click="friendBtnAction"
             >
               {{ btnLabel }}
             </v-btn>
-          </v-flex>
-          <v-flex xs12>
-            <img height="150" class="img-circle img-profile" src="../../assets/images/enzo.jpg">
-          </v-flex>
-          <v-flex xs12 class="primetime text-darkgrey">
-            <h2>{{user.userName}} {{ user.userFirstname}}</h2>
-          </v-flex>
-          <v-flex xs12 class="font-italic text-grey text-lowercase">
-              @{{ user.userPseudo}}
-          </v-flex>
-          <v-flex xs12>
-            <v-textarea
-              v-model="user.userDescription"
-              auto-grow
-              :disabled="!isUserActive"
-              flat
-              solo
-              color="deep-purple"
-              label="Bio"
-              rows="2"
-            ></v-textarea>
             <v-btn
-              color="success"
+              color="white"
               block
+              small
               v-if="isUserActive"
-              depressed large class="mb-4"
+              depressed
               @click="saveProfile"
             >
-              sauvegarder
+              Modifier Le Profil
             </v-btn>
+          </v-flex>
+
+          <!-- User Pseudo -->
+          <v-flex xs12 class="mt-3">
+            <h3 class="body-1 font-weight-bold text-xs-left">{{user.userName}} {{ user.userFirstname}}</h3>
+            <h5 class="font-italic font-weight-light text-grey text-xs-left">@{{ user.userPseudo}}</h5>
+          </v-flex>
+
+          <!-- User description -->
+          <v-flex xs12>
+            <h5 class="body-1 text-xs-left">{{ user.userDescription}}</h5>
+
+            <!-- Alert confirmation -->
             <v-snackbar
               color="indigo darken-4"
               v-model="snackbar.state"
@@ -61,88 +74,27 @@
                 alright ok
               </v-btn>
             </v-snackbar>
-            <!--<v-card-text class="text-justify profile-legend bold">
-              {{ user.userDescription}}
-            </v-card-text>-->
           </v-flex>
         </v-layout>
       </v-flex>
 
-      <!-- Stats -->
-      <v-flex class="pl-4" xs12 md6 text-xs-left>
-        <v-card-text>
-          <!-- Notifications -->
-          <v-layout v-if="isUserActive" row align-center class="mb-5"
-                    slot="activator"
-                    color="primary"
-                    dark
-          >
-            <v-badge
-              color="amber accent-4"
-              left
-              overlap
-              class="mr-4"
-            >
-              <span slot="badge">{{ invitations.length }}</span>
-              <v-icon
-                large
-                color="indigo darken-4"
-                @click="dialogOpen(true)"
-              >notifications</v-icon>
-            </v-badge>
-            <v-layout column>
-              <h3>Notifications</h3>
-            </v-layout>
-          </v-layout>
+      <!-- Content -->
+      <v-flex xs12 md6 text-xs-left>
 
-          <!-- Foolowers -->
-          <v-tooltip left>
-            <v-layout row align-center class="mb-4"
-                      slot="activator"
-                      color="primary"
-                      dark
-            >
-              <v-badge overlap class="mr-3">
-                <v-avatar
-                  color="indigo darken-4"
-                >
-                  <v-icon dark>whatshot</v-icon>
-                </v-avatar>
-              </v-badge>
-              <v-layout column>
-                <h3 class="bold" style="color: #1A237E">{{ listoffriends.length }}</h3>
-                <h3>Followers</h3>
-              </v-layout>
-            </v-layout>
-            <span>
-              <v-layout row align-center>
-                Amis de boisson <i class="material-icons ml-2" style="font-size: 0.9em">favorite</i>
-              </v-layout>
-            </span>
-          </v-tooltip>
+        <!-- Notifications -->
+        <v-btn
+          color="white"
+          block
+          small
+          v-if="isUserActive"
+          depressed
+          @click="dialogOpen(true)"
+        >
+          {{ invitations.length }} notifications
+        </v-btn>
+      </v-flex>
 
-          <!-- Apéritifs -->
-          <v-tooltip v-if="isViewPublic" left>
-            <v-layout row align-center class="mb-4"
-                      slot="activator"
-                      color="primary"
-                      dark
-            >
-              <v-badge overlap class="mr-3">
-                <v-avatar
-                  color="indigo darken-4"
-                >
-                  <v-icon dark>local_bar</v-icon>
-                </v-avatar>
-              </v-badge>
-              <v-layout column>
-                <h3 class="bold" style="color: #1A237E">{{ numberFrequent }}</h3>
-                <h3>Apéritifs</h3>
-              </v-layout>
-            </v-layout>
-            <span>Nombre total de fragata !</span>
-          </v-tooltip>
-
+      <v-flex xs12 class="pt-5">
           <!-- Stats -->
           <v-tooltip v-if="isViewPublic" left>
             <v-layout row align-center class="mb-4"
@@ -158,27 +110,23 @@
                 </v-avatar>
               </v-badge>
               <v-layout column>
-                <h3 class="bold" style="color: #E65100">{{ ratioFrequent }}</h3>
-                <h3>Nuits par semaine</h3>
+                <h4 class="bold text-xs-right" style="color: #E65100">{{ ratioFrequent }}</h4>
+                <h4 class="text-xs-right">Nuits par semaine</h4>
               </v-layout>
             </v-layout>
             <span>Moyenne de Panama par semaine</span>
           </v-tooltip>
-        </v-card-text>
       </v-flex>
 
-      <!-- Friend list -->
-      <v-flex class="border-left" xs12 md3>
-        <friendlist v-if="!isLoading"
-                    :friendlist="listoffriends"
-                    :sizeInput="300"
-                    :isLink="true"
-        ></friendlist>
-      </v-flex>
       <!-- Dialog Notifications -->
-      <v-dialog v-model="dialogNotifications" scrollable max-width="600px">
+      <v-dialog v-model="dialogNotifications" scrollable fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-card>
-          <v-card-title>Notifications</v-card-title>
+          <v-card-title>
+            <v-btn icon color="blue darken-1" flat @click.native="dialogOpen(false)">
+              <v-icon>chevron_left</v-icon>
+            </v-btn>
+            Notifications
+          </v-card-title>
           <v-divider></v-divider>
           <v-card-text style="height: 400px;">
             <v-list two-line subheader>
@@ -206,11 +154,60 @@
               </v-list-tile>
             </v-list>
           </v-card-text>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="dialogFriendList" scrollable fullscreen hide-overlay transition="dialog-bottom-transition">
+        <v-card>
+          <v-card-title>
+            <v-btn icon color="blue darken-1" flat @click.native="dialogFriendOpen(false)">
+              <v-icon>chevron_left</v-icon>
+            </v-btn>
+            Homies
+          </v-card-title>
           <v-divider></v-divider>
-          <v-card-actions>
-            <v-btn color="blue darken-1" flat @click.native="dialogOpen(false)">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="dialogOpen(false)">Save</v-btn>
-          </v-card-actions>
+          <v-card-text style="height: 400px;">
+            <v-list two-line subheader>
+              <v-list-tile
+                v-for="item in friendList"
+                :key="item.userId"
+                avatar
+                @click="true"
+              >
+                <v-layout row wrap>
+                  <v-flex xs8>
+                    <v-layout>
+                      <v-avatar
+                        slot="activator"
+                        size="40px"
+                        class="mr-2"
+                        @click="goToProfile(item)"
+                      >
+                        <img
+                          src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460"
+                          alt="Avatar"
+                        >
+                      </v-avatar>
+                      <v-list-tile-content @click="goToProfile(item)">
+                        <v-list-tile-title>{{ item.userName + ' ' + item.userFirstname }}</v-list-tile-title>
+                        <v-list-tile-sub-title>{{ '@' + item.userPseudo }}</v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-layout>
+                  </v-flex>
+                  <v-flex xs4>
+                    <v-list-tile-action>
+                      <v-btn depressed
+                             block
+                             outline
+                             @click="unfollow(item.userId)"
+                             color="indigo darken-4">
+                        copain
+                      </v-btn>
+                    </v-list-tile-action>
+                  </v-flex>
+                </v-layout>
+              </v-list-tile>
+            </v-list>
+          </v-card-text>
         </v-card>
       </v-dialog>
     </v-layout>
@@ -259,5 +256,9 @@
     to {
       transform: rotate(360deg);
     }
+  }
+
+  .v-card__title {
+    max-height: 50px !important;
   }
 </style>

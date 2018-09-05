@@ -3,57 +3,43 @@
     <v-layout row wrap align-center>
       <v-flex xs12 md6>
         <v-layout row wrap align-center>
-          <!-- STEPPER -->
-          <v-flex xs12 class="mt-4 mb-4">
-            <v-stepper value="2">
-              <v-stepper-header>
-                <v-divider></v-divider>
-                <v-stepper-step step="1" complete>Quand ?</v-stepper-step>
-
-                <v-divider></v-divider>
-
-                <v-stepper-step step="2" complete>Où mon gava ?</v-stepper-step>
-
-                <v-divider></v-divider>
-              </v-stepper-header>
-            </v-stepper>
-          </v-flex>
           <!-- DATE PICKER -->
-          <v-flex xs12 md6 class="pr-5">
+          <v-flex xs12 md6>
             <v-layout align-center justify-center>
-              <datepicker class="mx-3" @datePicked="changeDate"
+              <datepicker @datePicked="changeDate"
               />
               <v-btn disabled block id="dateShow" outline color="indigo darken-4">{{ moment(new Date(datePicked)).format('dddd DD/MM') }}</v-btn>
             </v-layout>
           </v-flex>
           <!-- PLACES LIST -->
-          <v-flex xs12 md6>
+          <v-flex xs12 md6 >
             <v-text-field
-              v-model="search"
+              @keyup="searchPlace()"
               append-icon="search"
               label="Trouves ton QG"
               single-line
+              id="place-search"
               hide-details
               class="mb-2"
             ></v-text-field>
             <v-card flat
-                    id="placeHead"
                     class="scroll"
-                    style="max-height: 300px"
+                    style="max-height: 150px;"
+                    id="placeHead"
             >
               <v-data-table
-                :headers="headers"
                 :items="places"
-                :search="search"
+                id="place-table"
                 hide-actions
+                hide-headers
                 :expand="true"
               >
                 <template slot="items" slot-scope="props"
                           :value="name"
                 >
-                  <td class="text-xs-left">{{ props.item.placeName }}</td>
-                  <td class="text-xs-left">{{ props.item.placeAdressCity }}</td>
-                  <td class="justify-center align-center layout px-0">
+                  <td class="text-xs-left" @click="displayPlace(props.item)">{{ props.item.nbParticipants }}</td>
+                  <td class="text-xs-left" @click="displayPlace(props.item)">{{ props.item.placeName }}</td>
+                  <td class="justify-center align-center layout px-0" @click="displayPlace(props.item)">
                     <v-icon
                       medium
                       class="mr-2"
@@ -64,14 +50,17 @@
                     </v-icon>
                   </td>
                 </template>
-                <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                  Aucun QG trouvé à ce nom
-                </v-alert>
               </v-data-table>
+              <v-btn v-if="displayError"
+                     color="error"
+                     block
+                     depressed
+                     class="text-xs-left">Gros ça existe pas ça
+              </v-btn>
             </v-card>
           </v-flex>
           <!-- BTN SUBMIT -->
-          <v-flex class="mt-5">
+          <v-flex class="">
             <v-btn
               color="success"
               block
@@ -87,7 +76,7 @@
       </v-flex>
       <v-flex xs6>
         <!-- MAP -->
-        <mapcard :places="places" :width="500" :height="500" :zoom="15">
+        <mapcard :places="places" :centerMap="centerMap" :width="mapWidth" :height="mapHeight" :zoom="15">
         </mapcard>
       </v-flex>
     </v-layout>
@@ -141,7 +130,7 @@ import DatePicker from '../calendar/DatePicker'
 import _service from '../../models/index'
 import moment from 'moment'
 import store from '../../store/store'
-// import _helper from '../../helpers'
+import _helper from '../../helpers'
 
 export default {
   name: 'MapPage',
@@ -153,6 +142,7 @@ export default {
     return {
       moment: moment,
       search: '',
+      helper: _helper,
       datePicked: null,
       headers: [
         {
@@ -167,7 +157,11 @@ export default {
       places: [],
       pickedPlace: null,
       frequentations: [],
-      dialog: false
+      dialog: false,
+      mapHeight: 200,
+      mapWidth: 200,
+      centerMap: [43.610476, 3.875535],
+      displayError: false
     }
   },
   methods: {
@@ -175,12 +169,19 @@ export default {
     async loadPlaces () {
       // Load every places to drink in Montpellier
       this.places = await _service.place.findAllForUser(this.datePicked)
+      console.log(this.places[0])
     },
 
     /* ======= VIEW METHODS ======= */
     async changeDate (value) {
       this.datePicked = value
       await this.loadPlaces()
+    },
+    searchPlace () {
+      this.displayError = this.helper.search.searchPlace()
+    },
+    displayPlace (place) {
+      this.centerMap = [place.placeMapLat, place.placeMapLon]
     },
     choosePlace (place) {
       this.pickedPlace = place
@@ -206,6 +207,8 @@ export default {
   },
   async created () {
     this.datePicked = new Date()
+    this.mapHeight = window.innerWidth - 65
+    this.mapWidth = window.innerWidth - 65
     await this.loadPlaces()
   }
 }

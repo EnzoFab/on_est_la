@@ -140,6 +140,7 @@ module.exports = {
     },
 
     // Used in the MapPage view
+    // We tag every place that the user is already going to
     findFrequentedPlacesFromUser (req, res, next) {
         FrequentUser
             .findAll({

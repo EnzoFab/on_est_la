@@ -35,6 +35,11 @@ export default {
       required: false,
       default: 16
     },
+    centerMap: {
+      type: Array,
+      required: false,
+      default: [43.610476, 3.875535]
+    },
     places: {}
   },
   components: {
@@ -53,7 +58,7 @@ export default {
       this.markers = []
       for (let p of places) {
         let m = L.marker([p.placeMapLat, p.placeMapLon]).addTo(this.map)
-        m.bindPopup(p.placeName)
+        m.bindPopup(p.placeName + ' : ' + p.nbParticipants + ' nighterz')
         this.markers.push(m)
       }
     }
@@ -62,7 +67,7 @@ export default {
     this.$nextTick(function () {
       this.map = L.map('map', {
         center: [43.610476, 3.875535],
-        zoom: 15
+        zoom: 14
       })
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map)
     })
@@ -74,6 +79,9 @@ export default {
   watch: {
     places: function update (value, oldValue) {
       this.loadMarkers(value)
+    },
+    centerMap: function update (value, oldValue) {
+      this.map.setView(value, 14)
     }
   }
 }
