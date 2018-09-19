@@ -35,7 +35,7 @@ body, html {
 
 #signPage {
   /* The image used */
-  background-image: url('../src/assets/images/sign_wallpaper.jpg');
+  /* background-image: url('../src/assets/images/sign_wallpaper.jpg'); */
 
   /* Full height */
   height: 100%;

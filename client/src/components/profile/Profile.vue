@@ -46,6 +46,16 @@
             >
               Modifier Le Profil
             </v-btn>
+            <v-btn
+              color="red"
+              block
+              small
+              v-if="isUserActive"
+              depressed
+              @click="logOut"
+            >
+              Déconnexion
+            </v-btn>
           </v-flex>
 
           <!-- User Pseudo -->
@@ -156,6 +166,7 @@
           </v-card-text>
         </v-card>
       </v-dialog>
+      <!-- Dialog friendlist -->
       <v-dialog v-model="dialogFriendList" scrollable fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-card>
           <v-card-title>

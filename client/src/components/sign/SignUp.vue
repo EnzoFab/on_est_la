@@ -155,5 +155,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .v-input {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
 </style>

@@ -9,5 +9,6 @@ router.post('/sign_up', middleware.verificationAuth, middleware.hashPassword, us
 router.post('/log_in', middleware.verificationLogin, middleware.comparePassword, authController.logIn);
 router.post('/is_logged', middleware.decodeToken, authController.isLoggeg);
 router.post('/find_logged', middleware.decodeToken, authController.findLogged);
+router.get('/account-validation/:token', authController.validEmail)
 
 module.exports = router;

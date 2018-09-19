@@ -17,9 +17,12 @@ module.exports = {
             let token = req.headers.authorization.split(' ')[1]
                 || req.headers['x-access-token'] || req.body.token || req.params.token ;
             jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
+                console.log('ouais')
                 callback(err, decoded)
             })
         } else {
+            console.log('non')
+
             callback(errorType.customError('Token invalide', null, 403))
         }
     }

@@ -30,7 +30,7 @@ app.use(cors({
     credentials: true
 }));
 
-app.listen(4200);
+app.listen(process.env.SERVER_PORT);
 
 app.use('/api', indexRouter);
 //app.use('/', indexRouter);

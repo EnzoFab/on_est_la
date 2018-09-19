@@ -61,14 +61,14 @@ export default {
       v => !!v || 'Abuse pas, met ton mot de passe'
     ],
     alert: false,
-    errorMessage: 'Identifiant et/ou mot de passe incorrects.'
+    errorMessage: 'Identifiant et/ou mot de passe incorrects. \nCompte non validé.'
   }),
 
   methods: {
     async submit () {
       if (this.$refs.form.validate()) {
         let signed = await _service.user.signIn(this.identifiant, this.password)
-        if (signed) {
+        if (signed[0]) {
           this.alert = false
           this.$router.push({name: 'home'})
         } else {

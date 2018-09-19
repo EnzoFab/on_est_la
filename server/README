@@ -16,7 +16,9 @@ Here is an example :
 /* UPDATE SERVER DATABASE */
 To update sequelize models of the server side when a change occured in the postgres database, run this command :
 
+npm install -g sequelize-pg-generator
 spgen -d my_database -u my_user -p my_password
+
 spgen -d onestla -u postgres -p postgres
 
 Then delete the old "models" folder and rename the name one "model" to "models" (you replace the previous folder).

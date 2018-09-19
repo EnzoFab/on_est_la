@@ -169,7 +169,6 @@ export default {
     async loadPlaces () {
       // Load every places to drink in Montpellier
       this.places = await _service.place.findAllForUser(this.datePicked)
-      console.log(this.places[0])
     },
 
     /* ======= VIEW METHODS ======= */

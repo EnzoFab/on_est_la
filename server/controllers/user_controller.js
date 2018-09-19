@@ -2,6 +2,7 @@
 require('dotenv').config();
 const helper = require('../helpers');
 const policy = require('../policy');
+const tokenGenerator = new (require('uuid-token-generator'))(256); // Default is a 128-bit token encoded in base58
 
 
 /* SET UP DB LINK */
@@ -20,9 +21,25 @@ const sequelize = orm.sequelize();
 module.exports = {
     create (req, res) {
         req.body.userAccountState = 'created';
+        let seed = tokenGenerator.generate();
+        req.body.userToken = seed
         return User
             .create(req.body)
-            .then((user) => res.status(201).send(user))
+            .then((user) => {
+                let generateLink = `${process.env.SERVER_URL}:${process.env.CLIENT_PORT}/auth/account-validation/${seed}`;
+                helper.mailSender.send(req.body.userMail, 'Compte crée',
+                    `<h3 style="color: blue">Ton compte est crée narvallo.</h3><br><br>Clique sur ce lien pour activer ton f*cking compte et pouvoir te connecter online.
+                     <br><br>
+                        <h4><a href="${generateLink}">Valider mon compte comme B2O</a></h4>`,
+                    [], function (error, response) {
+                        if (error) {
+                            res.status(400).send(error)
+                        } else {
+                            res.status(201).send(user)
+                        }
+                    });
+
+            })
             .catch((error) => res.status(400).send(error));
     },
 

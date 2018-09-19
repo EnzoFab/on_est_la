@@ -76,8 +76,9 @@ export default {
     async loadStats () {
       this.isLoading = true
       // Need to get only finished party
-      let frequent = await _service.frequentUser.findAllFrequentFromUserId(this.user.userId)
+      let frequent = await _service.frequentUser.findAllFrequentFromUserIdPast(this.user.userId)
       this.numberFrequent = frequent.length
+      console.log(_helper.date.daysBetweenDates(this.user.userDateInscription, new Date()))
       this.ratioFrequent = this.numberFrequent / _helper.date.daysBetweenDates(this.user.userDateInscription, new Date()) * 7
       this.isLoading = false
     },
@@ -211,6 +212,11 @@ export default {
       await this.loadAllInvitations()
       await this.loadFriends()
     },
+
+    async logOut () {
+      await _service.user.clearLocalUserInformations()
+      this.$router.push({name: 'sign'})
+    }
   },
   computed: {
     isViewPublic () {

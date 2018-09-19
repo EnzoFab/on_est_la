@@ -12,6 +12,7 @@ import Sign from '@/components/sign/Sign'
 import _service from '../models'
 import store from '@/store/store'
 import LeafletMap from '../components/map/LeafletMap'
+import AccountValidation from '../components/accountvalidation/Accountvalidation'
 
 Vue.use(Router)
 
@@ -29,6 +30,14 @@ const router = new Router({
       path: '/home',
       name: 'home',
       component: Home,
+      meta: {title: 'On est là hein'}
+    },
+
+    {
+      path: '/account-validation/:token',
+      name: 'accountValidation',
+      component: AccountValidation,
+      props: true,
       meta: {title: 'On est là hein'}
     },
 
@@ -108,7 +117,10 @@ router.beforeEach(async (to, from, next) => {
   } else {
     // User not logged
     store.commit('setIsLogged', false)
+    console.log('path : ', to.path)
     if (to.path === '/sign-in') {
+      next()
+    } else if (to.path.includes('/account-validation')) {
       next()
     } else {
       next('./sign-in')

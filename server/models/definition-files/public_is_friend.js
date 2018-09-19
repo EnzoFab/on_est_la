@@ -10,7 +10,7 @@ To modify this model:
 3. Use utility methods to easily access orm properties.
 
 "use strict";
-var orm     = require('model\index.js'),
+var orm     = require('model/index.js'),
     model   = require('./is_friend.js'),
     util    = require('../utils.js')(model),
     Seq     = orm.Sequelize();
@@ -18,7 +18,7 @@ var orm     = require('model\index.js'),
 module.exports = model;
 
 // Some utility methods:
-util.getRelation("user").onDelete = 'CASCADE'; 
+util.getRelation("relatedUserIdHaveFriend").onDelete = 'CASCADE'; 
 util.getAttribute("userId").comment = 'This is the comment'; 
 
 ------------------------------------------------------------------------------------*/
@@ -63,8 +63,8 @@ module.exports = {
         table: "user",
         source: "generator",
         details: {
-            as: "user",
-            foreignKey: "user_id",
+            as: "relatedUserIdHaveFriend",
+            foreignKey: "user_id_have_friend",
             onDelete: "NO ACTION",
             onUpdate: "NO ACTION"
         }
@@ -75,8 +75,8 @@ module.exports = {
         table: "user",
         source: "generator",
         details: {
-            as: "relatedUserIdHaveFriend",
-            foreignKey: "user_id_have_friend",
+            as: "user",
+            foreignKey: "user_id",
             onDelete: "NO ACTION",
             onUpdate: "NO ACTION"
         }

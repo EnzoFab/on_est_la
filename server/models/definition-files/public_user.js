@@ -10,7 +10,7 @@ To modify this model:
 3. Use utility methods to easily access orm properties.
 
 "use strict";
-var orm     = require('model\index.js'),
+var orm     = require('model/index.js'),
     model   = require('./user.js'),
     util    = require('../utils.js')(model),
     Seq     = orm.Sequelize();
@@ -120,8 +120,8 @@ module.exports = {
         table: "is_friend",
         source: "generator",
         details: {
-            as: "isFriendUserFks",
-            foreignKey: "user_id",
+            as: "isFriendUser0Fks",
+            foreignKey: "user_id_have_friend",
             onDelete: "NO ACTION",
             onUpdate: "NO ACTION"
         }
@@ -132,8 +132,8 @@ module.exports = {
         table: "is_friend",
         source: "generator",
         details: {
-            as: "isFriendUser0Fks",
-            foreignKey: "user_id_have_friend",
+            as: "isFriendUserFks",
+            foreignKey: "user_id",
             onDelete: "NO ACTION",
             onUpdate: "NO ACTION"
         }
@@ -196,9 +196,9 @@ module.exports = {
         table: "user",
         source: "generator",
         details: {
-            as: "relatedIsFriendUserFkUserIdHaveFriends",
-            foreignKey: "user_id",
-            otherKey: "user_id_have_friend",
+            as: "isFriendUser0FkUsers",
+            foreignKey: "user_id_have_friend",
+            otherKey: "user_id",
             through: "is_friend",
             onDelete: "NO ACTION",
             onUpdate: "NO ACTION"
@@ -210,9 +210,9 @@ module.exports = {
         table: "user",
         source: "generator",
         details: {
-            as: "isFriendUser0FkUsers",
-            foreignKey: "user_id_have_friend",
-            otherKey: "user_id",
+            as: "relatedIsFriendUserFkUserIdHaveFriends",
+            foreignKey: "user_id",
+            otherKey: "user_id_have_friend",
             through: "is_friend",
             onDelete: "NO ACTION",
             onUpdate: "NO ACTION"

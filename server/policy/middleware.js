@@ -56,6 +56,17 @@ module.exports = {
         }
     },
 
+    verificationMailValid (req, res, next) {
+        const Verifier = require("email-verifier");
+
+        let verifier = new Verifier("your_email_verification_api_key");
+        verifier.verify("r@rdegges.com", (err, data) => {
+            if (err) throw err;
+            console.log(data);
+            next()
+        })
+    },
+
     verificationLogin(req, res, next) {
         if (helper.userHelper.validMailPassword(req.body)) {
             next();
@@ -75,7 +86,6 @@ module.exports = {
     comparePassword (req, res, next) {
         let identifiant = req.body.userMail;
         const Op = Sequelize.Op;
-
         User
             .findAll({
                 where: {
@@ -91,7 +101,11 @@ module.exports = {
                         .then ((answer) => {
                             if (answer) {
                                 req.body = user[0]
-                                next()
+                                if (req.body.dataValues.userAccountState !== 'valid') {
+                                    next(errorType.customError('Compte non validé', null, 403))
+                                } else {
+                                    next()
+                                }
                             } else {
                                 next(errorType.customError('Email et/ou mot de passe invalides', null, 403))
                             }
@@ -241,6 +255,60 @@ module.exports = {
             next(e)
         }
     },
+
+    async findFrequentForStats (req, res, next) {
+        try {
+            const Op = Sequelize.Op;
+            let answer = []
+            for (let e of req.body.friends) {
+                let element = e
+                let filterFrequents = []
+                // Get all frequent for this user
+                await FrequentUser
+                    .findAll({
+                        where: {
+                            userId: element.userId,
+                            frequentDateStart: {
+                                [Op.lt]: new Date(),
+                            }
+                        }
+                    })
+                    .then(async (frequents) => {
+                        // Get all place information about each frequents
+                        for (let f of frequents) {
+                            await Place
+                                .findAll({
+                                    where: {
+                                        placeId: f.dataValues.placeId,
+                                    }
+                                })
+                                .then((place) => {
+                                    let event = {
+                                        frequent: f.dataValues,
+                                        place: place[0].dataValues
+                                    };
+                                    filterFrequents.push(event)
+                                })
+                        }
+
+                        let friendEvent = {
+                            user: {
+                                userName: e.userName,
+                                userFirstname: e.userFirstname,
+                                userPseudo: e.userPseudo
+                            },
+                            frequents: filterFrequents
+                        }
+                        answer.push(friendEvent)
+                    })
+            }
+            req.body.events = answer;
+            next()
+        } catch (e) {
+            next(e)
+        }
+    },
+
     sortEventsForCalendar (req, res, next) {
         /* req.body.events = {user: {], frequents: {frequent: {}, place: {}} */
         try {

@@ -20,6 +20,7 @@ module.exports = {
     logIn (req, res) {
         req.body.userPass = undefined;
         let token = helperJ.jwtSignMember(req.body);
+
         res.status(201).send({
             data: req.body,
             token: token
@@ -33,5 +34,30 @@ module.exports = {
     findLogged (req, res) {
         req.body.decoded.userPass = undefined
         res.status(201).send(req.decoded)
+    },
+
+    validEmail (req, res) {
+        return User
+            .findAll({
+                where: {
+                    userToken: req.params.token
+                }
+            })
+            .then((user) => {
+                user[0].dataValues.userAccountState = 'valid'
+                User
+                    .update(user[0].dataValues, {
+                            where: {
+                                userId: user[0].dataValues.userId
+                            }
+                        })
+                            .then((userUpdated) => {
+                                user[0].dataValues.userPass = null
+                                user[0].dataValues.userToken = null
+                                res.status(201).send(user)
+                            })
+                            .catch((error) => res.status(400).send(error));
+            })
+            .catch((error) => res.status(400).send(error))
     }
 };

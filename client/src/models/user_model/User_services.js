@@ -30,10 +30,10 @@ export default {
           // this.storeUserInformation(res.data)
           store.commit('setToken', 'Bearer ' + res.data.token)
           store.commit('setUser', res.data.data)
-          isSigned = true
+          isSigned = [true, null]
         })
     } catch (e) {
-      isSigned = false
+      isSigned = [false, e]
     }
     return isSigned
   },
@@ -99,6 +99,16 @@ export default {
 
   async findOneFromPseudo (userPseudo) {
     let uri = 'http://localhost:1330/api/user/find_one_from_pseudo/' + userPseudo
+    try {
+      let res = await axios.get(uri)
+      return res.data
+    } catch (e) {
+      return []
+    }
+  },
+
+  async validAccount (userToken) {
+    let uri = 'http://localhost:1330/api/auth/account-validation/' + userToken
     try {
       let res = await axios.get(uri)
       return res.data
