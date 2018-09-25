@@ -2,8 +2,14 @@
 require('dotenv').config();
 const helper = require('../helpers');
 const policy = require('../policy');
+var cloudinary = require('cloudinary');
 const tokenGenerator = new (require('uuid-token-generator'))(256); // Default is a 128-bit token encoded in base58
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET
+});
 
 /* SET UP DB LINK */
 const orm = require('../models');
@@ -193,5 +199,12 @@ module.exports = {
             })
                 .then((user) => res.status(201).send(user))
                 .catch((error) => res.status(400).send(error))
+    },
+
+    storeProfilePicture (req, res) {
+        cloudinary.v2.uploader.upload(req.body.userPicture, (error, result) => {
+            console.log(result, error)
+            res.status(201).send(result)
+        });
     }
 };

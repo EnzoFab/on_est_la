@@ -14,6 +14,8 @@ import VueAxios from 'vue-axios'
 import 'vue-event-calendar/dist/style.css' // ^1.1.10, CSS has been extracted as one file, so you can easily update it.
 import vueEventCalendar from 'vue-event-calendar'
 import moment from 'moment'
+import VueClip from 'vue-clip'
+
 // import store from './components/shared/Store'
 // import _service from './models'
 
@@ -25,6 +27,7 @@ Vue.use(moment)
 Vue.use(VueAxios, axios)
 Vue.use(Vuetify)
 Vue.use(store)
+Vue.use(VueClip)
 
 sync(store, router)
 

@@ -325,9 +325,20 @@ module.exports = {
                         place: f.place,
                         users: []
                     }
-                    if (events.indexOf(e) === -1) {
-                        // We add distinct date/place for the calendar
+                    // We check if the event already exist
+                    // We add distinct event
+                    if (events.length === 0) {
                         events.push(e)
+                    } else {
+                        let exist = false
+                        for (let existingEvent of events) {
+                            if (e.date === existingEvent.date && existingEvent.title === e.title) {
+                                exist = true
+                            }
+                        }
+                        if (!exist) {
+                            events.push(e)
+                        }
                     }
                 }
             }

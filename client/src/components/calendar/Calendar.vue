@@ -142,6 +142,8 @@ export default {
       this.friendsEvent = await _service.frequentUser.findAllFrequentFriends()
       this.myEvents = await _service.frequentUser.findAllFrequentFromUser()
       this.events = this.friendsEvent
+      console.log(this.events)
+      console.log(this.myEvents)
       this.eventsFusion()
     },
 
