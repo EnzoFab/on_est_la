@@ -202,9 +202,25 @@ module.exports = {
     },
 
     storeProfilePicture (req, res) {
-        cloudinary.v2.uploader.upload(req.body.userPicture, (error, result) => {
-            console.log(result, error)
-            res.status(201).send(result)
+        cloudinary.v2.uploader.upload(req.body.userPicture.dataUrl,
+            {
+                public_id: "profile_pictures/" + req.body.pictureName,
+                transformation: [
+                    {width: 100, crop: "scale"},
+                    {quality: "auto"}
+                ]
+            },
+            (error, result) => {
+            return User
+                .update(
+                    { userPicture: result.url },
+                    { where: { userId: req.body.userId }}
+                )
+                .then((user) => {
+                    console.log(result)
+                    res.status(201).send(true)
+                })
+                .catch((error) => res.status(400).send(error));
         });
     }
 };

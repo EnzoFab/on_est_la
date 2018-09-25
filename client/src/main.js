@@ -8,7 +8,6 @@ import 'vuetify/dist/vuetify.min.css'
 import { sync } from 'vuex-router-sync'
 import store from '@/store/store'
 import 'material-design-icons-iconfont/dist/fonts/material-icons.css'
-import * as VueGoogleMaps from 'vue2-google-maps'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import 'vue-event-calendar/dist/style.css' // ^1.1.10, CSS has been extracted as one file, so you can easily update it.
@@ -30,13 +29,6 @@ Vue.use(store)
 Vue.use(VueClip)
 
 sync(store, router)
-
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyCt0gdwbDQE54poc617Y527r7szzIoM0aE',
-    libraries: 'places' // necessary for places input
-  }
-})
 
 Vue.config.productionTip = false
 // in init router file

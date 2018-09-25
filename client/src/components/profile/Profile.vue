@@ -8,7 +8,7 @@
 
           <!-- Picture -->
           <v-flex xs4 >
-            <img height="70" class="img-circle img-profile" src="../../assets/images/enzo.jpg">
+            <img height="70" class="img-circle img-profile" :src="user.userPicture">
           </v-flex>
 
           <v-flex xs8>

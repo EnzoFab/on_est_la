@@ -37,7 +37,13 @@ export default {
         text: 'Modifications enregistrées petit frère !'
       },
       numberFrequent: 0,
-      ratioFrequent: 0
+      ratioFrequent: 0,
+      options: {
+        url: '/',
+        maxFiles: 1,
+        paramName: 'profilePicture'
+      },
+      files: []
     }
   },
   methods: {
@@ -78,8 +84,8 @@ export default {
       // Need to get only finished party
       let frequent = await _service.frequentUser.findAllFrequentFromUserIdPast(this.user.userId)
       this.numberFrequent = frequent.length
-      console.log(_helper.date.daysBetweenDates(this.user.userDateInscription, new Date()))
       this.ratioFrequent = this.numberFrequent / _helper.date.daysBetweenDates(this.user.userDateInscription, new Date()) * 7
+      this.ratioFrequent = Math.trunc(this.ratioFrequent * 100) / 100
       this.isLoading = false
     },
 
@@ -141,7 +147,7 @@ export default {
       }
     },
     dialogFriendOpen (state) {
-      // If State = true, then we show notifications to the user only if it's his profile
+      // If State = true, then we show friendlist to the user only if it's his profile
       if (true) {
         this.dialogFriendList = state
       }

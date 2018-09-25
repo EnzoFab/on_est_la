@@ -48,6 +48,16 @@ export default {
     }
   },
 
+  async updateProfilePicture (body) {
+    let uri = 'http://localhost:1330/api/user/update_picture'
+    try {
+      let res = await axios.post(uri, body)
+      return res.data
+    } catch (e) {
+      return false
+    }
+  },
+
   signUp (body) {
     return new Promise((resolve, reject) => {
       let uri = 'http://localhost:1330/api/auth/sign_up'
